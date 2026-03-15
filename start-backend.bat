@@ -1,9 +1,16 @@
 @echo off
 echo Starting Backend...
 cd backend
-if exist venv\Scripts\activate.bat (
-    call venv\Scripts\activate.bat
-) else (
-    echo Virtual environment not found in backend\venv. Ensure you have set it up.
+if not exist venv\Scripts\python.exe (
+    echo Creating virtual environment...
+    python -m venv venv
 )
-uvicorn main:app --reload
+
+echo Activating virtual environment...
+call venv\Scripts\activate.bat
+
+echo Installing dependencies...
+venv\Scripts\python.exe -m pip install -r requirements.docker.txt
+
+echo Starting uvicorn...
+venv\Scripts\python.exe -m uvicorn main:app --reload

@@ -2,11 +2,17 @@
 echo "Starting Backend..."
 cd backend || exit
 
-# Check if the virtual environment exists and activate it
-if [ -f "venv/bin/activate" ]; then
-    source venv/bin/activate
-else
-    echo "Virtual environment not found in backend/venv. Ensure you have set it up."
+# Create virtual environment if it doesn't exist
+if [ ! -d "venv" ]; then
+    echo "Creating virtual environment..."
+    python3 -m venv venv
 fi
 
-uvicorn main:app --reload
+echo "Activating virtual environment..."
+source venv/bin/activate
+
+echo "Installing dependencies..."
+venv/bin/python -m pip install -r requirements.docker.txt
+
+echo "Starting uvicorn..."
+venv/bin/python -m uvicorn main:app --reload

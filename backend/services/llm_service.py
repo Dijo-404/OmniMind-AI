@@ -1,4 +1,4 @@
-﻿"""
+"""
 LLM service - routes every call through DigitalOcean Gradient AI (Llama 3.1 70B).
 Each expert agent uses the exact named persona system prompt from the master spec.
 """
@@ -158,7 +158,7 @@ class LLMService:
         self, query: str, expert_outputs: dict[str, str]
     ) -> dict[str, Any]:
         views = "\n\n".join(
-            f"{AGENT_META.get(k, {}).get(\"name\", k)} says:\n{v[:600]}"
+            f"{AGENT_META.get(k, {}).get('name', k)} says:\n{v[:600]}"
             for k, v in expert_outputs.items()
         )
         prompt = (
@@ -216,7 +216,7 @@ class LLMService:
         scenarios: list[SimulationScenario],
     ) -> dict[str, Any]:
         all_analyses = "\n\n".join(
-            f"{AGENT_META.get(k, {}).get(\"name\", k)} ({AGENT_META.get(k, {}).get(\"role\", \"\")}):\n{v}"
+            f"{AGENT_META.get(k, {}).get('name', k)} ({AGENT_META.get(k, {}).get('role', '')}):\n{v}"
             for k, v in expert_outputs.items()
         )
         scenario_summary = "\n".join(
