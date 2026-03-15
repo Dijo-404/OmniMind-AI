@@ -1,10 +1,6 @@
 # OmniMind AI
 
-Autonomous Multi-Agent AI Platform for Real-World Decision Intelligence and Simulation.
-
-Built for the **DigitalOcean Gradient AI Hackathon** — targeting $14,000 across 4 prize categories.
-
----
+OmniMind-AI  Autonomous Multi Agent AI Platform for Real World Decision Intelligence and Simulation
 
 ## Architecture — 5 Layers
 
@@ -16,7 +12,6 @@ Layer 4  Knowledge       Qdrant vector DB + Sentence Transformers (all-MiniLM-L6
 Layer 5  Data & Memory   PostgreSQL (sessions) + Redis (cache + memory)
 ```
 
----
 
 ## Agent Council
 
