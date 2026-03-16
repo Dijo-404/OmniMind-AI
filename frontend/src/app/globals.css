@@ -67,23 +67,27 @@
   }
   
   .btn-secondary {
-    @apply relative overflow-hidden bg-white/5 backdrop-blur-xl hover:bg-royal-gold/10 text-royal-gold font-bold py-3 px-8 rounded-full border border-royal-gold/30 shadow-lg transition-all duration-500 transform hover:scale-105 hover:border-royal-gold focus:outline-none active:scale-95;
+    @apply relative overflow-hidden backdrop-blur-xl hover:bg-royal-gold/10 text-royal-gold font-bold py-3 px-8 rounded-full border border-royal-gold/30 shadow-lg transition-all duration-500 transform hover:scale-105 hover:border-royal-gold focus:outline-none active:scale-95;
+    background-color: var(--glass-bg);
   }
   
   .btn-ghost {
-    @apply relative overflow-hidden bg-transparent hover:bg-royal-gold/5 text-secondary hover:text-royal-gold font-medium py-2 px-4 rounded-lg transition-all duration-300;
+    @apply relative overflow-hidden bg-transparent hover:bg-royal-gold/5 text-royal-text-secondary hover:text-royal-gold font-medium py-2 px-4 rounded-lg transition-all duration-300;
   }
   
   .card {
-    @apply relative bg-royal-charcoal/80 backdrop-blur-xl rounded-3xl shadow-2xl border border-royal-gold/10 p-8 transition-all duration-500 hover:border-royal-gold/30 hover:shadow-royal-gold/10 hover:shadow-2xl hover:-translate-y-2;
+    background-color: var(--bg-sidebar);
+    @apply relative backdrop-blur-xl rounded-3xl shadow-2xl border border-royal-gold/10 p-8 transition-all duration-500 hover:border-royal-gold/30 hover:shadow-royal-gold/10 hover:shadow-2xl hover:-translate-y-2;
   }
   
   .card-dark {
-    @apply relative bg-royal-black/40 backdrop-blur-2xl rounded-3xl shadow-2xl border border-royal-gold/5 p-8 transition-all duration-500 hover:border-royal-gold/20 hover:scale-[1.02];
+    background-color: var(--bg-main);
+    @apply relative backdrop-blur-2xl rounded-3xl shadow-2xl border border-royal-gold/5 p-8 transition-all duration-500 hover:border-royal-gold/20 hover:scale-[1.02];
   }
   
   .glass-card {
-    @apply relative bg-white/5 backdrop-blur-2xl rounded-3xl border border-white/10 shadow-2xl overflow-hidden;
+    background-color: var(--glass-bg);
+    @apply relative backdrop-blur-2xl rounded-3xl border border-royal-gold/10 shadow-2xl overflow-hidden;
   }
 
   .glass-card::after {
@@ -97,7 +101,8 @@
   }
   
   .input-field {
-    @apply block w-full rounded-2xl border-white/10 bg-white/5 backdrop-blur-md shadow-inner transition-all duration-300 focus:border-royal-gold focus:ring-royal-gold/20 focus:ring-4 focus:bg-white/10 sm:text-sm placeholder:text-gray-500 text-white;
+    background-color: var(--glass-bg);
+    @apply block w-full rounded-2xl border-royal-gold/10 backdrop-blur-md shadow-inner transition-all duration-300 focus:border-royal-gold focus:ring-royal-gold/20 focus:ring-4 focus:bg-royal-gold/10 sm:text-sm text-royal-text-primary;
   }
   
   .gradient-text {
