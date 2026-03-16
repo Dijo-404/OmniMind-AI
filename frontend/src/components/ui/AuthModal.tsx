@@ -29,8 +29,8 @@ export default function AuthModal({ isOpen, onClose, onSuccess }: AuthModalProps
     await new Promise(resolve => setTimeout(resolve, 1500));
     
     setIsLoading(false);
-    toast.success(isLogin ? 'Welcome back to the Elite.' : 'Your sovereign journey begins.');
-    onSuccess({ name: formData.name || 'Sovereign User', email: formData.email });
+    toast.success(isLogin ? 'Successfully logged in.' : 'Account created successfully.');
+    onSuccess({ name: formData.name || 'User', email: formData.email });
     onClose();
   };
 
@@ -42,7 +42,7 @@ export default function AuthModal({ isOpen, onClose, onSuccess }: AuthModalProps
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="absolute inset-0 bg-royal-black/80 backdrop-blur-xl"
+            className="absolute inset-0 bg-[var(--bg-main)]/80 backdrop-blur-xl"
             onClick={onClose}
           />
           
@@ -51,11 +51,11 @@ export default function AuthModal({ isOpen, onClose, onSuccess }: AuthModalProps
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.9, y: 20 }}
             transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-            className="relative w-full max-w-lg bg-royal-charcoal border border-royal-gold/20 rounded-[2.5rem] shadow-2xl overflow-hidden"
+            className="relative w-full max-w-lg bg-[var(--bg-main)] border border-blue-600/20 rounded-[2.5rem] shadow-2xl overflow-hidden"
           >
             {/* Background Effects */}
-            <div className="absolute top-0 right-0 w-64 h-64 bg-royal-gold/5 blur-[80px] rounded-full -mr-32 -mt-32" />
-            <div className="absolute bottom-0 left-0 w-64 h-64 bg-royal-gold/5 blur-[80px] rounded-full -ml-32 -mb-32" />
+            <div className="absolute top-0 right-0 w-64 h-64 bg-blue-600/5 blur-[80px] rounded-full -mr-32 -mt-32" />
+            <div className="absolute bottom-0 left-0 w-64 h-64 bg-blue-600/5 blur-[80px] rounded-full -ml-32 -mb-32" />
 
             <div className="relative z-10 p-10 sm:p-14">
               <button
@@ -66,26 +66,26 @@ export default function AuthModal({ isOpen, onClose, onSuccess }: AuthModalProps
               </button>
 
               <div className="flex flex-col items-center mb-10 text-center">
-                <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-royal-gold to-royal-gold-dark flex items-center justify-center mb-6 shadow-3xl">
-                  <SparklesIcon className="w-8 h-8 text-royal-black" />
+                <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-600 to-blue-800 flex items-center justify-center mb-6 shadow-3xl">
+                  <SparklesIcon className="w-8 h-8 text-black" />
                 </div>
-                <h2 className="text-3xl font-black text-white italic uppercase tracking-tighter mb-2">
-                  {isLogin ? 'Access the Vault' : 'Join the Elite'}
+                <h2 className="text-3xl font-bold text-[var(--text-primary)] tracking-tight mb-2">
+                  {isLogin ? 'Sign In' : 'Create Account'}
                 </h2>
-                <p className="text-royal-gold/60 text-[10px] font-black uppercase tracking-[0.4em]">
-                  {isLogin ? 'Enter your credentials' : 'Establish your sovereign identity'}
+                <p className="text-[var(--text-secondary)] text-sm font-medium">
+                  {isLogin ? 'Enter your details to continue' : 'Get started with OmniMind today'}
                 </p>
               </div>
 
               <form onSubmit={handleSubmit} className="space-y-6">
                 {!isLogin && (
                   <div className="relative">
-                    <UserIcon className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-white/20" />
+                    <UserIcon className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[var(--text-secondary)]/30" />
                     <input
                       type="text"
-                      placeholder="User Handle"
+                      placeholder="Your Name"
                       required
-                      className="w-full bg-white/5 border border-white/5 rounded-2xl px-12 py-4 text-white placeholder-white/20 focus:outline-none focus:ring-1 focus:ring-royal-gold/50 focus:border-royal-gold/50 transition-all font-medium"
+                      className="w-full bg-[var(--glass-bg)] border border-[var(--border-primary)] rounded-2xl px-12 py-4 text-[var(--text-primary)] placeholder-[var(--text-secondary)]/30 focus:outline-none focus:ring-1 focus:ring-blue-600/50 focus:border-blue-600/50 transition-all font-medium"
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                     />
@@ -93,54 +93,54 @@ export default function AuthModal({ isOpen, onClose, onSuccess }: AuthModalProps
                 )}
                 
                 <div className="relative">
-                  <EnvelopeIcon className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-white/20" />
+                  <EnvelopeIcon className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[var(--text-secondary)]/30" />
                   <input
                     type="email"
-                    placeholder="Encrypted Email"
+                    placeholder="Email Address"
                     required
-                    className="w-full bg-white/5 border border-white/5 rounded-2xl px-12 py-4 text-white placeholder-white/20 focus:outline-none focus:ring-1 focus:ring-royal-gold/50 focus:border-royal-gold/50 transition-all font-medium"
+                    className="w-full bg-[var(--glass-bg)] border border-[var(--border-primary)] rounded-2xl px-12 py-4 text-[var(--text-primary)] placeholder-[var(--text-secondary)]/30 focus:outline-none focus:ring-1 focus:ring-blue-600/50 focus:border-blue-600/50 transition-all font-medium"
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                   />
                 </div>
 
                 <div className="relative">
-                  <LockClosedIcon className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-white/20" />
+                  <LockClosedIcon className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[var(--text-secondary)]/30" />
                   <input
                     type="password"
-                    placeholder="Secure Cipher"
+                    placeholder="Password"
                     required
-                    className="w-full bg-white/5 border border-white/5 rounded-2xl px-12 py-4 text-white placeholder-white/20 focus:outline-none focus:ring-1 focus:ring-royal-gold/50 focus:border-royal-gold/50 transition-all font-medium"
+                    className="w-full bg-[var(--glass-bg)] border border-[var(--border-primary)] rounded-2xl px-12 py-4 text-[var(--text-primary)] placeholder-[var(--text-secondary)]/30 focus:outline-none focus:ring-1 focus:ring-blue-600/50 focus:border-blue-600/50 transition-all font-medium"
                     value={formData.password}
                     onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                   />
                 </div>
 
                 <motion.button
-                  whileHover={{ scale: 1.02, boxShadow: "0 0 40px rgba(212, 175, 55, 0.4)" }}
+                  whileHover={{ scale: 1.02, boxShadow: "0 0 40px rgba(59, 130, 246, 0.4)" }}
                   whileTap={{ scale: 0.98 }}
                   disabled={isLoading}
                   className="btn-primary w-full py-5 flex items-center justify-center gap-3 text-xs font-black uppercase tracking-[0.2em] disabled:opacity-50"
                   type="submit"
                 >
                   {isLoading ? (
-                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-royal-black"></div>
+                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
                   ) : (
                     <>
                       <Zap className="w-4 h-4" />
-                      {isLogin ? 'Initiate Link' : 'Forge Identity'}
+                      {isLogin ? 'Sign In' : 'Create Account'}
                     </>
                   )}
                 </motion.button>
               </form>
 
-              <div className="mt-8 text-center text-[10px] font-black uppercase tracking-widest text-white/30">
-                {isLogin ? "Don't have an identity?" : "Already part of the elite?"}
+              <div className="mt-8 text-center text-xs font-medium text-[var(--text-secondary)]">
+                {isLogin ? "Don't have an account?" : "Already have an account?"}
                 <button
                   onClick={() => setIsLogin(!isLogin)}
-                  className="ml-2 text-royal-gold hover:text-white transition-colors"
+                  className="ml-2 text-blue-600 hover:underline transition-colors"
                 >
-                  {isLogin ? 'Forge Now' : 'Link Vault'}
+                  {isLogin ? 'Sign Up' : 'Sign In'}
                 </button>
               </div>
             </div>

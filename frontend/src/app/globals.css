@@ -3,30 +3,31 @@
 @tailwind utilities;
 
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800;900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap');
 
 @layer base {
   :root {
-    --bg-main: #050505;
-    --bg-sidebar: #121212;
-    --text-primary: rgba(255, 255, 255, 0.9);
-    --text-secondary: rgba(255, 255, 255, 0.4);
-    --border-primary: rgba(255, 255, 255, 0.1);
-    --gold-glow: rgba(212, 175, 55, 0.2);
-    --glass-bg: rgba(255, 255, 255, 0.05);
+    --bg-main: #09090b;
+    --bg-sidebar: #18181b;
+    --text-primary: #f4f4f5;
+    --text-secondary: #a1a1aa;
+    --border-primary: #27272a;
+    --brand-accent: #3b82f6;
+    --brand-accent-glow: rgba(59, 130, 246, 0.1);
+    --glass-bg: rgba(24, 24, 27, 0.8);
     --chart-grid: rgba(255, 255, 255, 0.05);
     --chart-tick: rgba(255, 255, 255, 0.3);
   }
 
   .light-theme {
-    --bg-main: #F4F7FA;
-    --bg-sidebar: #FFFFFF;
-    --text-primary: #1A1C1E;
-    --text-secondary: #64748B;
-    --border-primary: rgba(0, 0, 0, 0.08);
-    --gold-glow: rgba(212, 175, 55, 0.1);
-    --glass-bg: rgba(0, 0, 0, 0.03);
+    --bg-main: #ffffff;
+    --bg-sidebar: #f8fafc;
+    --text-primary: #0f172a;
+    --text-secondary: #64748b;
+    --border-primary: #e2e8f0;
+    --brand-accent: #2563eb;
+    --brand-accent-glow: rgba(37, 99, 235, 0.05);
+    --glass-bg: rgba(255, 255, 255, 0.9);
     --chart-grid: rgba(0, 0, 0, 0.05);
     --chart-tick: rgba(0, 0, 0, 0.4);
   }
@@ -47,53 +48,43 @@
   }
 
   h1, h2, h3, h4, h5, h6 {
-    @apply font-display font-bold uppercase tracking-tight;
+    @apply font-sans font-semibold tracking-tight;
     color: var(--text-primary);
   }
 }
 
 @layer components {
   .btn-primary {
-    @apply relative overflow-hidden bg-gradient-to-r from-royal-gold via-royal-gold-light to-royal-gold-dark text-[#050505] font-bold py-3 px-8 rounded-full transition-all duration-500 transform hover:scale-105 hover:shadow-[0_0_20px_rgba(212,175,55,0.4)] focus:outline-none active:scale-95 border border-royal-gold-light/20;
-  }
-  
-  .btn-primary::before {
-    @apply absolute inset-0 bg-gradient-to-r from-white/40 to-transparent opacity-0 transition-opacity duration-300;
-    content: '';
-  }
-  
-  .btn-primary:hover::before {
-    @apply opacity-100;
+    @apply bg-blue-600 text-white font-medium py-2.5 px-6 rounded-lg transition-all duration-200 hover:bg-blue-700 focus:outline-none active:scale-95 shadow-sm;
   }
   
   .btn-secondary {
-    @apply relative overflow-hidden backdrop-blur-xl hover:bg-royal-gold/10 text-royal-gold font-bold py-3 px-8 rounded-full border border-royal-gold/30 shadow-lg transition-all duration-500 transform hover:scale-105 hover:border-royal-gold focus:outline-none active:scale-95;
-    background-color: var(--glass-bg);
+    @apply bg-transparent hover:bg-[var(--glass-bg)] text-[var(--text-primary)] font-medium py-2.5 px-6 rounded-lg border border-[var(--border-primary)] transition-all duration-200 focus:outline-none active:scale-95;
   }
   
   .btn-ghost {
-    @apply relative overflow-hidden bg-transparent hover:bg-royal-gold/5 text-royal-text-secondary hover:text-royal-gold font-medium py-2 px-4 rounded-lg transition-all duration-300;
+    @apply relative overflow-hidden bg-transparent hover:bg-blue-600/5 text-[var(--text-secondary)] hover:text-blue-600 font-medium py-2 px-4 rounded-lg transition-all duration-300;
   }
   
   .card {
     background-color: var(--bg-sidebar);
-    @apply relative backdrop-blur-xl rounded-3xl shadow-2xl border border-royal-gold/10 p-8 transition-all duration-500 hover:border-royal-gold/30 hover:shadow-royal-gold/10 hover:shadow-2xl hover:-translate-y-2;
+    @apply rounded-xl border border-[var(--border-primary)] p-6 transition-all duration-200 shadow-sm;
   }
   
   .card-dark {
     background-color: var(--bg-main);
-    @apply relative backdrop-blur-2xl rounded-3xl shadow-2xl border border-royal-gold/5 p-8 transition-all duration-500 hover:border-royal-gold/20 hover:scale-[1.02];
+    @apply rounded-xl border border-[var(--border-primary)] p-6 transition-all duration-200;
   }
   
   .glass-card {
     background-color: var(--glass-bg);
-    @apply relative backdrop-blur-2xl rounded-3xl border border-royal-gold/10 shadow-2xl overflow-hidden;
+    @apply backdrop-blur-md rounded-xl border border-[var(--border-primary)] shadow-sm overflow-hidden;
   }
 
   .glass-card::after {
     content: '';
     @apply absolute inset-0 opacity-0 transition-opacity duration-500;
-    background: radial-gradient(circle at center, rgba(212, 175, 55, 0.1) 0%, transparent 70%);
+    background: radial-gradient(circle at center, rgba(59, 130, 246, 0.1) 0%, transparent 70%);
   }
 
   .glass-card:hover::after {
@@ -101,17 +92,17 @@
   }
   
   .input-field {
-    background-color: var(--glass-bg);
-    @apply block w-full rounded-2xl border-royal-gold/10 backdrop-blur-md shadow-inner transition-all duration-300 focus:border-royal-gold focus:ring-royal-gold/20 focus:ring-4 focus:bg-royal-gold/10 sm:text-sm text-royal-text-primary;
+    background-color: var(--bg-main);
+    @apply block w-full rounded-lg border-[var(--border-primary)] transition-all duration-200 focus:border-blue-500 focus:ring-blue-500/10 focus:ring-4 sm:text-sm text-[var(--text-primary)];
   }
   
   .gradient-text {
-    @apply bg-gradient-to-r from-royal-gold via-royal-gold-light to-royal-gold-dark bg-clip-text text-transparent;
+    @apply text-[var(--text-primary)];
   }
   
   .gradient-border {
     @apply relative p-[1px] rounded-3xl overflow-hidden;
-    background: linear-gradient(135deg, rgba(212,175,55,0.3) 0%, rgba(255,255,255,0.05) 50%, rgba(212,175,55,0.3) 100%);
+    background: linear-gradient(135deg, rgba(59,130,246,0.3) 0%, rgba(255,255,255,0.05) 50%, rgba(59,130,246,0.3) 100%);
   }
   
   .floating-element {
@@ -129,47 +120,47 @@
   .shimmer-effect::after {
     content: '';
     @apply absolute inset-0 -translate-x-full;
-    background: linear-gradient(90deg, transparent, rgba(212,175,55,0.2), transparent);
+    background: linear-gradient(90deg, transparent, rgba(59,130,246,0.2), transparent);
     animation: shimmer 3s infinite;
   }
   
   .mesh-gradient {
     background: 
       radial-gradient(at 0% 0%, var(--bg-sidebar) 0, transparent 50%), 
-      radial-gradient(at 50% 0%, rgba(212, 175, 55, 0.05) 0, transparent 50%), 
+      radial-gradient(at 50% 0%, rgba(59, 130, 246, 0.05) 0, transparent 50%), 
       radial-gradient(at 100% 0%, var(--bg-main) 0, transparent 50%), 
       radial-gradient(at 50% 50%, var(--bg-sidebar) 0, transparent 50%), 
       radial-gradient(at 0% 100%, var(--bg-main) 0, transparent 50%), 
-      radial-gradient(at 50% 100%, rgba(212, 175, 55, 0.05) 0, transparent 50%), 
+      radial-gradient(at 50% 100%, rgba(59, 130, 246, 0.05) 0, transparent 50%), 
       radial-gradient(at 100% 100%, var(--bg-sidebar) 0, transparent 50%);
     background-size: 200% 200%;
     animation: gradient-xy 15s ease infinite;
   }
   
-  .royal-mesh {
+  .brand-mesh {
     background-image: 
-      radial-gradient(circle at 20% 20%, rgba(212, 175, 55, 0.08) 0%, transparent 40%),
-      radial-gradient(circle at 80% 80%, rgba(212, 175, 55, 0.08) 0%, transparent 40%),
+      radial-gradient(circle at 20% 20%, rgba(59, 130, 246, 0.05) 0%, transparent 40%),
+      radial-gradient(circle at 80% 80%, rgba(59, 130, 246, 0.05) 0%, transparent 40%),
       radial-gradient(circle at 50% 50%, var(--bg-sidebar) 0%, transparent 70%);
   }
 
-  .gold-glow {
-    box-shadow: 0 0 50px -12px rgba(212, 175, 55, 0.2);
+  .brand-glow {
+    box-shadow: 0 0 50px -12px rgba(59, 130, 246, 0.2);
   }
 
-  .royal-card {
+  .card-standard {
     background: var(--bg-sidebar);
-    @apply backdrop-blur-xl border border-royal-gold/10 rounded-3xl overflow-hidden shadow-2xl transition-all duration-500 hover:border-royal-gold/30 hover:shadow-royal-gold/5;
+    @apply border border-[var(--border-primary)] rounded-xl overflow-hidden shadow-sm transition-all duration-200;
   }
   
   .typing-effect {
-    border-right: 2px solid #D4AF37;
+    border-right: 2px solid #3b82f6;
     animation: blink 1s infinite;
   }
   
   @keyframes blink {
     0%, 50% { border-color: transparent; }
-    51%, 100% { border-color: #D4AF37; }
+    51%, 100% { border-color: #3b82f6; }
   }
   
   .agent-pulse {
@@ -180,22 +171,22 @@
     0%, 100% {
       opacity: 1;
       transform: scale(1);
-      filter: drop-shadow(0 0 0px rgba(212, 175, 55, 0));
+      filter: drop-shadow(0 0 0px rgba(59, 130, 246, 0));
     }
     50% {
       opacity: 0.9;
       transform: scale(1.02);
-      filter: drop-shadow(0 0 15px rgba(212, 175, 55, 0.3));
+      filter: drop-shadow(0 0 15px rgba(59, 130, 246, 0.3));
     }
   }
   
   .holographic {
     background: linear-gradient(45deg, 
-      rgba(212, 175, 55, 0.05) 0%,
+      rgba(59, 130, 246, 0.05) 0%,
       rgba(255, 255, 255, 0.02) 25%,
-      rgba(212, 175, 55, 0.05) 50%,
+      rgba(59, 130, 246, 0.05) 50%,
       rgba(255, 255, 255, 0.02) 75%,
-      rgba(212, 175, 55, 0.05) 100%
+      rgba(59, 130, 246, 0.05) 100%
     );
     background-size: 400% 400%;
     animation: gradient-xy 8s ease infinite;

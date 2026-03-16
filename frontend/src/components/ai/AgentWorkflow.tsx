@@ -130,55 +130,55 @@ export default function AgentWorkflow({ query, onBack }: AgentWorkflowProps) {
 
   if (isLoading && !snapshot) {
     return (
-      <div className="min-h-screen bg-royal-black py-12 flex items-center justify-center relative overflow-hidden">
-        <div className="absolute inset-0 royal-mesh opacity-20" />
-        <div className="royal-card max-w-xl w-full text-center p-20 relative z-10 border-royal-gold/10">
+      <div className="min-h-screen bg-[var(--bg-main)] py-12 flex items-center justify-center relative overflow-hidden">
+        <div className="absolute inset-0 opacity-20" />
+        <div className="card max-w-xl w-full text-center p-20 relative z-10 border-blue-600/10">
           <div className="w-24 h-24 mx-auto mb-8 relative">
             <motion.div
               animate={{ rotate: 360 }}
               transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
-              className="absolute inset-0 rounded-full border-[2px] border-royal-gold/10 border-t-royal-gold"
+              className="absolute inset-0 rounded-full border-[2px] border-blue-600/10 border-t-blue-600"
             />
-            <div className="absolute inset-4 rounded-full bg-royal-gold/5 animate-pulse" />
+            <div className="absolute inset-4 rounded-full bg-blue-600/5 animate-pulse" />
           </div>
-          <p className="text-royal-gold font-black text-xs uppercase tracking-[0.5em] animate-pulse">Initializing Sovereign Protocol</p>
+          <p className="text-blue-600 font-semibold text-xs uppercase tracking-widest animate-pulse">Initializing Analysis Engine</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-royal-black py-12 relative overflow-hidden">
-      <div className="absolute inset-0 royal-mesh opacity-10" />
+    <div className="min-h-screen bg-[var(--bg-main)] py-12 relative overflow-hidden">
+      <div className="absolute inset-0 opacity-10" />
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="mb-12">
           <button
             onClick={onBack}
-            className="flex items-center gap-3 text-white/40 hover:text-royal-gold transition-colors mb-8 group"
+            className="flex items-center gap-3 text-[var(--text-secondary)] hover:text-blue-600 transition-colors mb-8 group"
           >
-            <div className="w-8 h-8 rounded-full border border-white/5 flex items-center justify-center group-hover:border-royal-gold/50 transition-all">
+            <div className="w-8 h-8 rounded-full border border-[var(--border-primary)] flex items-center justify-center group-hover:border-blue-600/50 transition-all">
               <ArrowLeftIcon className="h-4 w-4" />
             </div>
-            <span className="text-[10px] font-black uppercase tracking-widest">Withdraw Mandate</span>
+            <span className="text-[10px] font-semibold uppercase tracking-widest">Back to Dashboard</span>
           </button>
 
-          <div className="royal-card p-10 border-royal-gold/20">
+          <div className="card p-10 border-blue-600/20">
             <div className="flex flex-wrap justify-between items-start gap-8 mb-10">
               <div className="flex-1 min-w-[300px]">
                 <div className="flex items-center gap-4 mb-4">
-                  <div className="w-2 h-2 rounded-full bg-royal-gold animate-pulse shadow-[0_0_10px_rgba(212,175,55,1)]" />
-                  <h1 className="text-2xl font-black text-white uppercase tracking-tighter italic">Sovereign Analysis in Flux</h1>
+                  <div className="w-2 h-2 rounded-full bg-blue-600 animate-pulse" />
+                  <h1 className="text-2xl font-bold text-[var(--text-primary)] tracking-tight">Active Analysis</h1>
                 </div>
-                <div className="bg-white/5 rounded-2xl p-6 border border-white/5 group hover:border-royal-gold/20 transition-all duration-500">
-                  <p className="text-royal-gold/60 text-[10px] font-black uppercase tracking-[0.2em] mb-2">The Mandate</p>
-                  <p className="text-white/80 font-medium leading-relaxed">
+                <div className="bg-[var(--glass-bg)] rounded-2xl p-6 border border-[var(--border-primary)] group hover:border-blue-600/20 transition-all duration-500">
+                  <p className="text-blue-600/60 text-[10px] font-semibold uppercase tracking-wider mb-2">Original Request</p>
+                  <p className="text-[var(--text-primary)]/80 font-medium leading-relaxed">
                     "{query}"
                   </p>
                 </div>
                 <div className="mt-4 flex items-center gap-2">
-                   <span className="text-[10px] font-black text-white/30 uppercase tracking-widest">Session Authority:</span>
-                   <code className="text-[10px] font-black text-royal-silver bg-white/5 px-3 py-1 rounded-full border border-white/5">
+                   <span className="text-[10px] font-medium text-[var(--text-secondary)]/50 uppercase tracking-widest">Session ID:</span>
+                   <code className="text-[10px] font-medium text-slate-400 bg-white/5 px-3 py-1 rounded-full border border-white/5">
                     {sessionId}
                    </code>
                 </div>
@@ -189,7 +189,7 @@ export default function AgentWorkflow({ query, onBack }: AgentWorkflowProps) {
                 className="btn-primary flex items-center gap-3 h-fit px-8 py-4 text-[10px] font-black uppercase tracking-widest"
               >
                 <ArrowDownTrayIcon className="h-4 w-4" />
-                Export Archive
+                Export Results
               </button>
             </div>
             <div className="pt-6 border-t border-white/5">
@@ -200,11 +200,11 @@ export default function AgentWorkflow({ query, onBack }: AgentWorkflowProps) {
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
           <div className="lg:col-span-2 space-y-10">
-            <div className="royal-card p-10">
+            <div className="card p-10">
               <div className="flex items-center justify-between mb-10">
-                <h2 className="text-xl font-black text-white uppercase tracking-tight italic">Active AI Constructs</h2>
-                <div className="px-4 py-2 bg-royal-gold/5 rounded-full border border-royal-gold/20">
-                   <span className="text-[10px] font-black text-royal-gold uppercase tracking-widest leading-none">
+                <h2 className="text-xl font-bold text-[var(--text-primary)] tracking-tight">Active AI Experts</h2>
+                <div className="px-4 py-2 bg-blue-600/5 rounded-full border border-blue-600/20">
+                   <span className="text-[10px] font-semibold text-blue-600 uppercase tracking-widest leading-none">
                     {agents.filter(a => a.status === 'active').length} Active
                    </span>
                 </div>
@@ -225,10 +225,10 @@ export default function AgentWorkflow({ query, onBack }: AgentWorkflowProps) {
               </div>
             </div>
 
-            <div className="royal-card p-10">
+            <div className="card p-10">
               <div className="flex items-center justify-between mb-8">
-                <h2 className="text-xl font-black text-white uppercase tracking-tight italic">Construct Dialectics</h2>
-                <div className="w-10 h-1 rounded-full bg-gradient-to-r from-royal-gold to-transparent" />
+                <h2 className="text-xl font-bold text-[var(--text-primary)] tracking-tight">Agent Collaboration</h2>
+                <div className="w-10 h-1 rounded-full bg-gradient-to-r from-blue-600 to-transparent" />
               </div>
               <div className="space-y-4 max-h-96 overflow-y-auto pr-4 scrollbar-thin scrollbar-thumb-white/10 scrollbar-track-transparent">
                 {(snapshot?.messages ?? []).map((message, index) => (
@@ -236,21 +236,21 @@ export default function AgentWorkflow({ query, onBack }: AgentWorkflowProps) {
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     key={`${message.timestamp}-${index}`} 
-                    className="bg-white/5 rounded-2xl p-5 border border-white/5 hover:border-royal-gold/20 transition-all duration-500"
+                    className="bg-[var(--glass-bg)] rounded-2xl p-5 border border-[var(--border-primary)] hover:border-blue-600/20 transition-all duration-500"
                   >
                     <div className="flex items-center justify-between mb-3">
-                      <p className="text-[10px] font-black text-royal-gold uppercase tracking-[0.2em]">
+                      <p className="text-[10px] font-semibold text-blue-600 uppercase tracking-[0.2em]">
                         {message.agent_name}
                       </p>
-                      <span className="text-[9px] font-black text-white/20 uppercase tracking-widest px-3 py-1 bg-white/5 rounded-full">
+                      <span className="text-[9px] font-semibold text-[var(--text-secondary)]/50 uppercase tracking-widest px-3 py-1 bg-white/5 rounded-full">
                         {message.stage}
                       </span>
                     </div>
-                    <p className="text-sm text-white/60 font-medium leading-relaxed italic">"{message.content}"</p>
+                    <p className="text-sm text-[var(--text-secondary)] font-medium leading-relaxed italic">"{message.content}"</p>
                   </motion.div>
                 ))}
                 {snapshot?.messages.length === 0 && (
-                  <p className="text-xs font-black text-white/20 uppercase tracking-[0.3em] text-center py-20">Dialectal synthesis awaiting initiation...</p>
+                  <p className="text-xs font-semibold text-[var(--text-secondary)]/50 uppercase tracking-[0.3em] text-center py-20">Awaiting collaboration...</p>
                 )}
               </div>
             </div>
@@ -263,21 +263,21 @@ export default function AgentWorkflow({ query, onBack }: AgentWorkflowProps) {
           <div className="lg:col-span-1 space-y-10">
             <ConsensusPanel consensus={snapshot?.consensus} />
             
-            <div className="royal-card p-10">
-              <h3 className="text-lg font-black text-white uppercase tracking-tight mb-8 italic">Temporal Updates</h3>
+            <div className="card p-10">
+              <h3 className="text-lg font-bold text-[var(--text-primary)] tracking-tight mb-8">Event Log</h3>
               <div className="space-y-3 max-h-80 overflow-y-auto pr-4 scrollbar-thin scrollbar-thumb-white/10 scrollbar-track-transparent">
                 {events.map((event, index) => (
                   <motion.div 
                     initial={{ opacity: 0, scale: 0.95 }}
                     animate={{ opacity: 1, scale: 1 }}
                     key={`${event.type}-${index}`} 
-                    className="text-[10px] bg-white/5 rounded-xl px-5 py-4 border border-white/5"
+                    className="text-[10px] bg-[var(--glass-bg)] rounded-xl px-5 py-4 border border-[var(--border-primary)]"
                   >
-                    <p className="font-black text-royal-gold uppercase tracking-widest mb-1">{event.type}</p>
-                    <p className="text-white/40 font-medium uppercase tracking-tight">{event.message}</p>
+                    <p className="font-semibold text-blue-600 uppercase tracking-widest mb-1">{event.type}</p>
+                    <p className="text-[var(--text-secondary)] font-medium uppercase tracking-tight">{event.message}</p>
                   </motion.div>
                 ))}
-                {events.length === 0 && <p className="text-xs font-black text-white/20 uppercase tracking-widest text-center py-10">Waiting for stream...</p>}
+                {events.length === 0 && <p className="text-xs font-semibold text-[var(--text-secondary)]/50 uppercase tracking-widest text-center py-10">Waiting for stream...</p>}
               </div>
             </div>
           </div>

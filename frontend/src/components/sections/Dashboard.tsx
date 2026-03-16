@@ -44,30 +44,22 @@ export default function Dashboard({ user, activeTab = 'dashboard' }: DashboardPr
         className="mb-16 flex flex-col md:flex-row md:items-end justify-between gap-8"
       >
         <div>
-          <p className="text-royal-gold/60 text-[10px] font-bold uppercase tracking-[0.2em] mb-1">
-            Performance Insights
+          <p className="text-[var(--text-secondary)] text-xs font-medium mb-1">
+            Overview
           </p>
-          <h1 className="text-4xl font-bold uppercase tracking-tight">
-            Business <span className="text-royal-gold">Overview</span>
+          <h1 className="text-3xl font-bold tracking-tight">
+            Dashboard
           </h1>
         </div>
         
-        <div className="flex gap-4">
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="btn-secondary px-8 text-xs font-bold uppercase tracking-widest"
-          >
-            Insights Settings
-          </motion.button>
-          <motion.button
-            whileHover={{ scale: 1.05, boxShadow: "0 0 25px rgba(212, 175, 55, 0.4)" }}
-            whileTap={{ scale: 0.95 }}
-            className="btn-primary px-8 text-xs font-bold uppercase tracking-widest flex items-center gap-2"
-          >
+        <div className="flex gap-3">
+          <button className="btn-secondary px-6 text-sm">
+            Settings
+          </button>
+          <button className="btn-primary px-6 text-sm flex items-center gap-2">
             <Zap className="w-4 h-4" />
             New Project
-          </motion.button>
+          </button>
         </div>
       </motion.div>
 
@@ -79,28 +71,28 @@ export default function Dashboard({ user, activeTab = 'dashboard' }: DashboardPr
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: index * 0.1 }}
-            className="royal-card p-8 group hover:border-royal-gold/30 transition-all duration-500"
+            className="card p-8 group hover:border-blue-600/30 transition-all duration-500"
           >
-            <div className="flex justify-between items-start mb-6">
-              <div className="w-12 h-12 rounded-xl bg-royal-gold/5 border border-royal-gold/10 flex items-center justify-center group-hover:bg-royal-gold/10 group-hover:border-royal-gold/20 transition-all duration-500">
-                <stat.icon className="w-6 h-6 text-royal-gold" />
+            <div className="flex justify-between items-start mb-4">
+              <div className="w-10 h-10 rounded-lg bg-blue-600/10 flex items-center justify-center">
+                <stat.icon className="w-5 h-5 text-blue-600" />
               </div>
-              <span className="text-[10px] font-bold text-green-500/80 bg-green-500/5 px-2 py-1 rounded-md uppercase tracking-widest">
+              <span className="text-[10px] font-semibold text-green-600 bg-green-500/10 px-2 py-1 rounded">
                 {stat.trend}
               </span>
             </div>
-            <p className="text-[10px] font-bold text-royal-text-secondary uppercase tracking-[0.1em] mb-2">{stat.name}</p>
-            <h3 className="text-3xl font-bold tracking-tight">{stat.value}</h3>
+            <p className="text-xs font-medium text-[var(--text-secondary)] mb-1">{stat.name}</p>
+            <h3 className="text-2xl font-bold">{stat.value}</h3>
           </motion.div>
         ))}
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
         <div className="lg:col-span-2 space-y-10">
-          <div className="royal-card p-10">
-            <div className="flex justify-between items-center mb-10">
-              <h2 className="text-xl font-bold uppercase tracking-tight">Active Analytics</h2>
-              <button className="text-[10px] font-bold text-royal-gold uppercase tracking-[0.2em] hover:text-royal-gold-light transition-colors">
+          <div className="card p-6">
+            <div className="flex justify-between items-center mb-8">
+              <h2 className="text-lg font-semibold">Active Analytics</h2>
+              <button className="text-xs font-medium text-blue-600 hover:underline">
                 View Reports
               </button>
             </div>
@@ -108,27 +100,27 @@ export default function Dashboard({ user, activeTab = 'dashboard' }: DashboardPr
           </div>
         </div>
 
-        <div className="space-y-10">
-          <div className="royal-card p-10">
-            <h2 className="text-xl font-bold uppercase tracking-tight mb-8">Project History</h2>
+        <div className="space-y-6">
+          <div className="card p-6">
+            <h2 className="text-lg font-semibold mb-6">Project History</h2>
             <div className="space-y-6">
               {recentHistory.map((item, index) => (
                 <div key={item.id} className="group cursor-pointer">
-                  <div className="flex justify-between items-start mb-2">
-                    <h3 className="text-xs font-black group-hover:text-royal-gold transition-colors">{item.title}</h3>
-                    <ChevronRight className="w-4 h-4 text-royal-text-secondary group-hover:text-royal-gold transform group-hover:translate-x-1 transition-all" />
+                  <div className="flex justify-between items-start mb-1">
+                    <h3 className="text-sm font-medium group-hover:text-blue-600 transition-colors">{item.title}</h3>
+                    <ChevronRight className="w-4 h-4 text-[var(--text-secondary)] group-hover:translate-x-1 transition-transform" />
                   </div>
-                  <div className="flex items-center gap-4 text-[9px] font-black text-royal-text-secondary uppercase tracking-widest">
+                  <div className="flex items-center gap-3 text-[10px] text-[var(--text-secondary)]">
                     <span>{item.date}</span>
-                    <span className="w-1 h-1 rounded-full bg-royal-gold/10" />
-                    <span className="text-royal-gold/60">{item.agents} Experts</span>
-                    <span className="w-1 h-1 rounded-full bg-royal-gold/10" />
-                    <span>{item.status}</span>
+                    <span className="w-1 h-1 rounded-full bg-[var(--border-primary)]" />
+                    <span>{item.agents} Experts</span>
+                    <span className="w-1 h-1 rounded-full bg-[var(--border-primary)]" />
+                    <span className="text-blue-600/80">{item.status}</span>
                   </div>
                 </div>
               ))}
             </div>
-            <button className="w-full mt-10 py-4 border border-royal-gold/10 rounded-xl text-[10px] font-bold text-royal-text-secondary uppercase tracking-[0.1em] hover:bg-royal-gold/5 transition-all">
+            <button className="w-full mt-8 py-3 border border-[var(--border-primary)] rounded-lg text-xs font-medium text-[var(--text-secondary)] hover:bg-[var(--glass-bg)] transition-all">
               View Archive
             </button>
           </div>
@@ -140,31 +132,26 @@ export default function Dashboard({ user, activeTab = 'dashboard' }: DashboardPr
   );
 
   const renderPlaceholder = (title: string, subtitle: string) => (
-    <div className="flex flex-col items-center justify-center min-h-[70vh] p-8 text-center">
-      <div className="w-24 h-24 rounded-3xl bg-royal-gold/10 border border-royal-gold/20 flex items-center justify-center mb-8 relative">
-        <Sparkles className="text-royal-gold w-12 h-12" />
-        <motion.div 
-          animate={{ scale: [1, 1.2, 1], opacity: [0.5, 1, 0.5] }}
-          transition={{ duration: 2, repeat: Infinity }}
-          className="absolute inset-0 bg-royal-gold/20 blur-xl rounded-full"
-        />
+    <div className="flex flex-col items-center justify-center min-h-[60vh] p-8 text-center bg-[var(--bg-main)] rounded-2xl border border-[var(--border-primary)] m-8">
+      <div className="w-16 h-16 rounded-2xl bg-blue-600/10 flex items-center justify-center mb-6">
+        <Sparkles className="text-blue-600 w-8 h-8" />
       </div>
-      <h2 className="text-4xl font-bold uppercase tracking-tight mb-4">{title}</h2>
-      <p className="text-royal-gold/60 text-xs font-bold uppercase tracking-[0.2em] mb-12 max-w-md">{subtitle}</p>
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full max-w-2xl">
-        <div className="royal-card p-8 border-dashed border-royal-gold/10">
-          <div className="w-10 h-10 rounded-xl bg-royal-gold/5 flex items-center justify-center mb-4 mx-auto">
-            <Zap className="text-royal-gold w-5 h-5" />
+      <h2 className="text-2xl font-semibold mb-2">{title}</h2>
+      <p className="text-[var(--text-secondary)] text-sm mb-10 max-w-sm">{subtitle}</p>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full max-w-xl">
+        <div className="card p-6 border-dashed">
+          <div className="w-8 h-8 rounded-lg bg-blue-600/5 flex items-center justify-center mb-3 mx-auto">
+            <Zap className="text-blue-600 w-4 h-4" />
           </div>
-          <p className="text-[10px] font-bold text-royal-text-secondary mb-2 uppercase tracking-widest">Status</p>
-          <p className="text-sm font-bold uppercase tracking-tight">System Updating</p>
+          <p className="text-[10px] font-semibold text-[var(--text-secondary)] mb-1 uppercase tracking-wider">Status</p>
+          <p className="text-sm font-semibold">Updating</p>
         </div>
-        <div className="royal-card p-8 border-dashed border-royal-gold/10">
-           <div className="w-10 h-10 rounded-xl bg-royal-gold/5 flex items-center justify-center mb-4 mx-auto">
-            <ShieldCheck className="text-royal-gold w-5 h-5" />
+        <div className="card p-6 border-dashed">
+           <div className="w-8 h-8 rounded-lg bg-blue-600/5 flex items-center justify-center mb-3 mx-auto">
+            <ShieldCheck className="text-blue-600 w-4 h-4" />
           </div>
-          <p className="text-[10px] font-bold text-royal-text-secondary mb-2 uppercase tracking-widest">Security</p>
-          <p className="text-sm font-bold uppercase tracking-tight">Member Verified</p>
+          <p className="text-[10px] font-semibold text-[var(--text-secondary)] mb-1 uppercase tracking-wider">Security</p>
+          <p className="text-sm font-semibold">Verified</p>
         </div>
       </div>
     </div>
@@ -184,14 +171,12 @@ export default function Dashboard({ user, activeTab = 'dashboard' }: DashboardPr
           {activeTab === 'chat' && <MultiAgentChat />}
           {activeTab === 'rag' && renderPlaceholder('Resource Center', 'Building a comprehensive library of verified resources.')}
           {activeTab === 'sim' && (
-            <div className="p-8 max-w-7xl mx-auto">
-              <div className="mb-12">
-                <p className="text-royal-gold/60 text-[10px] font-bold uppercase tracking-[0.2em] mb-1">Scenario Planning</p>
-                <h2 className="text-3xl font-bold uppercase tracking-tight">Strategic <span className="text-royal-gold">Planning</span></h2>
+            <div className="p-8 max-w-7xl mx-auto space-y-8">
+              <div>
+                <p className="text-[var(--text-secondary)] text-xs font-medium mb-1">Scenario Planning</p>
+                <h2 className="text-2xl font-bold tracking-tight">Project Simulations</h2>
               </div>
-              <div className="royal-card p-10">
-                <SimulationResults />
-              </div>
+              <SimulationResults />
             </div>
           )}
           {activeTab === 'consensus' && renderPlaceholder('Strategic Insights', 'Gathering expert opinions for comprehensive analysis.')}

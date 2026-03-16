@@ -7,10 +7,10 @@ import { Users, Brain, Target, Zap, Rocket, Shield } from 'lucide-react';
 import CountUp from 'react-countup';
 
 const stats = [
-  { icon: Users, value: 5, suffix: '+', label: 'AI Agents', color: 'text-royal-gold' },
-  { icon: Brain, value: 95, suffix: '%', label: 'Accuracy', color: 'text-royal-silver' },
-  { icon: Target, value: 10, suffix: 'x', label: 'Faster Decisions', color: 'text-royal-gold' },
-  { icon: Zap, value: 24, suffix: '/7', label: 'Available', color: 'text-royal-silver' },
+  { icon: Users, value: 5, suffix: '+', label: 'AI Experts', color: 'text-blue-600' },
+  { icon: Brain, value: 95, suffix: '%', label: 'Precision', color: 'text-slate-400' },
+  { icon: Target, value: 10, suffix: 'x', label: 'Decision Speed', color: 'text-blue-600' },
+  { icon: Zap, value: 24, suffix: '/7', label: 'Reliability', color: 'text-slate-400' },
 ];
 
 const floatingElements = [
@@ -31,10 +31,10 @@ export default function Hero({ onGetStarted }: HeroProps) {
   const isInView = useInView(ref, { once: true });
 
   return (
-    <section ref={ref} className="relative overflow-hidden pt-32 pb-24 sm:pt-40 sm:pb-32 bg-royal-black">
-      {/* Royal background effects */}
-      <div className="absolute inset-0 royal-mesh opacity-50" />
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full bg-[radial-gradient(circle_at_50%_-20%,rgba(212,175,55,0.1)_0%,transparent_50%)]" />
+    <section ref={ref} className="relative overflow-hidden pt-32 pb-24 sm:pt-40 sm:pb-32 bg-[var(--bg-main)]">
+      {/* Background effects */}
+      <div className="absolute inset-0 opacity-50" />
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full bg-[radial-gradient(circle_at_50%_-20%,rgba(59,130,246,0.05)_0%,transparent_50%)]" />
       
       {/* Floating background elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -47,7 +47,7 @@ export default function Hero({ onGetStarted }: HeroProps) {
             className="absolute floating-element"
             style={{ left: element.x, top: element.y }}
           >
-            <element.icon className="w-16 h-16 text-royal-gold" />
+            <element.icon className="w-16 h-16 text-blue-600" />
           </motion.div>
         ))}
       </div>
@@ -63,14 +63,14 @@ export default function Hero({ onGetStarted }: HeroProps) {
               initial={{ scale: 0.8, opacity: 0 }}
               animate={isInView ? { scale: 1, opacity: 1 } : {}}
               transition={{ delay: 0.2, duration: 0.6 }}
-              className="inline-flex items-center gap-2 px-6 py-2 rounded-full bg-white/5 backdrop-blur-xl border border-white/10 text-royal-gold text-xs font-black uppercase tracking-[0.3em] mb-12 shadow-2xl"
+              className="inline-flex items-center gap-2 px-6 py-2 rounded-full bg-white/5 backdrop-blur-xl border border-white/10 text-blue-600 text-xs font-semibold uppercase tracking-wider mb-12 shadow-2xl"
             >
               <SparklesIcon className="w-4 h-4" />
-              <span>Future of Autonomous Intelligence</span>
+              <span>Advanced Multi-Agent Intelligence</span>
               <ArrowRightIcon className="w-4 h-4" />
             </motion.div>
 
-            <h1 className="text-6xl font-black tracking-tighter text-white sm:text-8xl mb-12">
+            <h1 className="text-6xl font-bold tracking-tight text-[var(--text-primary)] sm:text-8xl mb-12">
               <motion.span
                 initial={{ opacity: 0, y: 20 }}
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -83,15 +83,15 @@ export default function Hero({ onGetStarted }: HeroProps) {
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={isInView ? { opacity: 1, scale: 1 } : {}}
                 transition={{ delay: 0.5, duration: 0.8 }}
-                className="block gradient-text drop-shadow-[0_0_15px_rgba(212,175,55,0.3)] leading-tight italic"
+                className="block text-blue-600 leading-tight"
               >
-                OMNIMIND
+                OmniMind
               </motion.span>
               <motion.span
                 initial={{ opacity: 0, y: 20 }}
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ delay: 0.7, duration: 0.8 }}
-                className="block mt-2 text-4xl sm:text-6xl text-white/40 tracking-normal"
+                className="block mt-2 text-4xl sm:text-6xl text-[var(--text-secondary)] tracking-normal"
               >
                 Autonomous Multi-Agent Era
               </motion.span>
@@ -101,9 +101,9 @@ export default function Hero({ onGetStarted }: HeroProps) {
               initial={{ opacity: 0, y: 20 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ delay: 0.9, duration: 0.8 }}
-              className="mt-12 text-lg leading-8 text-white/50 max-w-2xl mx-auto font-medium"
+              className="mt-12 text-lg leading-8 text-[var(--text-secondary)] max-w-2xl mx-auto font-medium"
             >
-              Elevate your strategic decision intelligence with our elite collective of AI agents. 
+              Elevate your strategic decision intelligence with our collective of AI agents. 
               Precision-engineered for complex problem solving and real-world results.
             </motion.p>
           </motion.div>
@@ -115,24 +115,24 @@ export default function Hero({ onGetStarted }: HeroProps) {
             className="mt-16 flex flex-col sm:flex-row items-center justify-center gap-8"
           >
             <motion.button
-              whileHover={{ scale: 1.05, boxShadow: "0 0 40px rgba(212, 175, 55, 0.4)" }}
+              whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={onGetStarted}
-              className="btn-primary text-sm font-black uppercase tracking-widest px-12 py-5 flex items-center gap-4 glow-effect"
+              className="btn-primary text-sm font-semibold px-12 py-5 flex items-center gap-4"
             >
               <Rocket className="w-5 h-5" />
-              Establish Dominion
+              Get Started
               <ArrowRightIcon className="w-5 h-5" />
             </motion.button>
             
             <motion.button
-              whileHover={{ scale: 1.05, borderColor: "#D4AF37", color: "#D4AF37" }}
+              whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={onGetStarted}
-              className="btn-secondary text-sm font-black uppercase tracking-widest px-12 py-5 flex items-center gap-4"
+              className="btn-secondary text-sm font-semibold px-12 py-5 flex items-center gap-4"
             >
               <PlayIcon className="w-5 h-5" />
-              Royal Showcase
+              Watch Demo
             </motion.button>
           </motion.div>
 
@@ -152,10 +152,10 @@ export default function Hero({ onGetStarted }: HeroProps) {
                 whileHover={{ scale: 1.1, y: -5 }}
                 className="flex flex-col items-center group cursor-pointer"
               >
-                <div className="flex items-center justify-center w-20 h-20 rounded-full bg-white/5 backdrop-blur-xl border border-white/5 mb-6 group-hover:border-royal-gold/50 transition-all duration-500 shadow-2xl">
+                <div className="flex items-center justify-center w-20 h-20 rounded-full bg-white/5 backdrop-blur-xl border border-white/5 mb-6 group-hover:border-blue-500/50 transition-all duration-500 shadow-2xl">
                   <stat.icon className={`w-8 h-8 ${stat.color} group-hover:scale-110 transition-transform duration-500`} />
                 </div>
-                <div className="text-4xl font-black text-white mb-2 tracking-tighter">
+                <div className="text-4xl font-bold text-[var(--text-primary)] mb-2 tracking-tight">
                   {isInView && (
                     <CountUp
                       end={stat.value}
@@ -165,7 +165,7 @@ export default function Hero({ onGetStarted }: HeroProps) {
                     />
                   )}
                 </div>
-                <div className="text-[10px] text-royal-gold/60 font-black uppercase tracking-[0.2em]">{stat.label}</div>
+                <div className="text-[10px] text-blue-600/60 font-semibold uppercase tracking-wider">{stat.label}</div>
               </motion.div>
             ))}
           </motion.div>
@@ -180,25 +180,25 @@ export default function Hero({ onGetStarted }: HeroProps) {
         >
           <div className="relative">
             {/* Glow effect */}
-            <div className="absolute -inset-10 bg-royal-gold/5 rounded-[4rem] blur-[100px]" />
+            <div className="absolute -inset-10 bg-blue-600/5 rounded-[4rem] blur-[100px]" />
             
-            <div className="relative royal-card p-12 sm:p-20 group">
+            <div className="relative card p-12 sm:p-20 group">
                {/* Border glow on hover */}
-               <div className="absolute inset-x-0 top-0 h-[1px] bg-gradient-to-r from-transparent via-royal-gold/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
-               <div className="absolute inset-x-0 bottom-0 h-[1px] bg-gradient-to-r from-transparent via-royal-gold/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
+               <div className="absolute inset-x-0 top-0 h-[1px] bg-gradient-to-r from-transparent via-blue-600/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
+               <div className="absolute inset-x-0 bottom-0 h-[1px] bg-gradient-to-r from-transparent via-blue-600/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-16">
                 <motion.div
                   whileHover={{ y: -10 }}
                   className="text-center group/item"
                 >
-                  <div className="w-24 h-24 bg-gradient-to-br from-royal-gold/20 to-royal-black rounded-[2rem] flex items-center justify-center mx-auto mb-8 border border-white/5 group-hover/item:border-royal-gold/40 transition-all duration-500 shadow-2xl overflow-hidden relative">
-                    <div className="absolute inset-0 bg-royal-gold opacity-0 group-hover/item:opacity-10 transition-opacity" />
-                    <Brain className="w-12 h-12 text-royal-gold" />
+                  <div className="w-24 h-24 bg-gradient-to-br from-blue-600/10 to-[var(--bg-main)] rounded-[2rem] flex items-center justify-center mx-auto mb-8 border border-white/5 group-hover/item:border-blue-600/40 transition-all duration-500 shadow-2xl overflow-hidden relative">
+                    <div className="absolute inset-0 bg-blue-600 opacity-0 group-hover/item:opacity-10 transition-opacity" />
+                    <Brain className="w-12 h-12 text-blue-600" />
                   </div>
-                  <h3 className="font-black text-white mb-4 text-xl tracking-tight uppercase">Elite Analysis</h3>
-                  <p className="text-white/40 text-sm leading-relaxed font-medium">
-                    Premier AI agents orchestrate high-fidelity intelligence architectures for your most complex challenges.
+                  <h3 className="font-bold text-[var(--text-primary)] mb-4 text-xl tracking-tight uppercase">Analysis</h3>
+                  <p className="text-[var(--text-secondary)] text-sm leading-relaxed font-medium">
+                    AI agents orchestrate high-fidelity intelligence architectures for your most complex challenges.
                   </p>
                 </motion.div>
 
@@ -206,13 +206,13 @@ export default function Hero({ onGetStarted }: HeroProps) {
                   whileHover={{ y: -10 }}
                   className="text-center group/item"
                 >
-                  <div className="w-24 h-24 bg-gradient-to-br from-royal-gold/20 to-royal-black rounded-[2rem] flex items-center justify-center mx-auto mb-8 border border-white/5 group-hover/item:border-royal-gold/40 transition-all duration-500 shadow-2xl overflow-hidden relative">
-                    <div className="absolute inset-0 bg-royal-gold opacity-0 group-hover/item:opacity-10 transition-opacity" />
-                    <Target className="w-12 h-12 text-royal-gold" />
+                  <div className="w-24 h-24 bg-gradient-to-br from-blue-600/10 to-[var(--bg-main)] rounded-[2rem] flex items-center justify-center mx-auto mb-8 border border-white/5 group-hover/item:border-blue-600/40 transition-all duration-500 shadow-2xl overflow-hidden relative">
+                    <div className="absolute inset-0 bg-blue-600 opacity-0 group-hover/item:opacity-10 transition-opacity" />
+                    <Target className="w-12 h-12 text-blue-600" />
                   </div>
-                  <h3 className="font-black text-white mb-4 text-xl tracking-tight uppercase">Strategic Simulation</h3>
-                  <p className="text-white/40 text-sm leading-relaxed font-medium">
-                    Navigate the future with sovereign precision using advanced synthetic scenario intelligence.
+                  <h3 className="font-bold text-[var(--text-primary)] mb-4 text-xl tracking-tight uppercase">Simulation</h3>
+                  <p className="text-[var(--text-secondary)] text-sm leading-relaxed font-medium">
+                    Navigate the future with precision using advanced synthetic scenario intelligence.
                   </p>
                 </motion.div>
 
@@ -220,13 +220,13 @@ export default function Hero({ onGetStarted }: HeroProps) {
                   whileHover={{ y: -10 }}
                   className="text-center group/item"
                 >
-                  <div className="w-24 h-24 bg-gradient-to-br from-royal-gold/20 to-royal-black rounded-[2rem] flex items-center justify-center mx-auto mb-8 border border-white/5 group-hover/item:border-royal-gold/40 transition-all duration-500 shadow-2xl overflow-hidden relative">
-                    <div className="absolute inset-0 bg-royal-gold opacity-0 group-hover/item:opacity-10 transition-opacity" />
-                    <Users className="w-12 h-12 text-royal-gold" />
+                  <div className="w-24 h-24 bg-gradient-to-br from-blue-600/10 to-[var(--bg-main)] rounded-[2rem] flex items-center justify-center mx-auto mb-8 border border-white/5 group-hover/item:border-blue-600/40 transition-all duration-500 shadow-2xl overflow-hidden relative">
+                    <div className="absolute inset-0 bg-blue-600 opacity-0 group-hover/item:opacity-10 transition-opacity" />
+                    <Users className="w-12 h-12 text-blue-600" />
                   </div>
-                  <h3 className="font-black text-white mb-4 text-xl tracking-tight uppercase">Consensus Mastery</h3>
-                  <p className="text-white/40 text-sm leading-relaxed font-medium">
-                    Unerring recommendations forged through rigorous dialectical AI collaboration and debate.
+                  <h3 className="font-bold text-[var(--text-primary)] mb-4 text-xl tracking-tight uppercase">Consensus</h3>
+                  <p className="text-[var(--text-secondary)] text-sm leading-relaxed font-medium">
+                    Reliable recommendations forged through collaborative AI collaboration and debate.
                   </p>
                 </motion.div>
               </div>

@@ -14,6 +14,8 @@ export const metadata: Metadata = {
   themeColor: '#3b82f6',
 };
 
+import { ThemeProvider } from '@/context/ThemeContext';
+
 export default function RootLayout({
   children,
 }: {
@@ -26,10 +28,11 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
       </head>
       <body className={`${inter.className} antialiased`}>
-        <div className="min-h-screen mesh-gradient">
-          {children}
-          <Toaster 
-            position="top-right"
+        <ThemeProvider>
+          <div className="min-h-screen mesh-gradient text-[var(--text-primary)]">
+            {children}
+            <Toaster 
+              position="top-right"
             toastOptions={{
               duration: 4000,
               style: {
@@ -56,6 +59,7 @@ export default function RootLayout({
             }}
           />
         </div>
+        </ThemeProvider>
       </body>
     </html>
   );

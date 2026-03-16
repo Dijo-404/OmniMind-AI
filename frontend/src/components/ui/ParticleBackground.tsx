@@ -33,12 +33,12 @@ export default function ParticleBackground() {
       const particles: Particle[] = [];
       const particleCount = Math.min(100, Math.floor((canvas.width * canvas.height) / 15000));
       
-const colors = [
-        'rgba(212, 175, 55, 0.4)',   // Gold
-        'rgba(192, 192, 192, 0.4)', // Silver
-        'rgba(255, 255, 255, 0.2)', // White glow
-        'rgba(212, 175, 55, 0.15)',  // Subtle Gold
-        'rgba(11, 11, 11, 0.8)',    // Deep Charcoal
+      const colors = [
+        'rgba(59, 130, 246, 0.4)',   // Blue
+        'rgba(148, 163, 184, 0.4)',  // Slate
+        'rgba(255, 255, 255, 0.1)',  // White
+        'rgba(59, 130, 246, 0.15)',  // Subtle Blue
+        'rgba(9, 9, 11, 0.8)',       // Zinc
       ];
 
       for (let i = 0; i < particleCount; i++) {
@@ -92,7 +92,7 @@ const colors = [
             ctx.beginPath();
             ctx.moveTo(particle.x, particle.y);
             ctx.lineTo(otherParticle.x, otherParticle.y);
-            ctx.strokeStyle = `rgba(212, 175, 55, ${opacity})`;
+            ctx.strokeStyle = `rgba(59, 130, 246, ${opacity})`;
             ctx.lineWidth = 0.3;
             ctx.stroke();
           }

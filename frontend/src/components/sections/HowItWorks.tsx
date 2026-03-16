@@ -14,51 +14,51 @@ import {
 const steps = [
   {
     id: 1,
-    title: 'Cognitive Decomposition',
-    description: 'Our Sovereign Planner analyzes your challenge and architecturally breaks it down into elite domains.',
+    title: 'Cognitive Analysis',
+    description: 'The system analyzes your challenge and breaks it down into logical domains.',
     icon: DocumentTextIcon,
-    color: 'from-royal-gold to-royal-gold-dark',
+    color: 'from-blue-600 to-blue-800',
     details: ['Semantic analysis', 'Domain mapping', 'Strategic planning', 'Resource allocation'],
   },
   {
     id: 2,
-    title: 'Elite Formation',
-    description: 'Dynamic synthesis of specialized AI constructs, each precision-tuned for distinct expert mastery.',
+    title: 'Expert Selection',
+    description: 'Dynamic selection of specialized AI experts, each optimized for specific project needs.',
     icon: CpuChipIcon,
-    color: 'from-white/10 to-white/5',
-    details: ['Construct synthesis', 'Dialectical settings', 'High-fidelity tuning', 'Capability locking'],
+    color: 'from-zinc-800 to-zinc-900',
+    details: ['Expert selection', 'Logic settings', 'Refined tuning', 'Security locking'],
   },
   {
     id: 3,
-    title: 'Sovereign Research',
-    description: 'Concurrent multidimensional intelligence gathering across the global digital landscape.',
+    title: 'Deep Research',
+    description: 'Concurrent gathering of relevant information and data from verified sources.',
     icon: ChartBarIcon,
-    color: 'from-royal-gold/20 to-royal-gold/40',
-    details: ['Neural retrieval', 'Evidence weighting', 'Real-time synthesis', 'Truth verification'],
+    color: 'from-blue-600/20 to-blue-600/40',
+    details: ['Data retrieval', 'Evidence weighting', 'Real-time synthesis', 'Source verification'],
   },
   {
     id: 4,
-    title: 'Dialectical Debate',
-    description: 'Constructs engage in rigorous intellectual contest to forge the most resilient solutions.',
+    title: 'Collaborative Debate',
+    description: 'AI agents engage in structured debate to refine and validate proposed solutions.',
     icon: LightBulbIcon,
-    color: 'from-white/5 to-white/10',
-    details: ['Logical critique', 'Adversarial testing', 'Solution hardening', 'Strategic alignment'],
+    color: 'from-zinc-900 to-zinc-800',
+    details: ['Logical critique', 'Quality testing', 'Solution hardening', 'Project alignment'],
   },
   {
     id: 5,
-    title: 'Future Projection',
-    description: 'Advanced synthetic simulations project high-fidelity outcomes across infinite strategic paths.',
+    title: 'Scenario Projection',
+    description: 'Advanced simulations project potential outcomes across multiple strategic paths.',
     icon: ChartBarIcon,
-    color: 'from-royal-gold-dark to-royal-gold',
-    details: ['Linear modeling', 'Chaos assessment', 'Success probability', 'Timeline folding'],
+    color: 'from-blue-800 to-blue-600',
+    details: ['Outcome modeling', 'Risk assessment', 'Success probability', 'Timeline analysis'],
   },
   {
     id: 6,
-    title: 'Unerring Consensus',
-    description: 'The final distillation of supreme collective intelligence into an actionable royal directive.',
+    title: 'Unified Consensus',
+    description: 'The final distillation of collective intelligence into an actionable project directive.',
     icon: CheckCircleIcon,
-    color: 'from-white/20 to-white/5',
-    details: ['Intelligence synthesis', 'Directive issuance', 'Risk insulation', 'Path clearings'],
+    color: 'from-zinc-700 to-zinc-900',
+    details: ['Result synthesis', 'Actionable plans', 'Risk mitigation', 'Clear direction'],
   },
 ];
 
@@ -71,10 +71,10 @@ export default function HowItWorks({ onAction }: HowItWorksProps) {
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section id="how-it-works" ref={ref} className="py-32 sm:py-48 bg-royal-black relative overflow-hidden">
+    <section id="how-it-works" ref={ref} className="py-32 sm:py-48 bg-[var(--bg-main)] text-[var(--text-primary)] relative overflow-hidden">
       {/* Background elements */}
-      <div className="absolute inset-0 royal-mesh opacity-20" />
-      <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-royal-gold/30 to-transparent" />
+      <div className="absolute inset-0 opacity-20" />
+      <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-blue-600/30 to-transparent" />
       
       <div className="mx-auto max-w-7xl px-6 lg:px-8 relative z-10">
         <motion.div
@@ -84,17 +84,17 @@ export default function HowItWorks({ onAction }: HowItWorksProps) {
           className="mx-auto max-w-4xl text-center mb-32"
         >
           <motion.span 
-            className="text-xs font-black uppercase tracking-[0.5em] text-royal-gold mb-6 block"
+            className="text-xs font-black uppercase tracking-[0.5em] text-blue-600 mb-6 block"
             initial={{ opacity: 0 }}
             animate={isInView ? { opacity: 1 } : {}}
           >
             The Workflow of Supremacy
           </motion.span>
-          <h2 className="text-4xl font-black tracking-tighter text-white sm:text-6xl mb-8">
+          <h2 className="text-4xl font-bold tracking-tight text-[var(--text-primary)] sm:text-6xl mb-8">
             The OmniMind Protocol
           </h2>
-          <p className="text-xl text-white/40 leading-8 max-w-2xl mx-auto font-medium">
-            Intelligence redefined through a sequence of elite collaborative operations.
+          <p className="text-xl text-[var(--text-secondary)] leading-8 max-w-2xl mx-auto font-medium">
+            Intelligence redefined through a sequence of collaborative operations.
           </p>
         </motion.div>
 
@@ -103,10 +103,10 @@ export default function HowItWorks({ onAction }: HowItWorksProps) {
           <div className="hidden lg:block absolute top-0 left-0 w-full h-full pointer-events-none opacity-30">
             <svg className="w-full h-full" viewBox="0 0 1200 800">
               <defs>
-                <linearGradient id="royalLineGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                  <stop offset="0%" stopColor="rgba(212, 175, 55, 0.5)" />
-                  <stop offset="50%" stopColor="rgba(255, 255, 255, 0.2)" />
-                  <stop offset="100%" stopColor="rgba(212, 175, 55, 0.5)" />
+                <linearGradient id="brandLineGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stopColor="rgba(59, 130, 246, 0.5)" />
+                  <stop offset="50%" stopColor="rgba(255, 255, 255, 0.1)" />
+                  <stop offset="100%" stopColor="rgba(59, 130, 246, 0.5)" />
                 </linearGradient>
               </defs>
               {steps.slice(0, -1).map((_, index) => (
@@ -115,7 +115,7 @@ export default function HowItWorks({ onAction }: HowItWorksProps) {
                   d={`M ${200 + (index % 2) * 400} ${150 + Math.floor(index / 2) * 250} 
                       Q ${400 + (index % 2) * 200} ${200 + Math.floor(index / 2) * 250} 
                       ${600 - (index % 2) * 400} ${150 + Math.floor((index + 1) / 2) * 250}`}
-                  stroke="url(#royalLineGradient)"
+                  stroke="url(#brandLineGradient)"
                   strokeWidth="1.5"
                   fill="none"
                   strokeDasharray="10,10"
@@ -138,9 +138,9 @@ export default function HowItWorks({ onAction }: HowItWorksProps) {
                 whileHover={{ y: -5 }}
                 className="relative group"
               >
-                <div className="royal-card p-12 h-full group-hover:border-royal-gold/40 transition-all duration-500">
+                <div className="card p-12 h-full group-hover:border-blue-600/40 transition-all duration-500">
                   {/* Step number */}
-                  <div className="absolute -top-6 -left-6 w-14 h-14 rounded-[1.5rem] bg-gradient-to-br from-royal-gold to-royal-gold-dark flex items-center justify-center text-royal-black font-black text-xl shadow-2xl border border-white/20 transform -rotate-12 group-hover:rotate-0 transition-transform duration-500">
+                  <div className="absolute -top-6 -left-6 w-14 h-14 rounded-[1.5rem] bg-gradient-to-br from-blue-600 to-blue-800 flex items-center justify-center text-white font-black text-xl shadow-2xl border border-white/20 transform -rotate-12 group-hover:rotate-0 transition-transform duration-500">
                     {step.id}
                   </div>
 
@@ -151,10 +151,10 @@ export default function HowItWorks({ onAction }: HowItWorksProps) {
                   </div>
 
                   {/* Content */}
-                  <h3 className="text-2xl font-black text-white mb-6 uppercase tracking-tight group-hover:text-royal-gold transition-colors duration-500">
+                  <h3 className="text-2xl font-bold text-[var(--text-primary)] mb-6 tracking-tight group-hover:text-blue-600 transition-colors duration-500">
                     {step.title}
                   </h3>
-                  <p className="text-white/40 text-sm leading-relaxed mb-10 font-medium group-hover:text-white/60 transition-colors duration-500">
+                  <p className="text-[var(--text-secondary)] text-sm leading-relaxed mb-10 font-medium group-hover:text-[var(--text-primary)]/60 transition-colors duration-500">
                     {step.description}
                   </p>
 
@@ -165,7 +165,7 @@ export default function HowItWorks({ onAction }: HowItWorksProps) {
                         key={detailIndex}
                         className="flex items-center text-white/30 text-[10px] font-black uppercase tracking-widest"
                       >
-                        <div className="w-1.5 h-1.5 bg-royal-gold rounded-full mr-3 shadow-[0_0_5px_rgba(212,175,55,1)]" />
+                        <div className="w-1.5 h-1.5 bg-blue-600 rounded-full mr-3 shadow-[0_0_5px_rgba(59,130,246,0.5)]" />
                         {detail}
                       </motion.div>
                     ))}
@@ -184,16 +184,16 @@ export default function HowItWorks({ onAction }: HowItWorksProps) {
           className="text-center mt-32"
         >
           <motion.button
-            whileHover={{ scale: 1.05, boxShadow: "0 0 30px rgba(212, 175, 55, 0.3)" }}
+            whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             onClick={onAction}
-            className="btn-primary text-xs font-black uppercase tracking-widest px-12 py-5 flex items-center gap-4 mx-auto"
+            className="btn-primary text-xs font-semibold uppercase tracking-widest px-12 py-5 flex items-center gap-4 mx-auto"
           >
-            Invoke The protocol
+            Start Your Project
             <ArrowRightIcon className="w-4 h-4" />
           </motion.button>
         </motion.div>
       </div>
     </section>
   );
-}
+}

@@ -20,6 +20,7 @@ import {
   Zap,
   LayoutDashboard
 } from 'lucide-react';
+import { useTheme } from '@/context/ThemeContext';
 
 interface AppLayoutProps {
   user: { name: string; email: string };
@@ -31,16 +32,10 @@ interface AppLayoutProps {
 
 export default function AppLayout({ user, onSignOut, children, activeTab, setActiveTab }: AppLayoutProps) {
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
-  const [isDarkTheme, setIsDarkTheme] = useState(true);
+  const { theme, setTheme } = useTheme();
   const [isProfileOpen, setIsProfileOpen] = useState(false);
 
-  useEffect(() => {
-    if (!isDarkTheme) {
-      document.documentElement.classList.add('light-theme');
-    } else {
-      document.documentElement.classList.remove('light-theme');
-    }
-  }, [isDarkTheme]);
+  const isDarkTheme = theme === 'dark';
 
   const menuItems = [
     { id: 'dashboard', name: 'Dashboard', icon: LayoutDashboard },
@@ -52,31 +47,31 @@ export default function AppLayout({ user, onSignOut, children, activeTab, setAct
   ];
 
   return (
-    <div className="flex h-screen bg-royal-black overflow-x-hidden overflow-y-hidden transition-colors duration-500">
+    <div className="flex h-screen bg-[var(--bg-main)] overflow-x-hidden overflow-y-hidden transition-colors duration-500 text-[var(--text-primary)]">
       {/* Sidebar */}
       <motion.aside
         initial={false}
         animate={{ width: isSidebarCollapsed ? 80 : 280 }}
-        className="relative bg-royal-charcoal border-r border-royal-gold/10 flex flex-col z-30 transition-colors duration-500"
+        className="relative bg-[var(--bg-sidebar)] border-r border-blue-600/10 flex flex-col z-30 transition-colors duration-500"
       >
         {/* Toggle Button */}
         <button
           onClick={() => setIsSidebarCollapsed(!isSidebarCollapsed)}
-          className="absolute -right-3 top-20 w-6 h-6 bg-royal-gold rounded-full flex items-center justify-center text-royal-black shadow-lg border border-royal-black z-50 hover:scale-110 transition-transform"
+          className="absolute -right-3 top-20 w-6 h-6 bg-blue-600 rounded-full flex items-center justify-center text-zinc-950 shadow-lg border border-zinc-950 z-50 hover:scale-110 transition-transform"
         >
           {isSidebarCollapsed ? <ChevronRight size={14} /> : <ChevronLeft size={14} />}
         </button>
 
         {/* Brand */}
-        <div className="p-6 flex items-center gap-4">
-          <div className="w-10 h-10 rounded-xl bg-royal-gold flex items-center justify-center shrink-0 shadow-3xl">
-            <Brain className="text-royal-black w-6 h-6" />
+        <div className="p-6 flex items-center gap-3">
+          <div className="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center shrink-0 shadow-sm">
+            <Brain className="text-white w-5 h-5" />
           </div>
           {!isSidebarCollapsed && (
             <motion.span
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              className="text-xl font-black italic uppercase tracking-tighter gradient-text"
+              className="text-lg font-semibold tracking-tight text-[var(--text-primary)]"
             >
               OmniMind
             </motion.span>
@@ -84,20 +79,20 @@ export default function AppLayout({ user, onSignOut, children, activeTab, setAct
         </div>
 
         {/* Navigation */}
-        <nav className="flex-1 px-4 py-8 space-y-2">
+        <nav className="flex-1 px-3 py-6 space-y-1">
           {menuItems.map((item) => (
             <button
               key={item.id}
               onClick={() => setActiveTab(item.id)}
-              className={`w-full flex items-center gap-4 px-4 py-4 rounded-2xl transition-all duration-300 group ${
+              className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all duration-200 group ${
                 activeTab === item.id 
-                  ? 'bg-royal-gold/10 border border-royal-gold/20 text-royal-gold shadow-inner' 
-                  : 'text-royal-text-secondary hover:text-royal-gold hover:bg-royal-gold/5 border border-transparent'
+                  ? 'bg-blue-600/10 text-blue-600' 
+                  : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--glass-bg)]'
               }`}
             >
-              <item.icon size={20} className={activeTab === item.id ? 'text-royal-gold' : 'group-hover:text-royal-gold transition-colors'} />
+              <item.icon size={18} className={activeTab === item.id ? 'text-blue-600' : 'group-hover:text-[var(--text-primary)] transition-colors'} />
               {!isSidebarCollapsed && (
-                <span className="text-xs font-black uppercase tracking-widest whitespace-nowrap">
+                <span className="text-sm font-medium whitespace-nowrap">
                   {item.name}
                 </span>
               )}
@@ -106,14 +101,14 @@ export default function AppLayout({ user, onSignOut, children, activeTab, setAct
         </nav>
 
         {/* Footer */}
-        <div className="p-4 border-t border-white/5">
+        <div className="p-3 border-t border-[var(--border-primary)]">
           <button
             onClick={onSignOut}
-            className="w-full flex items-center gap-4 px-4 py-4 rounded-2xl text-red-500/60 hover:text-red-500 hover:bg-red-500/5 transition-all group"
+            className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-red-500 hover:bg-red-500/5 transition-all group"
           >
-            <LogOut size={20} />
+            <LogOut size={18} />
             {!isSidebarCollapsed && (
-              <span className="text-xs font-black uppercase tracking-widest">Sign Out</span>
+              <span className="text-sm font-medium">Sign Out</span>
             )}
           </button>
         </div>
@@ -122,49 +117,43 @@ export default function AppLayout({ user, onSignOut, children, activeTab, setAct
       {/* Main Content */}
       <div className="flex-1 flex flex-col relative overflow-hidden">
         {/* Top Header */}
-        <header className="h-20 bg-royal-black/50 backdrop-blur-xl border-b border-royal-gold/10 px-8 flex items-center justify-between z-20 transition-colors duration-500">
+        <header className="h-16 bg-[var(--bg-main)] border-b border-[var(--border-primary)] px-8 flex items-center justify-between z-20">
           <div className="flex items-center gap-4">
-            <h2 className="text-sm font-bold uppercase tracking-[0.2em] text-royal-text-secondary">
+            <h2 className="text-sm font-medium text-[var(--text-secondary)]">
               {menuItems.find(i => i.id === activeTab)?.name || 'Welcome Center'}
             </h2>
-            <div className="hidden sm:flex items-center gap-2 px-3 py-1 rounded-full bg-royal-gold/5 border border-royal-gold/10">
-              <Sparkles size={12} className="text-royal-gold" />
-              <span className="text-[8px] font-bold text-royal-gold uppercase tracking-widest">System Active</span>
-            </div>
           </div>
 
-          <div className="flex items-center gap-6">
+          <div className="flex items-center gap-4">
             {/* Theme Toggle */}
-            <div className="flex items-center gap-1 p-1 bg-royal-gold/5 rounded-full border border-royal-gold/10">
+            <div className="flex items-center gap-1 p-1 bg-[var(--glass-bg)] rounded-lg border border-[var(--border-primary)]">
               <button
-                onClick={() => setIsDarkTheme(false)}
-                className={`p-2 rounded-full transition-all ${!isDarkTheme ? 'bg-royal-gold text-[#050505] shadow-lg' : 'text-royal-text-secondary hover:text-royal-gold'}`}
+                onClick={() => setTheme('light')}
+                className={`p-1.5 rounded-md transition-all ${theme === 'light' ? 'bg-[var(--bg-sidebar)] text-blue-600 shadow-sm' : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'}`}
               >
-                <Sun size={16} />
+                <Sun size={14} />
               </button>
               <button
-                onClick={() => setIsDarkTheme(true)}
-                className={`p-2 rounded-full transition-all ${isDarkTheme ? 'bg-royal-gold text-[#050505] shadow-lg' : 'text-royal-text-secondary hover:text-royal-gold'}`}
+                onClick={() => setTheme('dark')}
+                className={`p-1.5 rounded-md transition-all ${theme === 'dark' ? 'bg-[var(--bg-sidebar)] text-blue-600 shadow-sm' : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'}`}
               >
-                <Moon size={16} />
+                <Moon size={14} />
               </button>
             </div>
 
             {/* Profile */}
-            <div className="relative flex items-center gap-4 pl-6 border-l border-royal-gold/10">
+            <div className="relative flex items-center gap-3 pl-4 border-l border-[var(--border-primary)]">
               <div className="text-right hidden sm:block">
-                <p className="text-[10px] font-bold uppercase tracking-wider">{user.name}</p>
-                <p className="text-[8px] font-medium text-royal-gold/60 uppercase tracking-widest">Professional Member</p>
+                <p className="text-xs font-medium">{user.name}</p>
+                <p className="text-[10px] text-[var(--text-secondary)]">Member</p>
               </div>
               <div 
                 onClick={() => setIsProfileOpen(!isProfileOpen)}
                 className="relative cursor-pointer"
               >
-                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-royal-gold to-royal-gold-dark flex items-center justify-center font-black text-royal-black shadow-3xl hover:scale-105 transition-transform">
+                <div className="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center font-bold text-white shadow-sm hover:bg-blue-700 transition-colors">
                   {user.name.charAt(0)}
                 </div>
-                {/* Dropdown Indicator */}
-                <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-green-500 border-2 border-royal-black rounded-full" />
               </div>
 
               <AnimatePresence>
@@ -178,21 +167,21 @@ export default function AppLayout({ user, onSignOut, children, activeTab, setAct
                       initial={{ opacity: 0, y: 10, scale: 0.95 }}
                       animate={{ opacity: 1, y: 0, scale: 1 }}
                       exit={{ opacity: 0, y: 10, scale: 0.95 }}
-                      className="absolute right-0 top-16 w-56 bg-royal-charcoal backdrop-blur-2xl border border-royal-gold/20 rounded-3xl shadow-[0_20px_50px_rgba(0,0,0,0.5)] p-2 z-50 overflow-hidden"
+                      className="absolute right-0 top-16 w-56 bg-[var(--bg-sidebar)] backdrop-blur-2xl border border-blue-600/20 rounded-3xl shadow-[0_20px_50px_rgba(0,0,0,0.5)] p-2 z-50 overflow-hidden"
                     >
-                      <div className="px-4 py-3 mb-2 border-b border-royal-gold/10">
-                        <p className="text-[10px] font-bold text-royal-gold uppercase tracking-tighter truncate">{user.name}</p>
-                        <p className="text-[8px] font-medium text-royal-text-secondary uppercase tracking-widest truncate">{user.email}</p>
+                      <div className="px-4 py-3 mb-2 border-b border-blue-600/10">
+                        <p className="text-[10px] font-bold text-blue-600 uppercase tracking-tighter truncate">{user.name}</p>
+                        <p className="text-[8px] font-medium text-[var(--text-secondary)] uppercase tracking-widest truncate">{user.email}</p>
                       </div>
                       <button 
-                        className="w-full flex items-center gap-3 px-4 py-4 rounded-2xl hover:bg-royal-gold/5 text-royal-text-secondary hover:text-royal-gold transition-all duration-300 group"
+                        className="w-full flex items-center gap-3 px-4 py-4 rounded-2xl hover:bg-blue-600/5 text-[var(--text-secondary)] hover:text-blue-600 transition-all duration-300 group"
                         onClick={() => setIsProfileOpen(false)}
                       >
                         <Settings size={18} className="group-hover:rotate-45 transition-transform duration-500" />
                         <span className="text-[10px] font-bold uppercase tracking-widest">Profile Settings</span>
                       </button>
                       <button 
-                        className="w-full flex items-center gap-3 px-4 py-4 rounded-2xl hover:bg-red-500/5 text-royal-text-secondary hover:text-red-500 transition-all duration-300"
+                        className="w-full flex items-center gap-3 px-4 py-4 rounded-2xl hover:bg-red-500/5 text-[var(--text-secondary)] hover:text-red-500 transition-all duration-300"
                         onClick={() => {
                           setIsProfileOpen(false);
                           onSignOut();
@@ -214,8 +203,8 @@ export default function AppLayout({ user, onSignOut, children, activeTab, setAct
           {/* Background decoration */}
           {activeTab !== 'chat' && (
             <>
-              <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-royal-gold/5 blur-[120px] rounded-full -mr-64 -mt-64 pointer-events-none" />
-              <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-royal-gold/5 blur-[120px] rounded-full -ml-64 -mb-64 pointer-events-none" />
+              <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-blue-600/5 blur-[120px] rounded-full -mr-64 -mt-64 pointer-events-none" />
+              <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-blue-600/5 blur-[120px] rounded-full -ml-64 -mb-64 pointer-events-none" />
             </>
           )}
           

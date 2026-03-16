@@ -66,19 +66,17 @@ export default function HomePage() {
   }
 
   return (
-    <main className="min-h-screen relative overflow-hidden bg-royal-black">
+    <main className="min-h-screen relative overflow-hidden bg-[var(--bg-main)]">
       <Toaster position="bottom-right" toastOptions={{
         style: {
-          background: '#0A0A0A',
-          color: '#D4AF37',
-          border: '1px solid rgba(212, 175, 55, 0.2)',
-          fontSize: '10px',
-          fontWeight: '900',
-          textTransform: 'uppercase',
-          letterSpacing: '0.1em'
+          background: '#18181b',
+          color: '#f4f4f5',
+          border: '1px solid rgba(59, 130, 246, 0.2)',
+          fontSize: '12px',
+          fontWeight: '500',
         }
       }} />
-      <div className="absolute inset-0 royal-mesh opacity-20 pointer-events-none" />
+      <div className="absolute inset-0 opacity-20 pointer-events-none" />
       <ParticleBackground />
       
       <AuthModal 
@@ -111,8 +109,8 @@ export default function HomePage() {
             <Pricing onAction={() => setIsAuthModalOpen(true)} />
             
             <section className="py-48 px-4 relative overflow-hidden">
-              <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[1px] bg-gradient-to-r from-transparent via-royal-gold/20 to-transparent" />
-              <div className="absolute inset-0 bg-gradient-to-b from-royal-black via-royal-gold/5 to-royal-black opacity-30"></div>
+              <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[1px] bg-gradient-to-r from-transparent via-blue-600/20 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-b from-[var(--bg-main)] via-blue-600/5 to-[var(--bg-main)] opacity-30"></div>
               
               <div className="max-w-6xl mx-auto relative z-10">
                 <motion.div
@@ -123,40 +121,40 @@ export default function HomePage() {
                   className="text-center mb-24"
                 >
                   <motion.span 
-                    className="text-[10px] font-black uppercase tracking-[0.5em] text-royal-gold mb-6 block"
+                    className="text-xs font-semibold uppercase tracking-widest text-blue-600 mb-6 block"
                     initial={{ opacity: 0 }}
                     whileInView={{ opacity: 1 }}
                   >
-                    Immediate Deployment
+                    Get Started Today
                   </motion.span>
-                  <h2 className="text-4xl sm:text-7xl font-black text-white mb-8 italic uppercase tracking-tighter">
-                    Summon the <span className="text-royal-gold">Collective</span>
+                  <h2 className="text-4xl sm:text-7xl font-bold text-white mb-8 tracking-tight">
+                    Experience Unified <span className="text-blue-600">Intelligence</span>
                   </h2>
                   <p className="text-xl text-white/40 max-w-2xl mx-auto leading-relaxed font-medium">
-                    Initiate a high-fidelity collaboration between elite AI constructs. 
-                    Witness the synthesis of sovereign intelligence.
+                    Deploy a network of specialized AI experts to solve your most complex challenges. 
+                    Unlock the potential of collaborative AI.
                   </p>
                 </motion.div>
                 
                 <div className="relative group">
-                  <div className="absolute -inset-1 bg-gradient-to-r from-royal-gold/20 to-royal-gold-dark/20 blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
+                  <div className="absolute -inset-1 bg-gradient-to-r from-blue-600/20 to-blue-800/20 blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
                   <QueryInterface onSubmit={handleQuerySubmit} />
                 </div>
               </div>
             </section>
 
-            <footer className="py-20 border-t border-white/5 bg-royal-black/80 backdrop-blur-xl">
+            <footer className="py-20 border-t border-white/5 bg-[var(--bg-main)]/80 backdrop-blur-xl">
               <div className="max-w-7xl mx-auto px-8 flex flex-col md:flex-row justify-between items-center gap-8">
                 <div className="flex items-center gap-4">
-                  <div className="w-10 h-10 rounded-xl bg-royal-gold flex items-center justify-center font-black text-royal-black">O</div>
-                  <span className="text-xl font-black text-white italic tracking-tighter">OMNIMIND AI</span>
+                  <div className="w-10 h-10 rounded-xl bg-blue-600 flex items-center justify-center font-bold text-white shadow-sm">O</div>
+                  <span className="text-xl font-bold text-white tracking-tight">OmniMind</span>
                 </div>
-                <div className="text-[10px] font-black text-white/20 uppercase tracking-[0.3em]">
-                  © 2024 Sovereign Intelligence Group. All Rights Reserved.
+                <div className="text-xs font-medium text-white/20">
+                  © 2024 OmniMind AI. All Rights Reserved.
                 </div>
                 <div className="flex gap-8">
-                  {['Intelligence', 'Sovereignty', 'Protocols'].map(link => (
-                    <a key={link} href="#" className="text-[10px] font-black text-white/30 uppercase tracking-widest hover:text-royal-gold transition-colors">{link}</a>
+                  {['Solutions', 'Technology', 'Security'].map(link => (
+                    <a key={link} href="#" className="text-xs font-medium text-white/30 hover:text-blue-600 transition-colors">{link}</a>
                   ))}
                 </div>
               </div>
@@ -180,4 +178,4 @@ export default function HomePage() {
     </main>
   );
 }
-
+

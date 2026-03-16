@@ -55,22 +55,22 @@ export default function SimulationResults({ simulation }: SimulationResultsProps
   }));
 
   return (
-    <div className="royal-card p-10">
+    <div className="card p-6">
       <div className="flex items-center justify-between mb-8">
-        <h2 className="text-xl font-bold uppercase tracking-tight">
+        <h2 className="text-lg font-semibold">
           Scenario Analysis
         </h2>
-        <div className="h-[1px] w-20 bg-gradient-to-r from-royal-gold to-transparent" />
       </div>
 
       {simulation && (
-        <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-royal-text-secondary mb-10 bg-royal-gold/5 py-3 px-6 rounded-full border border-royal-gold/10 w-fit transition-colors duration-500">
-          Strategic Recommendation: <span className="text-royal-gold">{simulation.recommended_scenario}</span> · <span className="text-royal-silver">{Math.round(simulation.confidence * 100)}% Match</span>
-        </p>
+        <div className="mb-8 p-3 px-4 bg-blue-500/5 border border-blue-500/10 rounded-lg w-fit">
+          <p className="text-[10px] font-medium text-[var(--text-secondary)]">
+            Recommendation: <span className="text-blue-600 font-bold">{simulation.recommended_scenario}</span> • {Math.round(simulation.confidence * 100)}% Confidence
+          </p>
+        </div>
       )}
 
-      <div className="mb-12 p-6 bg-royal-gold/5 rounded-3xl border border-royal-gold/10 relative overflow-hidden group transition-colors duration-500">
-        <div className="absolute inset-0 bg-gradient-to-b from-royal-gold/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
+      <div className="mb-10 p-4 bg-[var(--bg-main)] rounded-xl border border-[var(--border-primary)]">
         <ResponsiveContainer width="100%" height={300}>
           <BarChart data={chartData}>
             <CartesianGrid strokeDasharray="3 3" stroke="var(--chart-grid)" vertical={false} />
@@ -78,73 +78,69 @@ export default function SimulationResults({ simulation }: SimulationResultsProps
               dataKey="name" 
               axisLine={false} 
               tickLine={false} 
-              tick={{ fill: 'var(--chart-tick)', fontSize: 10, fontWeight: 700 }} 
+              tick={{ fill: 'var(--chart-tick)', fontSize: 10, fontWeight: 500 }} 
             />
             <YAxis 
               axisLine={false} 
               tickLine={false} 
-              tick={{ fill: 'var(--chart-tick)', fontSize: 10, fontWeight: 700 }}
+              tick={{ fill: 'var(--chart-tick)', fontSize: 10, fontWeight: 500 }}
               tickFormatter={(value) => `₹${value}K`}
             />
             <Tooltip 
               contentStyle={{ 
-                backgroundColor: '#0A0A0A', 
-                border: '1px solid rgba(212, 175, 55, 0.2)', 
-                borderRadius: '12px',
-                fontSize: '10px',
-                fontWeight: '900',
-                textTransform: 'uppercase'
+                backgroundColor: 'var(--bg-sidebar)', 
+                border: '1px solid var(--border-primary)', 
+                borderRadius: '8px',
+                fontSize: '11px',
+                fontWeight: '500'
               }}
-              cursor={{ fill: 'rgba(255,255,255,0.03)' }}
+              cursor={{ fill: 'rgba(0,0,0,0.03)' }}
               formatter={(value, name) => [
                 name === 'ROI' ? `${value}%` : `₹${value}K`,
                 name
               ]}
             />
-            <Bar dataKey="Investment" fill="#D4AF37" radius={[4, 4, 0, 0]} name="Investment" />
-            <Bar dataKey="Profit" fill="#C0C0C0" radius={[4, 4, 0, 0]} name="Expected Profit" />
+            <Bar dataKey="Investment" fill="#3b82f6" radius={[4, 4, 0, 0]} name="Investment" />
+            <Bar dataKey="Profit" fill="#94a3b8" radius={[4, 4, 0, 0]} name="Expected Profit" />
           </BarChart>
         </ResponsiveContainer>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {simulationData.map((scenario, index) => (
-          <motion.div
+        {simulationData.map((scenario) => (
+          <div
             key={scenario.scenario}
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: index * 0.1 }}
-            className="royal-card p-6 bg-royal-gold/[0.02] border-royal-gold/5 hover:border-royal-gold/20 transition-all duration-500 group"
+            className="card p-5 bg-[var(--bg-main)]/50 border-[var(--border-primary)] hover:border-blue-500/30 transition-all group"
           >
-            <h3 className="text-xs font-bold uppercase tracking-widest mb-6 group-hover:text-royal-gold transition-colors">{scenario.scenario}</h3>
+            <h3 className="text-sm font-semibold mb-6 group-hover:text-blue-600 transition-colors">{scenario.scenario}</h3>
             <div className="space-y-3">
               <div className="flex justify-between items-center">
-                <span className="text-[9px] font-bold text-royal-text-secondary uppercase tracking-widest">Investment</span>
-                <span className="text-xs font-bold">₹{(scenario.investment / 1000).toFixed(0)}K</span>
+                <span className="text-[10px] font-medium text-[var(--text-secondary)]">Investment</span>
+                <span className="text-xs font-semibold">₹{(scenario.investment / 1000).toFixed(0)}K</span>
               </div>
-              <div className="flex justify-between items-center pb-2 border-b border-royal-gold/5">
-                <span className="text-[9px] font-bold text-royal-text-secondary uppercase tracking-widest">Expected Return</span>
-                <span className="text-xs font-bold text-royal-gold">₹{(scenario.expectedProfit / 1000).toFixed(0)}K</span>
+              <div className="flex justify-between items-center pb-2 border-b border-[var(--border-primary)]">
+                <span className="text-[10px] font-medium text-[var(--text-secondary)]">Expected Return</span>
+                <span className="text-xs font-bold text-blue-600">₹{(scenario.expectedProfit / 1000).toFixed(0)}K</span>
               </div>
               <div className="flex justify-between items-center pt-2">
-                <span className="text-[9px] font-bold text-royal-text-secondary uppercase tracking-widest">ROI</span>
+                <span className="text-[10px] font-medium text-[var(--text-secondary)]">ROI</span>
                 <span className="text-xs font-bold">{scenario.roi}%</span>
               </div>
               <div className="flex justify-between items-center">
-                <span className="text-[9px] font-bold text-royal-text-secondary uppercase tracking-widest">Risk Level</span>
-                <span className={`text-[9px] font-bold uppercase tracking-widest px-3 py-1 rounded-full border ${
-                  scenario.risk === 'Low' ? 'text-green-500/80 border-green-500/20 bg-green-500/5' :
-                  scenario.risk === 'Medium' ? 'text-royal-gold border-royal-gold/20 bg-royal-gold/5' : 'text-red-500/80 border-red-500/20 bg-red-500/5'
+                <span className="text-[10px] font-medium text-[var(--text-secondary)]">Risk Level</span>
+                <span className={`text-[10px] font-semibold px-2 py-0.5 rounded border ${
+                  scenario.risk === 'Low' ? 'text-green-600 border-green-200 bg-green-50' :
+                  scenario.risk === 'Medium' ? 'text-amber-600 border-amber-200 bg-amber-50' : 'text-red-600 border-red-200 bg-red-50'
                 }`}>
                   {scenario.risk}
                 </span>
               </div>
               <div className="flex justify-between items-center">
-                <span className="text-[9px] font-bold text-royal-text-secondary uppercase tracking-widest">Timeline</span>
-                <span className="text-[10px] font-bold text-royal-text-secondary uppercase">{scenario.timeline}</span>
+                <span className="text-[10px] font-medium text-[var(--text-secondary)]">Timeline</span>
+                <span className="text-[10px] font-medium text-[var(--text-secondary)]">{scenario.timeline}</span>
               </div>
             </div>
-          </motion.div>
+          </div>
         ))}
       </div>
     </div>

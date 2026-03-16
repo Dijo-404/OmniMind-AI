@@ -2,8 +2,9 @@
 
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Bars3Icon, XMarkIcon, SparklesIcon } from '@heroicons/react/24/outline';
+import { Bars3Icon, XMarkIcon, SparklesIcon, SunIcon, MoonIcon } from '@heroicons/react/24/outline';
 import { Brain, Zap, Target, Users } from 'lucide-react';
+import { useTheme } from '@/context/ThemeContext';
 
 interface HeaderProps {
   onSignIn: () => void;
@@ -14,6 +15,7 @@ interface HeaderProps {
 
 export default function Header({ onSignIn, onSignUp, user, onSignOut }: HeaderProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { theme, toggleTheme } = useTheme();
 
   const navItems = [
     { name: 'Features', href: '#features' },
@@ -27,7 +29,7 @@ export default function Header({ onSignIn, onSignUp, user, onSignOut }: HeaderPr
       initial={{ y: -100, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.8, ease: "easeOut" }}
-      className="fixed top-0 left-0 right-0 z-50 bg-royal-black/60 backdrop-blur-2xl border-b border-royal-gold/10"
+      className="fixed top-0 left-0 right-0 z-50 bg-[var(--bg-main)]/60 backdrop-blur-2xl border-b border-blue-600/10"
     >
       <nav className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8">
         <motion.div
@@ -39,23 +41,23 @@ export default function Header({ onSignIn, onSignUp, user, onSignOut }: HeaderPr
               <motion.div
                 animate={{ rotate: 360 }}
                 transition={{ duration: 12, repeat: Infinity, ease: "linear" }}
-                className="w-12 h-12 rounded-full bg-gradient-to-br from-royal-gold-light via-royal-gold to-royal-gold-dark p-[1px] gold-glow"
+                className="w-12 h-12 rounded-full bg-gradient-to-br from-blue-400 via-blue-600 to-blue-800 p-[1px] brand-glow"
               >
-                <div className="w-full h-full rounded-full bg-royal-black flex items-center justify-center p-2">
-                  <Brain className="w-full h-full text-royal-gold" />
+                <div className="w-full h-full rounded-full bg-[var(--bg-main)] flex items-center justify-center p-2">
+                  <Brain className="w-full h-full text-blue-600" />
                 </div>
               </motion.div>
               <motion.div
                 animate={{ scale: [1, 1.5, 1], opacity: [0.5, 1, 0.5] }}
                 transition={{ duration: 3, repeat: Infinity }}
-                className="absolute -top-1 -right-1 w-3 h-3 bg-royal-gold rounded-full blur-[1px]"
+                className="absolute -top-1 -right-1 w-3 h-3 bg-blue-600 rounded-full blur-[1px]"
               />
             </div>
             <div>
               <span className="text-3xl font-black gradient-text tracking-tighter">
                 OmniMind
               </span>
-              <div className="flex items-center space-x-1 text-[10px] font-bold uppercase tracking-[0.2em] text-royal-gold/60">
+              <div className="flex items-center space-x-1 text-[10px] font-bold uppercase tracking-[0.2em] text-blue-600/60">
                 <SparklesIcon className="w-3 h-3" />
                 <span>Autonomous AI</span>
               </div>
@@ -66,14 +68,14 @@ export default function Header({ onSignIn, onSignUp, user, onSignOut }: HeaderPr
         <div className="flex lg:hidden">
           <button
             type="button"
-            className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-royal-gold hover:bg-white/5 transition-colors"
+            className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-blue-600 hover:bg-white/5 transition-colors"
             onClick={() => setMobileMenuOpen(true)}
           >
             <Bars3Icon className="h-6 w-6" />
           </button>
         </div>
         
-        <div className="hidden lg:flex lg:gap-x-12">
+        <div className="hidden lg:flex lg:gap-x-12 items-center">
           {navItems.map((item, index) => (
             <motion.a
               key={item.name}
@@ -81,17 +83,27 @@ export default function Header({ onSignIn, onSignUp, user, onSignOut }: HeaderPr
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.1 * index, duration: 0.5 }}
-              className="relative text-xs font-black uppercase tracking-widest text-white/50 hover:text-royal-gold transition-all duration-300 group"
+              className="relative text-xs font-black uppercase tracking-widest text-[var(--text-primary)]/50 hover:text-blue-600 transition-all duration-300 group"
             >
               {item.name}
               <motion.div
-                className="absolute -bottom-1 left-0 h-[1px] bg-royal-gold rounded-full"
+                className="absolute -bottom-1 left-0 h-[1px] bg-blue-600 rounded-full"
                 initial={{ width: 0 }}
                 whileHover={{ width: '100%' }}
                 transition={{ duration: 0.3 }}
               />
             </motion.a>
           ))}
+          
+          {/* Theme Toggle Button */}
+          <motion.button
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
+            onClick={toggleTheme}
+            className="p-2 rounded-xl bg-[var(--glass-bg)] border border-[var(--border-primary)] text-blue-600 hover:border-blue-600/30 transition-all"
+          >
+            {theme === 'dark' ? <SunIcon className="w-4 h-4" /> : <MoonIcon className="w-4 h-4" />}
+          </motion.button>
         </div>
         
         <div className="hidden lg:flex lg:flex-1 lg:justify-end lg:gap-x-6">
@@ -106,7 +118,7 @@ export default function Header({ onSignIn, onSignUp, user, onSignOut }: HeaderPr
                 Sign In
               </motion.button>
               <motion.button
-                whileHover={{ scale: 1.05, boxShadow: "0 0 25px rgba(212, 175, 55, 0.4)" }}
+                whileHover={{ scale: 1.05, boxShadow: "0 0 25px rgba(59, 130, 246, 0.4)" }}
                 whileTap={{ scale: 0.95 }}
                 className="btn-primary flex items-center gap-2 text-xs uppercase tracking-widest px-8"
                 onClick={onSignUp}
@@ -118,19 +130,19 @@ export default function Header({ onSignIn, onSignUp, user, onSignOut }: HeaderPr
           ) : (
             <div className="flex items-center gap-6">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-royal-gold/10 border border-royal-gold/20 flex items-center justify-center font-black text-royal-gold text-xs shadow-inner">
+                <div className="w-10 h-10 rounded-xl bg-blue-600/10 border border-blue-600/20 flex items-center justify-center font-black text-blue-600 text-xs shadow-inner">
                   {user.name.charAt(0)}
                 </div>
                 <div className="flex flex-col">
                   <span className="text-[10px] font-black text-white uppercase tracking-wider">{user.name}</span>
-                  <span className="text-[8px] font-bold text-royal-gold/60 uppercase tracking-widest">Sovereign Tier</span>
+                  <span className="text-[8px] font-bold text-blue-600/60 uppercase tracking-widest">Active Member</span>
                 </div>
               </div>
               <button 
                 onClick={onSignOut}
                 className="text-[10px] font-black text-white/30 uppercase tracking-[0.2em] hover:text-red-500/80 transition-colors"
               >
-                Sever Link
+                Sign Out
               </button>
             </div>
           )}
@@ -145,7 +157,7 @@ export default function Header({ onSignIn, onSignUp, user, onSignOut }: HeaderPr
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="fixed inset-0 z-40 bg-royal-black/90 backdrop-blur-xl lg:hidden"
+              className="fixed inset-0 z-40 bg-[var(--bg-main)]/90 backdrop-blur-xl lg:hidden"
               onClick={() => setMobileMenuOpen(false)}
             />
             <motion.div
@@ -153,26 +165,34 @@ export default function Header({ onSignIn, onSignUp, user, onSignOut }: HeaderPr
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
               transition={{ type: 'spring', damping: 30, stiffness: 300 }}
-              className="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-royal-black px-6 py-6 sm:max-w-sm border-l border-royal-gold/10 shadow-2xl"
+              className="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-[var(--bg-sidebar)] px-6 py-6 sm:max-w-sm border-l border-blue-600/10 shadow-2xl"
             >
               <div className="flex items-center justify-between">
                 <a href="/" className="-m-1.5 p-1.5 flex items-center space-x-3">
-                  <div className="w-10 h-10 rounded-full bg-gradient-to-br from-royal-gold to-royal-gold-dark p-[1px]">
-                    <div className="w-full h-full rounded-full bg-royal-black flex items-center justify-center p-2">
-                       <Brain className="w-full h-full text-royal-gold" />
+                  <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-600 to-blue-800 p-[1px]">
+                    <div className="w-full h-full rounded-full bg-[var(--bg-main)] flex items-center justify-center p-2">
+                       <Brain className="w-full h-full text-blue-600" />
                     </div>
                   </div>
-                  <span className="text-xl font-black gradient-text">
+                  <span className="text-xl font-black text-[var(--text-primary)]">
                     OmniMind
                   </span>
                 </a>
-                <button
-                  type="button"
-                  className="-m-2.5 rounded-md p-2.5 text-royal-gold hover:bg-white/5 transition-colors"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  <XMarkIcon className="h-6 w-6" />
-                </button>
+                <div className="flex items-center gap-4">
+                  <button
+                    onClick={toggleTheme}
+                    className="p-2 rounded-xl bg-[var(--glass-bg)] border border-[var(--border-primary)] text-blue-600"
+                  >
+                    {theme === 'dark' ? <SunIcon className="w-5 h-5" /> : <MoonIcon className="w-5 h-5" />}
+                  </button>
+                  <button
+                    type="button"
+                    className="-m-2.5 rounded-md p-2.5 text-blue-600 hover:bg-white/5 transition-colors"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    <XMarkIcon className="h-6 w-6" />
+                  </button>
+                </div>
               </div>
               
               <div className="mt-12 flow-root">
@@ -185,7 +205,7 @@ export default function Header({ onSignIn, onSignUp, user, onSignOut }: HeaderPr
                         initial={{ opacity: 0, x: 20 }}
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ delay: 0.1 * index }}
-                        className="-mx-3 block rounded-xl px-4 py-4 text-sm font-bold uppercase tracking-widest text-white/70 hover:text-royal-gold hover:bg-white/5 transition-all"
+                        className="-mx-3 block rounded-xl px-4 py-4 text-sm font-bold uppercase tracking-widest text-white/70 hover:text-blue-600 hover:bg-white/5 transition-all"
                         onClick={() => setMobileMenuOpen(false)}
                       >
                         {item.name}
@@ -206,25 +226,25 @@ export default function Header({ onSignIn, onSignUp, user, onSignOut }: HeaderPr
                           onClick={() => { setMobileMenuOpen(false); onSignUp(); }}
                         >
                           <Zap className="w-4 h-4" />
-                          Join Elite
+                          Get Started
                         </button>
                       </>
                     ) : (
                       <div className="space-y-4">
                         <div className="flex items-center gap-4 p-4 rounded-2xl bg-white/5 border border-white/5">
-                          <div className="w-12 h-12 rounded-xl bg-royal-gold flex items-center justify-center font-black text-royal-black text-lg">
+                          <div className="w-12 h-12 rounded-xl bg-blue-600 flex items-center justify-center font-black text-white text-lg">
                             {user.name.charAt(0)}
                           </div>
                           <div>
                             <p className="text-sm font-black text-white italic">{user.name}</p>
-                            <p className="text-[10px] font-bold text-royal-gold/60 uppercase">Sovereign Tier</p>
+                            <p className="text-[10px] font-bold text-blue-600/60 uppercase">Active Member</p>
                           </div>
                         </div>
                         <button 
                           onClick={() => { setMobileMenuOpen(false); onSignOut(); }}
                           className="btn-secondary w-full justify-center text-red-500/80 border-red-500/10"
                         >
-                          Sever Link
+                          Sign Out
                         </button>
                       </div>
                     )}
