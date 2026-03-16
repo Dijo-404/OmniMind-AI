@@ -57,33 +57,33 @@ export default function SimulationResults({ simulation }: SimulationResultsProps
   return (
     <div className="royal-card p-10">
       <div className="flex items-center justify-between mb-8">
-        <h2 className="text-xl font-black text-white uppercase tracking-tight italic">
+        <h2 className="text-xl font-black uppercase tracking-tight italic">
           Projection Simulations
         </h2>
         <div className="h-[1px] w-20 bg-gradient-to-r from-royal-gold to-transparent" />
       </div>
 
       {simulation && (
-        <p className="text-[10px] font-black uppercase tracking-[0.3em] text-white/40 mb-10 bg-white/5 py-3 px-6 rounded-full border border-white/5 w-fit">
+        <p className="text-[10px] font-black uppercase tracking-[0.3em] text-royal-text-secondary mb-10 bg-royal-gold/5 py-3 px-6 rounded-full border border-royal-gold/10 w-fit transition-colors duration-500">
           High-Fidelity Recommendation: <span className="text-royal-gold italic">{simulation.recommended_scenario}</span> · <span className="text-royal-silver">{Math.round(simulation.confidence * 100)}% Certainty</span>
         </p>
       )}
 
-      <div className="mb-12 p-6 bg-white/5 rounded-3xl border border-white/5 relative overflow-hidden group">
+      <div className="mb-12 p-6 bg-royal-gold/5 rounded-3xl border border-royal-gold/10 relative overflow-hidden group transition-colors duration-500">
         <div className="absolute inset-0 bg-gradient-to-b from-royal-gold/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
         <ResponsiveContainer width="100%" height={300}>
           <BarChart data={chartData}>
-            <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" vertical={false} />
+            <CartesianGrid strokeDasharray="3 3" stroke="var(--chart-grid)" vertical={false} />
             <XAxis 
               dataKey="name" 
               axisLine={false} 
               tickLine={false} 
-              tick={{ fill: 'rgba(255,255,255,0.3)', fontSize: 10, fontWeight: 900 }} 
+              tick={{ fill: 'var(--chart-tick)', fontSize: 10, fontWeight: 900 }} 
             />
             <YAxis 
               axisLine={false} 
               tickLine={false} 
-              tick={{ fill: 'rgba(255,255,255,0.3)', fontSize: 10, fontWeight: 900 }}
+              tick={{ fill: 'var(--chart-tick)', fontSize: 10, fontWeight: 900 }}
               tickFormatter={(value) => `₹${value}K`}
             />
             <Tooltip 
@@ -114,24 +114,24 @@ export default function SimulationResults({ simulation }: SimulationResultsProps
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: index * 0.1 }}
-            className="royal-card p-6 bg-white/[0.02] border-white/5 hover:border-royal-gold/20 transition-all duration-500 group"
+            className="royal-card p-6 bg-royal-gold/[0.02] border-royal-gold/5 hover:border-royal-gold/20 transition-all duration-500 group"
           >
-            <h3 className="text-xs font-black text-white uppercase tracking-widest mb-6 group-hover:text-royal-gold transition-colors italic">{scenario.scenario}</h3>
+            <h3 className="text-xs font-black uppercase tracking-widest mb-6 group-hover:text-royal-gold transition-colors italic">{scenario.scenario}</h3>
             <div className="space-y-3">
               <div className="flex justify-between items-center">
-                <span className="text-[9px] font-black text-white/20 uppercase tracking-widest">Commitment</span>
-                <span className="text-xs font-bold text-white/80">₹{(scenario.investment / 1000).toFixed(0)}K</span>
+                <span className="text-[9px] font-black text-royal-text-secondary uppercase tracking-widest">Commitment</span>
+                <span className="text-xs font-bold">₹{(scenario.investment / 1000).toFixed(0)}K</span>
               </div>
-              <div className="flex justify-between items-center pb-2 border-b border-white/5">
-                <span className="text-[9px] font-black text-white/20 uppercase tracking-widest">Target Yield</span>
+              <div className="flex justify-between items-center pb-2 border-b border-royal-gold/5">
+                <span className="text-[9px] font-black text-royal-text-secondary uppercase tracking-widest">Target Yield</span>
                 <span className="text-xs font-bold text-royal-gold">₹{(scenario.expectedProfit / 1000).toFixed(0)}K</span>
               </div>
               <div className="flex justify-between items-center pt-2">
-                <span className="text-[9px] font-black text-white/20 uppercase tracking-widest">Efficiency (ROI)</span>
-                <span className="text-xs font-bold text-white">{scenario.roi}%</span>
+                <span className="text-[9px] font-black text-royal-text-secondary uppercase tracking-widest">Efficiency (ROI)</span>
+                <span className="text-xs font-bold">{scenario.roi}%</span>
               </div>
               <div className="flex justify-between items-center">
-                <span className="text-[9px] font-black text-white/20 uppercase tracking-widest">Risk Index</span>
+                <span className="text-[9px] font-black text-royal-text-secondary uppercase tracking-widest">Risk Index</span>
                 <span className={`text-[9px] font-black uppercase tracking-widest px-3 py-1 rounded-full border ${
                   scenario.risk === 'Low' ? 'text-green-500/80 border-green-500/20 bg-green-500/5' :
                   scenario.risk === 'Medium' ? 'text-royal-gold border-royal-gold/20 bg-royal-gold/5' : 'text-red-500/80 border-red-500/20 bg-red-500/5'
@@ -140,8 +140,8 @@ export default function SimulationResults({ simulation }: SimulationResultsProps
                 </span>
               </div>
               <div className="flex justify-between items-center">
-                <span className="text-[9px] font-black text-white/20 uppercase tracking-widest">Horizon</span>
-                <span className="text-[10px] font-black text-white/30 uppercase">{scenario.timeline}</span>
+                <span className="text-[9px] font-black text-royal-text-secondary uppercase tracking-widest">Horizon</span>
+                <span className="text-[10px] font-black text-royal-text-secondary uppercase">{scenario.timeline}</span>
               </div>
             </div>
           </motion.div>

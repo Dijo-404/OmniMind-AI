@@ -9,19 +9,24 @@ module.exports = {
     extend: {
       colors: {
         royal: {
-          black: '#050505',
-          charcoal: '#121212',
+          black: 'var(--bg-main)',
+          charcoal: 'var(--bg-sidebar)',
           gold: {
             DEFAULT: '#D4AF37',
             light: '#F9E27D',
             dark: '#AA8A2E',
-            glow: 'rgba(212, 175, 55, 0.3)',
+            glow: 'var(--gold-glow)',
           },
           silver: {
             DEFAULT: '#C0C0C0',
             light: '#E5E4E2',
             dark: '#848482',
           },
+          text: {
+            primary: 'var(--text-primary)',
+            secondary: 'var(--text-secondary)',
+          },
+          border: 'var(--border-primary)',
         },
         primary: {
           50: '#fdfcf7',

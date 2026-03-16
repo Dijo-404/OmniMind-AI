@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Brain, 
@@ -33,6 +33,14 @@ export default function AppLayout({ user, onSignOut, children, activeTab, setAct
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
   const [isDarkTheme, setIsDarkTheme] = useState(true);
 
+  useEffect(() => {
+    if (!isDarkTheme) {
+      document.documentElement.classList.add('light-theme');
+    } else {
+      document.documentElement.classList.remove('light-theme');
+    }
+  }, [isDarkTheme]);
+
   const menuItems = [
     { id: 'dashboard', name: 'Dominion Overview', icon: LayoutDashboard },
     { id: 'chat', name: 'Multi-Agent Chat', icon: MessageSquare },
@@ -43,12 +51,12 @@ export default function AppLayout({ user, onSignOut, children, activeTab, setAct
   ];
 
   return (
-    <div className="flex h-screen bg-royal-black text-white overflow-hidden">
+    <div className="flex h-screen bg-royal-black overflow-hidden transition-colors duration-500">
       {/* Sidebar */}
       <motion.aside
         initial={false}
         animate={{ width: isSidebarCollapsed ? 80 : 280 }}
-        className="relative bg-royal-charcoal border-r border-royal-gold/10 flex flex-col z-30"
+        className="relative bg-royal-charcoal border-r border-royal-gold/10 flex flex-col z-30 transition-colors duration-500"
       >
         {/* Toggle Button */}
         <button
@@ -83,7 +91,7 @@ export default function AppLayout({ user, onSignOut, children, activeTab, setAct
               className={`w-full flex items-center gap-4 px-4 py-4 rounded-2xl transition-all duration-300 group ${
                 activeTab === item.id 
                   ? 'bg-royal-gold/10 border border-royal-gold/20 text-royal-gold shadow-inner' 
-                  : 'text-white/40 hover:text-white hover:bg-white/5 border border-transparent'
+                  : 'text-royal-text-secondary hover:text-royal-gold hover:bg-royal-gold/5 border border-transparent'
               }`}
             >
               <item.icon size={20} className={activeTab === item.id ? 'text-royal-gold' : 'group-hover:text-royal-gold transition-colors'} />
@@ -113,9 +121,9 @@ export default function AppLayout({ user, onSignOut, children, activeTab, setAct
       {/* Main Content */}
       <div className="flex-1 flex flex-col relative overflow-hidden">
         {/* Top Header */}
-        <header className="h-20 bg-royal-black/50 backdrop-blur-xl border-b border-royal-gold/10 px-8 flex items-center justify-between z-20">
+        <header className="h-20 bg-royal-black/50 backdrop-blur-xl border-b border-royal-gold/10 px-8 flex items-center justify-between z-20 transition-colors duration-500">
           <div className="flex items-center gap-4">
-            <h2 className="text-sm font-black uppercase tracking-[0.3em] text-white/60">
+            <h2 className="text-sm font-black uppercase tracking-[0.3em] text-royal-text-secondary">
               {menuItems.find(i => i.id === activeTab)?.name || 'Command Center'}
             </h2>
             <div className="hidden sm:flex items-center gap-2 px-3 py-1 rounded-full bg-royal-gold/5 border border-royal-gold/10">
@@ -126,25 +134,25 @@ export default function AppLayout({ user, onSignOut, children, activeTab, setAct
 
           <div className="flex items-center gap-6">
             {/* Theme Toggle */}
-            <div className="flex items-center gap-1 p-1 bg-white/5 rounded-full border border-white/5">
+            <div className="flex items-center gap-1 p-1 bg-royal-gold/5 rounded-full border border-royal-gold/10">
               <button
                 onClick={() => setIsDarkTheme(false)}
-                className={`p-2 rounded-full transition-all ${!isDarkTheme ? 'bg-royal-gold text-royal-black shadow-lg' : 'text-white/20 hover:text-white'}`}
+                className={`p-2 rounded-full transition-all ${!isDarkTheme ? 'bg-royal-gold text-[#050505] shadow-lg' : 'text-royal-text-secondary hover:text-royal-gold'}`}
               >
                 <Sun size={16} />
               </button>
               <button
                 onClick={() => setIsDarkTheme(true)}
-                className={`p-2 rounded-full transition-all ${isDarkTheme ? 'bg-royal-gold text-royal-black shadow-lg' : 'text-white/20 hover:text-white'}`}
+                className={`p-2 rounded-full transition-all ${isDarkTheme ? 'bg-royal-gold text-[#050505] shadow-lg' : 'text-royal-text-secondary hover:text-royal-gold'}`}
               >
                 <Moon size={16} />
               </button>
             </div>
 
             {/* Profile */}
-            <div className="flex items-center gap-4 pl-6 border-l border-white/10">
+            <div className="flex items-center gap-4 pl-6 border-l border-royal-gold/10">
               <div className="text-right hidden sm:block">
-                <p className="text-[10px] font-black text-white uppercase tracking-wider">{user.name}</p>
+                <p className="text-[10px] font-black uppercase tracking-wider">{user.name}</p>
                 <p className="text-[8px] font-bold text-royal-gold/60 uppercase tracking-widest text-glow">Sovereign Tier</p>
               </div>
               <div className="relative group cursor-pointer">

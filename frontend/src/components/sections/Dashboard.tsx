@@ -46,7 +46,7 @@ export default function Dashboard({ user, activeTab = 'dashboard' }: DashboardPr
           <p className="text-royal-gold/60 text-[10px] font-black uppercase tracking-[0.4em] mb-1">
             Dominion Command Center
           </p>
-          <h1 className="text-4xl font-black text-white italic uppercase tracking-tighter">
+          <h1 className="text-4xl font-black italic uppercase tracking-tighter">
             Strategic <span className="text-royal-gold">Overview</span>
           </h1>
         </div>
@@ -81,15 +81,15 @@ export default function Dashboard({ user, activeTab = 'dashboard' }: DashboardPr
             className="royal-card p-8 group hover:border-royal-gold/30 transition-all duration-500"
           >
             <div className="flex justify-between items-start mb-6">
-              <div className="w-12 h-12 rounded-xl bg-white/5 border border-white/5 flex items-center justify-center group-hover:bg-royal-gold/10 group-hover:border-royal-gold/20 transition-all duration-500">
+              <div className="w-12 h-12 rounded-xl bg-royal-gold/5 border border-royal-gold/10 flex items-center justify-center group-hover:bg-royal-gold/10 group-hover:border-royal-gold/20 transition-all duration-500">
                 <stat.icon className="w-6 h-6 text-royal-gold" />
               </div>
               <span className="text-[10px] font-black text-green-500/80 bg-green-500/5 px-2 py-1 rounded-md uppercase tracking-widest">
                 {stat.trend}
               </span>
             </div>
-            <p className="text-[10px] font-black text-white/30 uppercase tracking-[0.2em] mb-2">{stat.name}</p>
-            <h3 className="text-3xl font-black text-white italic tracking-tighter">{stat.value}</h3>
+            <p className="text-[10px] font-black text-royal-text-secondary uppercase tracking-[0.2em] mb-2">{stat.name}</p>
+            <h3 className="text-3xl font-black italic tracking-tighter">{stat.value}</h3>
           </motion.div>
         ))}
       </div>
@@ -98,8 +98,8 @@ export default function Dashboard({ user, activeTab = 'dashboard' }: DashboardPr
         <div className="lg:col-span-2 space-y-10">
           <div className="royal-card p-10">
             <div className="flex justify-between items-center mb-10">
-              <h2 className="text-xl font-black text-white italic uppercase tracking-tight">Active Analytics</h2>
-              <button className="text-[10px] font-black text-royal-gold uppercase tracking-[0.2em] hover:text-white transition-colors">
+              <h2 className="text-xl font-black italic uppercase tracking-tight">Active Analytics</h2>
+              <button className="text-[10px] font-black text-royal-gold uppercase tracking-[0.2em] hover:text-royal-gold-light transition-colors">
                 View Full Logs
               </button>
             </div>
@@ -109,25 +109,25 @@ export default function Dashboard({ user, activeTab = 'dashboard' }: DashboardPr
 
         <div className="space-y-10">
           <div className="royal-card p-10">
-            <h2 className="text-xl font-black text-white italic uppercase tracking-tight mb-8">Mission History</h2>
+            <h2 className="text-xl font-black italic uppercase tracking-tight mb-8">Mission History</h2>
             <div className="space-y-6">
               {recentHistory.map((item, index) => (
                 <div key={item.id} className="group cursor-pointer">
                   <div className="flex justify-between items-start mb-2">
-                    <h3 className="text-xs font-black text-white group-hover:text-royal-gold transition-colors">{item.title}</h3>
-                    <ChevronRight className="w-4 h-4 text-white/20 group-hover:text-royal-gold transform group-hover:translate-x-1 transition-all" />
+                    <h3 className="text-xs font-black group-hover:text-royal-gold transition-colors">{item.title}</h3>
+                    <ChevronRight className="w-4 h-4 text-royal-text-secondary group-hover:text-royal-gold transform group-hover:translate-x-1 transition-all" />
                   </div>
-                  <div className="flex items-center gap-4 text-[9px] font-black text-white/20 uppercase tracking-widest">
+                  <div className="flex items-center gap-4 text-[9px] font-black text-royal-text-secondary uppercase tracking-widest">
                     <span>{item.date}</span>
-                    <span className="w-1 h-1 rounded-full bg-white/10" />
+                    <span className="w-1 h-1 rounded-full bg-royal-gold/10" />
                     <span className="text-royal-gold/60">{item.agents} Experts</span>
-                    <span className="w-1 h-1 rounded-full bg-white/10" />
+                    <span className="w-1 h-1 rounded-full bg-royal-gold/10" />
                     <span>{item.status}</span>
                   </div>
                 </div>
               ))}
             </div>
-            <button className="w-full mt-10 py-4 border border-white/5 rounded-xl text-[10px] font-black text-white/30 uppercase tracking-[0.2em] hover:bg-white/5 transition-all">
+            <button className="w-full mt-10 py-4 border border-royal-gold/10 rounded-xl text-[10px] font-black text-royal-text-secondary uppercase tracking-[0.2em] hover:bg-royal-gold/5 transition-all">
               Archieve Command
             </button>
           </div>
@@ -148,22 +148,22 @@ export default function Dashboard({ user, activeTab = 'dashboard' }: DashboardPr
           className="absolute inset-0 bg-royal-gold/20 blur-xl rounded-full"
         />
       </div>
-      <h2 className="text-4xl font-black text-white italic uppercase tracking-tighter mb-4">{title}</h2>
+      <h2 className="text-4xl font-black italic uppercase tracking-tighter mb-4">{title}</h2>
       <p className="text-royal-gold/60 text-xs font-black uppercase tracking-[0.3em] mb-12 max-w-md">{subtitle}</p>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full max-w-2xl">
-        <div className="royal-card p-8 border-dashed border-white/10">
-          <div className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center mb-4 mx-auto">
+        <div className="royal-card p-8 border-dashed border-royal-gold/10">
+          <div className="w-10 h-10 rounded-xl bg-royal-gold/5 flex items-center justify-center mb-4 mx-auto">
             <Zap className="text-royal-gold w-5 h-5" />
           </div>
-          <p className="text-[10px] font-black text-white/60 mb-2 uppercase tracking-widest">Status</p>
-          <p className="text-sm font-black text-white italic uppercase tracking-tight">Protocol Initializing</p>
+          <p className="text-[10px] font-black text-royal-text-secondary mb-2 uppercase tracking-widest">Status</p>
+          <p className="text-sm font-black italic uppercase tracking-tight">Protocol Initializing</p>
         </div>
-        <div className="royal-card p-8 border-dashed border-white/10">
-           <div className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center mb-4 mx-auto">
+        <div className="royal-card p-8 border-dashed border-royal-gold/10">
+           <div className="w-10 h-10 rounded-xl bg-royal-gold/5 flex items-center justify-center mb-4 mx-auto">
             <ShieldCheck className="text-royal-gold w-5 h-5" />
           </div>
-          <p className="text-[10px] font-black text-white/60 mb-2 uppercase tracking-widest">Security</p>
-          <p className="text-sm font-black text-white italic uppercase tracking-tight">Biometric Verified</p>
+          <p className="text-[10px] font-black text-royal-text-secondary mb-2 uppercase tracking-widest">Security</p>
+          <p className="text-sm font-black italic uppercase tracking-tight">Biometric Verified</p>
         </div>
       </div>
     </div>
@@ -186,7 +186,7 @@ export default function Dashboard({ user, activeTab = 'dashboard' }: DashboardPr
             <div className="p-8 max-w-7xl mx-auto">
               <div className="mb-12">
                 <p className="text-royal-gold/60 text-[10px] font-black uppercase tracking-[0.4em] mb-1">Future Forecasting</p>
-                <h2 className="text-3xl font-black text-white italic uppercase tracking-tighter">Strategic <span className="text-royal-gold">Simulation</span></h2>
+                <h2 className="text-3xl font-black italic uppercase tracking-tighter">Strategic <span className="text-royal-gold">Simulation</span></h2>
               </div>
               <div className="royal-card p-10">
                 <SimulationResults />
