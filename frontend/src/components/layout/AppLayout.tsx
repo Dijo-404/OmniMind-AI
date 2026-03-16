@@ -40,7 +40,7 @@ export default function AppLayout({ user, onSignOut, children, activeTab, setAct
   const menuItems = [
     { id: 'dashboard', name: 'Dashboard', icon: LayoutDashboard },
     { id: 'chat', name: 'Multi Agent Chat', icon: MessageSquare },
-    { id: 'rag', name: 'Resource Center', icon: Database },
+    { id: 'rag', name: 'RAG Knowledge Base', icon: Database },
     { id: 'sim', name: 'Scenario Planner', icon: PlayCircle },
     { id: 'consensus', name: 'Strategic Insights', icon: ShieldCheck },
     { id: 'analytics', name: 'Activity Reports', icon: BarChart3 },
@@ -51,7 +51,7 @@ export default function AppLayout({ user, onSignOut, children, activeTab, setAct
       {/* Sidebar */}
       <motion.aside
         initial={false}
-        animate={{ width: isSidebarCollapsed ? 80 : 280 }}
+        animate={{ width: isSidebarCollapsed ? 80 : 210 }}
         className="relative bg-[var(--bg-sidebar)] border-r border-blue-600/10 flex flex-col z-30 transition-colors duration-500"
       >
         {/* Toggle Button */}
@@ -63,7 +63,7 @@ export default function AppLayout({ user, onSignOut, children, activeTab, setAct
         </button>
 
         {/* Brand */}
-        <div className="p-6 flex items-center gap-3">
+        <div className="p-5 flex items-center gap-3">
           <div className="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center shrink-0 shadow-sm">
             <Brain className="text-white w-5 h-5" />
           </div>

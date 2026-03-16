@@ -169,7 +169,7 @@ export default function Dashboard({ user, activeTab = 'dashboard' }: DashboardPr
         >
           {activeTab === 'dashboard' && renderOverview()}
           {activeTab === 'chat' && <MultiAgentChat />}
-          {activeTab === 'rag' && renderPlaceholder('Resource Center', 'Building a comprehensive library of verified resources.')}
+          {activeTab === 'rag' && renderPlaceholder('RAG Knowledge Base', 'Access your unified knowledge and specialized RAG documentation.')}
           {activeTab === 'sim' && (
             <div className="p-8 max-w-7xl mx-auto space-y-8">
               <div>
