@@ -7,7 +7,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 
-from api.routes import agents, queries, simulations
+from api.routes import agents, queries, simulations, council
 from core.config import settings
 from core.database import init_db
 from services.gradient_ai import gradient_client
@@ -66,6 +66,7 @@ app.add_middleware(
 app.include_router(agents.router,      prefix="/api/agents",      tags=["agents"])
 app.include_router(queries.router,     prefix="/api/queries",     tags=["queries"])
 app.include_router(simulations.router, prefix="/api/simulations", tags=["simulations"])
+app.include_router(council.router,     prefix="/api/council",     tags=["llm-council"])
 
 
 @app.get("/")
