@@ -26,8 +26,11 @@ class Settings(BaseSettings):
     LLM_MAX_TOKENS: int = int(os.getenv("LLM_MAX_TOKENS", "2048"))
     LLM_TEMPERATURE: float = float(os.getenv("LLM_TEMPERATURE", "0.7"))
 
-    # OpenAI fallback
+    # LLM Council — multi-provider keys
     OPENAI_API_KEY: str = os.getenv("OPENAI_API_KEY", "")
+    GOOGLE_API_KEY: str = os.getenv("GOOGLE_API_KEY", "")
+    GROQ_API_KEY: str = os.getenv("GROQ_API_KEY", "")
+    TAVILY_API_KEY: str = os.getenv("TAVILY_API_KEY", "")
     AI_PROVIDER: str = os.getenv("AI_PROVIDER", "gradient")
 
     # Multi-Agent Debate System

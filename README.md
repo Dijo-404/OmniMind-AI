@@ -2,6 +2,37 @@
 
 OmniMind-AI  Autonomous Multi Agent AI Platform for Real World Decision Intelligence and Simulation
 
+## 🧠 NEW: LLM Council - Multi-Agent Chat System
+
+**5 specialized AI agents debate complex questions to reach consensus:**
+
+- 🧠 **Analyst** - Logical reasoning and structured thinking
+- 🔍 **Researcher** - Web research using Tavily API  
+- ⚠️ **Critic** - Critical analysis and flaw detection
+- 💭 **Debater** - Alternative viewpoints and counter-arguments
+- ✅ **Verifier** - Fact checking and final synthesis
+
+**Quick Test:**
+```bash
+cd backend
+python test_council.py
+```
+
+**API Example:**
+```bash
+# Start debate
+curl -X POST "http://localhost:8000/api/council/chat/start" \
+  -H "Content-Type: application/json" \
+  -d '{"question": "Will AGI happen before 2035?"}'
+
+# Run full council discussion  
+curl -X POST "http://localhost:8000/api/council/chat/run-all/{session_id}"
+```
+
+See [LLM_COUNCIL_README.md](LLM_COUNCIL_README.md) for full documentation.
+
+---
+
 ## Architecture — 5 Layers
 
 ```
