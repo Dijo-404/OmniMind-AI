@@ -32,65 +32,31 @@ class DecisionRuntime:
         self.rag_service = RAGService()
         self.graph = DecisionGraph(self.llm_service, self.rag_service)
 
-    def _build_initial_snapshot(self, session_id: str, query: str, context: dict[str, Any]) -> QueryResponse:
+    def _build_initial_snapshot(
+        self, session_id: str, query: str, context: dict[str, Any]
+    ) -> QueryResponse:
         now = datetime.utcnow()
-        # Named personas from master spec — order matches EXPERT_TYPES in decision_graph.py
+        expert_types = context.get("expert_types") or [
+            "research",
+            "risk",
+            "finance",
+            "strategy",
+            "policy",
+        ]
+        expert_types = [
+            e
+            for e in expert_types
+            if e in {"research", "risk", "finance", "strategy", "policy"}
+        ]
+        if not expert_types:
+            expert_types = ["research", "risk", "finance", "strategy", "policy"]
+
         agents = [
             AgentResponse(
                 id=f"{session_id}-planner",
                 name="Planner",
                 agent_type=AgentType.PLANNER,
                 role="Problem decomposition and planning",
-                status=AgentStatus.PENDING,
-                progress=0,
-                created_at=now,
-                updated_at=now,
-            ),
-            AgentResponse(
-                id=f"{session_id}-research",
-                name="Priya",
-                agent_type=AgentType.RESEARCH,
-                role="Research & Intelligence Agent",
-                status=AgentStatus.PENDING,
-                progress=0,
-                created_at=now,
-                updated_at=now,
-            ),
-            AgentResponse(
-                id=f"{session_id}-risk",
-                name="Arjun",
-                agent_type=AgentType.RISK,
-                role="Risk Analyst Agent",
-                status=AgentStatus.PENDING,
-                progress=0,
-                created_at=now,
-                updated_at=now,
-            ),
-            AgentResponse(
-                id=f"{session_id}-finance",
-                name="Kavya",
-                agent_type=AgentType.FINANCE,
-                role="Financial Strategy Agent",
-                status=AgentStatus.PENDING,
-                progress=0,
-                created_at=now,
-                updated_at=now,
-            ),
-            AgentResponse(
-                id=f"{session_id}-strategy",
-                name="Ravi",
-                agent_type=AgentType.STRATEGY,
-                role="Strategy & Execution Agent",
-                status=AgentStatus.PENDING,
-                progress=0,
-                created_at=now,
-                updated_at=now,
-            ),
-            AgentResponse(
-                id=f"{session_id}-policy",
-                name="Meera",
-                agent_type=AgentType.POLICY,
-                role="Policy & Government Schemes Agent",
                 status=AgentStatus.PENDING,
                 progress=0,
                 created_at=now,
@@ -128,27 +94,128 @@ class DecisionRuntime:
             ),
         ]
 
+        expert_map = {
+            "research": ("Priya", AgentType.RESEARCH, "Research & Intelligence Agent"),
+            "risk": ("Arjun", AgentType.RISK, "Risk Analyst Agent"),
+            "finance": ("Kavya", AgentType.FINANCE, "Financial Strategy Agent"),
+            "strategy": ("Ravi", AgentType.STRATEGY, "Strategy & Execution Agent"),
+            "policy": ("Meera", AgentType.POLICY, "Policy & Government Schemes Agent"),
+        }
+
+        expert_agents = []
+        for expert in expert_types:
+            name, agent_type, role = expert_map[expert]
+            expert_agents.append(
+                AgentResponse(
+                    id=f"{session_id}-{expert}",
+                    name=name,
+                    agent_type=agent_type,
+                    role=role,
+                    status=AgentStatus.PENDING,
+                    progress=0,
+                    created_at=now,
+                    updated_at=now,
+                )
+            )
+
+        agents = [agents[0], *expert_agents, *agents[1:]]
+
         steps = [
-            WorkflowStep(id=1, name="Planner", stage=WorkflowStage.PLANNER, status=AgentStatus.PENDING),
-            WorkflowStep(id=2, name="Experts", stage=WorkflowStage.EXPERTS, status=AgentStatus.PENDING),
-            WorkflowStep(id=3, name="Debate", stage=WorkflowStage.DEBATE, status=AgentStatus.PENDING),
-            WorkflowStep(id=4, name="Simulation", stage=WorkflowStage.SIMULATION, status=AgentStatus.PENDING),
-            WorkflowStep(id=5, name="Consensus", stage=WorkflowStage.CONSENSUS, status=AgentStatus.PENDING),
+            WorkflowStep(
+                id=1,
+                name="Planner",
+                stage=WorkflowStage.PLANNER,
+                status=AgentStatus.PENDING,
+            ),
+            WorkflowStep(
+                id=2,
+                name="Experts",
+                stage=WorkflowStage.EXPERTS,
+                status=AgentStatus.PENDING,
+            ),
+            WorkflowStep(
+                id=3,
+                name="Debate",
+                stage=WorkflowStage.DEBATE,
+                status=AgentStatus.PENDING,
+            ),
+            WorkflowStep(
+                id=4,
+                name="Simulation",
+                stage=WorkflowStage.SIMULATION,
+                status=AgentStatus.PENDING,
+            ),
+            WorkflowStep(
+                id=5,
+                name="Consensus",
+                stage=WorkflowStage.CONSENSUS,
+                status=AgentStatus.PENDING,
+            ),
         ]
 
         graph = ReasoningGraph(
             nodes=[
-                ReasoningNode(id="planner", label="Planner", stage=WorkflowStage.PLANNER, status=AgentStatus.PENDING, position={"x": 0, "y": 0}),
-                ReasoningNode(id="experts", label="Experts", stage=WorkflowStage.EXPERTS, status=AgentStatus.PENDING, position={"x": 180, "y": 0}),
-                ReasoningNode(id="debate", label="Debate", stage=WorkflowStage.DEBATE, status=AgentStatus.PENDING, position={"x": 360, "y": 0}),
-                ReasoningNode(id="simulation", label="Simulation", stage=WorkflowStage.SIMULATION, status=AgentStatus.PENDING, position={"x": 540, "y": 0}),
-                ReasoningNode(id="consensus", label="Consensus", stage=WorkflowStage.CONSENSUS, status=AgentStatus.PENDING, position={"x": 720, "y": 0}),
+                ReasoningNode(
+                    id="planner",
+                    label="Planner",
+                    stage=WorkflowStage.PLANNER,
+                    status=AgentStatus.PENDING,
+                    position={"x": 0, "y": 0},
+                ),
+                ReasoningNode(
+                    id="experts",
+                    label="Experts",
+                    stage=WorkflowStage.EXPERTS,
+                    status=AgentStatus.PENDING,
+                    position={"x": 180, "y": 0},
+                ),
+                ReasoningNode(
+                    id="debate",
+                    label="Debate",
+                    stage=WorkflowStage.DEBATE,
+                    status=AgentStatus.PENDING,
+                    position={"x": 360, "y": 0},
+                ),
+                ReasoningNode(
+                    id="simulation",
+                    label="Simulation",
+                    stage=WorkflowStage.SIMULATION,
+                    status=AgentStatus.PENDING,
+                    position={"x": 540, "y": 0},
+                ),
+                ReasoningNode(
+                    id="consensus",
+                    label="Consensus",
+                    stage=WorkflowStage.CONSENSUS,
+                    status=AgentStatus.PENDING,
+                    position={"x": 720, "y": 0},
+                ),
             ],
             edges=[
-                ReasoningEdge(id="e-planner-experts", source="planner", target="experts", label="plan"),
-                ReasoningEdge(id="e-experts-debate", source="experts", target="debate", label="challenge"),
-                ReasoningEdge(id="e-debate-simulation", source="debate", target="simulation", label="simulate"),
-                ReasoningEdge(id="e-simulation-consensus", source="simulation", target="consensus", label="decide"),
+                ReasoningEdge(
+                    id="e-planner-experts",
+                    source="planner",
+                    target="experts",
+                    label="plan",
+                ),
+                ReasoningEdge(
+                    id="e-experts-debate",
+                    source="experts",
+                    target="debate",
+                    label="challenge",
+                ),
+                ReasoningEdge(
+                    id="e-debate-simulation",
+                    source="debate",
+                    target="simulation",
+                    label="simulate",
+                ),
+                ReasoningEdge(
+                    id="e-simulation-consensus",
+                    source="simulation",
+                    target="consensus",
+                    label="decide",
+                ),
             ],
         )
 
@@ -165,7 +232,9 @@ class DecisionRuntime:
             updated_at=now,
         )
 
-    async def create_session(self, query: str, context: dict[str, Any]) -> QueryResponse:
+    async def create_session(
+        self, query: str, context: dict[str, Any]
+    ) -> QueryResponse:
         session_id = str(uuid4())
         snapshot = self._build_initial_snapshot(session_id, query, context)
         await session_store.save(snapshot)
@@ -187,7 +256,9 @@ class DecisionRuntime:
         if snapshot is None:
             return
 
-        async def on_event(updated_snapshot: QueryResponse, event_type: str, message: str) -> None:
+        async def on_event(
+            updated_snapshot: QueryResponse, event_type: str, message: str
+        ) -> None:
             await session_store.save(updated_snapshot)
             await session_cache.set_snapshot(updated_snapshot)
             await session_event_bus.publish(
@@ -244,7 +315,9 @@ class DecisionRuntime:
             await session_cache.set_snapshot(stored)
         return stored
 
-    async def list_sessions(self, limit: int = 20, skip: int = 0) -> list[QueryResponse]:
+    async def list_sessions(
+        self, limit: int = 20, skip: int = 0
+    ) -> list[QueryResponse]:
         return await session_store.list(limit=limit, skip=skip)
 
     async def delete_session(self, session_id: str) -> None:

@@ -5,9 +5,8 @@ from contextlib import asynccontextmanager
 import uvicorn
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import JSONResponse
 
-from api.routes import agents, queries, simulations, council, debate
+from app.api.routes import agents, intel, queries, simulations, council, debate, query
 from core.config import settings
 from core.database import init_db
 from services.gradient_ai import gradient_client
@@ -20,11 +19,13 @@ logger = logging.getLogger(__name__)
 async def _seed_knowledge_base() -> None:
     """Index domain documents into Qdrant on first startup."""
     try:
-        from services.rag_service import RAGService, FALLBACK_KB
+        from services.rag_service import RAGService
+
         rag = RAGService()
         await rag._init()
         if rag._qdrant_ok and rag._embedder_ok:
             from seed_knowledge import ALL_DOCS
+
             logger.info("Seeding %d documents into Qdrant...", len(ALL_DOCS))
             for doc in ALL_DOCS:
                 await rag.ingest_document(
@@ -36,7 +37,9 @@ async def _seed_knowledge_base() -> None:
                 )
             logger.info("Knowledge base seeding complete.")
         else:
-            logger.warning("Qdrant or embedder unavailable — using in-memory fallback KB.")
+            logger.warning(
+                "Qdrant or embedder unavailable — using in-memory fallback KB."
+            )
     except Exception as exc:
         logger.warning("Knowledge base seeding skipped: %s", exc)
 
@@ -63,21 +66,26 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-app.include_router(agents.router,      prefix="/api/agents",      tags=["agents"])
-app.include_router(queries.router,     prefix="/api/queries",     tags=["queries"])
+app.include_router(agents.router, prefix="/api/agents", tags=["agents"])
+app.include_router(intel.router, prefix="/api/intel", tags=["intel"])
+app.include_router(queries.router, prefix="/api/queries", tags=["queries"])
 app.include_router(simulations.router, prefix="/api/simulations", tags=["simulations"])
-app.include_router(council.router,     prefix="/api/council",     tags=["llm-council"])
-app.include_router(debate.router,      prefix="/api/debate",      tags=["debate"])
+app.include_router(council.router, prefix="/api/council", tags=["llm-council"])
+app.include_router(debate.router, prefix="/api/debate", tags=["debate"])
+app.include_router(query.router, tags=["workflow-stream"])
 
 
 @app.get("/")
 async def root():
-    return {"message": "OmniMind AI API is running", "provider": "DigitalOcean Gradient AI"}
+    return {
+        "message": "OmniMind AI API is running",
+        "provider": "DigitalOcean Gradient AI",
+    }
 
 
 @app.get("/health")
 async def health_check():
-    cache_health  = await session_cache.health()
+    cache_health = await session_cache.health()
     memory_health = await memory_service.health()
     return {
         "status": "healthy",

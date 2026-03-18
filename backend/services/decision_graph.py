@@ -2,10 +2,11 @@
 LangGraph decision workflow:
   Planner → Experts (Priya/Arjun/Kavya/Ravi/Meera) → Debate → Simulation → Consensus
 """
+
 from __future__ import annotations
 
 from datetime import datetime
-from typing import Any, Awaitable, Callable, TypedDict
+from typing import Awaitable, Callable, TypedDict
 
 from langgraph.graph import END, StateGraph
 
@@ -25,15 +26,15 @@ from models.schemas import (
 from services.llm_service import AGENT_META, LLMService
 from services.rag_service import RAGService
 
-# Expert agents in order — maps agent_type key → index in snapshot.agents
-EXPERT_TYPES = ["research", "risk", "finance", "strategy", "policy"]
+# Default expert agents in order.
+DEFAULT_EXPERT_TYPES = ["research", "risk", "finance", "strategy", "policy"]
 
 
 class DecisionState(TypedDict, total=False):
     snapshot: QueryResponse
     retrieved_docs: list[KnowledgeDocument]
     planner_output: str
-    expert_outputs: dict[str, str]   # agent_type → text
+    expert_outputs: dict[str, str]  # agent_type → text
     debate_summary: str
 
 
@@ -44,17 +45,17 @@ class DecisionGraph:
         self._cb: Callable[[QueryResponse, str, str], Awaitable[None]] | None = None
 
         wf = StateGraph(DecisionState)
-        wf.add_node("planner",    self._planner_node)
-        wf.add_node("experts",    self._experts_node)
-        wf.add_node("debate",     self._debate_node)
+        wf.add_node("planner", self._planner_node)
+        wf.add_node("experts", self._experts_node)
+        wf.add_node("debate", self._debate_node)
         wf.add_node("simulation", self._simulation_node)
-        wf.add_node("consensus",  self._consensus_node)
+        wf.add_node("consensus", self._consensus_node)
         wf.set_entry_point("planner")
-        wf.add_edge("planner",    "experts")
-        wf.add_edge("experts",    "debate")
-        wf.add_edge("debate",     "simulation")
+        wf.add_edge("planner", "experts")
+        wf.add_edge("experts", "debate")
+        wf.add_edge("debate", "simulation")
         wf.add_edge("simulation", "consensus")
-        wf.add_edge("consensus",  END)
+        wf.add_edge("consensus", END)
         self.graph = wf.compile()
 
     async def run(
@@ -66,15 +67,26 @@ class DecisionGraph:
         result = await self.graph.ainvoke({"snapshot": snapshot, "retrieved_docs": []})
         return result["snapshot"]
 
-    async def _emit(self, snapshot: QueryResponse, event_type: str, message: str) -> None:
+    async def _emit(
+        self, snapshot: QueryResponse, event_type: str, message: str
+    ) -> None:
         if self._cb:
             await self._cb(snapshot, event_type, message)
 
-    def _agent_by_type(self, snapshot: QueryResponse, agent_type: str) -> AgentResponse | None:
+    def _agent_by_type(
+        self, snapshot: QueryResponse, agent_type: str
+    ) -> AgentResponse | None:
         for a in snapshot.agents:
             if str(a.agent_type) == agent_type:
                 return a
         return None
+
+    def _expert_types_for_snapshot(self, snapshot: QueryResponse) -> list[str]:
+        configured = snapshot.context.get("expert_types") if snapshot.context else None
+        if not configured:
+            return DEFAULT_EXPERT_TYPES
+        normalized = [str(x) for x in configured if str(x) in set(DEFAULT_EXPERT_TYPES)]
+        return normalized or DEFAULT_EXPERT_TYPES
 
     # ── Stage 1: Planner ────────────────────────────────────────────────────
 
@@ -84,7 +96,9 @@ class DecisionGraph:
         snapshot.current_stage = WorkflowStage.PLANNER
         snapshot.workflow_steps[0].status = AgentStatus.ACTIVE
         snapshot.graph.nodes[0].status = AgentStatus.ACTIVE
-        await self._emit(snapshot, "stage.started", "Planner is decomposing the decision problem.")
+        await self._emit(
+            snapshot, "stage.started", "Planner is decomposing the decision problem."
+        )
 
         docs = await self.rag.retrieve_documents(snapshot.query, top_k=5)
         state["retrieved_docs"] = docs
@@ -100,31 +114,42 @@ class DecisionGraph:
             agent.progress = 100
             agent.output = planner_output
             agent.messages = [planner_output]
+            agent.provider = result.get("provider")
+            agent.provider_requested = "gradient"
+            agent.provider_used = result.get("provider")
+            agent.model = result.get("model")
+            agent.tokens = result.get("tokens_used")
+            agent.latency_ms = result.get("latency_ms")
+            agent.fallback_marker = result.get("fallback_marker")
+            agent.retrieved_docs = [d.title for d in docs]
             agent.updated_at = datetime.utcnow()
 
-        snapshot.messages.append(AgentMessage(
-            agent_name="Planner",
-            stage=WorkflowStage.PLANNER,
-            content=planner_output,
-            timestamp=datetime.utcnow(),
-        ))
+        snapshot.messages.append(
+            AgentMessage(
+                agent_name="Planner",
+                stage=WorkflowStage.PLANNER,
+                content=planner_output,
+                timestamp=datetime.utcnow(),
+            )
+        )
         snapshot.workflow_steps[0].status = AgentStatus.COMPLETED
         snapshot.workflow_steps[1].status = AgentStatus.ACTIVE
         snapshot.graph.nodes[0].status = AgentStatus.COMPLETED
         snapshot.graph.nodes[1].status = AgentStatus.ACTIVE
         snapshot.updated_at = datetime.utcnow()
-        await self._emit(snapshot, "stage.completed", "Planner completed task decomposition.")
+        await self._emit(
+            snapshot, "stage.completed", "Planner completed task decomposition."
+        )
         return state
 
     # ── Stage 2: Expert agents (Priya / Arjun / Kavya / Ravi / Meera) ──────
 
     async def _experts_node(self, state: DecisionState) -> DecisionState:
         snapshot = state["snapshot"]
-        docs = state.get("retrieved_docs", [])
         planner_output = state.get("planner_output", "")
         expert_outputs: dict[str, str] = {}
 
-        for agent_type in EXPERT_TYPES:
+        for agent_type in self._expert_types_for_snapshot(snapshot):
             agent = self._agent_by_type(snapshot, agent_type)
             meta = AGENT_META.get(agent_type, {})
             display_name = meta.get("name", agent_type)
@@ -134,15 +159,17 @@ class DecisionGraph:
                 agent.progress = 25
                 agent.updated_at = datetime.utcnow()
 
-            await self._emit(snapshot, "agent.started", f"{display_name} is analysing...")
+            await self._emit(
+                snapshot, "agent.started", f"{display_name} is analysing..."
+            )
 
             # Retrieve domain-specific docs for this agent
             domain_map = {
                 "research": None,
-                "risk":     None,
-                "finance":  "finance",
+                "risk": None,
+                "finance": "finance",
                 "strategy": "business",
-                "policy":   "government_schemes",
+                "policy": "government_schemes",
             }
             domain_docs = await self.rag.retrieve_documents(
                 snapshot.query, top_k=4, collection=domain_map.get(agent_type)
@@ -163,15 +190,28 @@ class DecisionGraph:
                 agent.progress = 100
                 agent.output = text
                 agent.messages = [text]
+                agent.provider = result.get("provider")
+                agent.provider_requested = "gradient"
+                agent.provider_used = result.get("provider")
+                agent.model = result.get("model")
+                agent.tokens = result.get("tokens_used")
+                agent.latency_ms = result.get("latency_ms")
+                agent.fallback_marker = result.get("fallback_marker")
+                agent.validation_marker = result.get("validation_marker")
+                agent.retrieved_docs = [d.title for d in domain_docs]
                 agent.updated_at = datetime.utcnow()
 
-            snapshot.messages.append(AgentMessage(
-                agent_name=display_name,
-                stage=WorkflowStage.EXPERTS,
-                content=text,
-                timestamp=datetime.utcnow(),
-            ))
-            await self._emit(snapshot, "agent.completed", f"{display_name} delivered expert opinion.")
+            snapshot.messages.append(
+                AgentMessage(
+                    agent_name=display_name,
+                    stage=WorkflowStage.EXPERTS,
+                    content=text,
+                    timestamp=datetime.utcnow(),
+                )
+            )
+            await self._emit(
+                snapshot, "agent.completed", f"{display_name} delivered expert opinion."
+            )
 
         state["expert_outputs"] = expert_outputs
         snapshot.workflow_steps[1].status = AgentStatus.COMPLETED
@@ -180,7 +220,9 @@ class DecisionGraph:
         snapshot.graph.nodes[2].status = AgentStatus.ACTIVE
         snapshot.current_stage = WorkflowStage.DEBATE
         snapshot.updated_at = datetime.utcnow()
-        await self._emit(snapshot, "stage.completed", "Expert analysis phase completed.")
+        await self._emit(
+            snapshot, "stage.completed", "Expert analysis phase completed."
+        )
         return state
 
     # ── Stage 3: Debate ─────────────────────────────────────────────────────
@@ -192,7 +234,9 @@ class DecisionGraph:
             agent.status = AgentStatus.ACTIVE
             agent.progress = 40
             agent.updated_at = datetime.utcnow()
-        await self._emit(snapshot, "stage.started", "Debate Moderator is synthesising trade-offs.")
+        await self._emit(
+            snapshot, "stage.started", "Debate Moderator is synthesising trade-offs."
+        )
 
         result = await self.llm.generate_debate(
             query=snapshot.query,
@@ -206,14 +250,23 @@ class DecisionGraph:
             agent.progress = 100
             agent.output = summary
             agent.messages = [summary]
+            agent.provider = result.get("provider")
+            agent.provider_requested = "gradient"
+            agent.provider_used = result.get("provider")
+            agent.model = result.get("model")
+            agent.tokens = result.get("tokens_used")
+            agent.latency_ms = result.get("latency_ms")
+            agent.fallback_marker = result.get("fallback_marker")
             agent.updated_at = datetime.utcnow()
 
-        snapshot.messages.append(AgentMessage(
-            agent_name="Debate Moderator",
-            stage=WorkflowStage.DEBATE,
-            content=summary,
-            timestamp=datetime.utcnow(),
-        ))
+        snapshot.messages.append(
+            AgentMessage(
+                agent_name="Debate Moderator",
+                stage=WorkflowStage.DEBATE,
+                content=summary,
+                timestamp=datetime.utcnow(),
+            )
+        )
         snapshot.workflow_steps[2].status = AgentStatus.COMPLETED
         snapshot.workflow_steps[3].status = AgentStatus.ACTIVE
         snapshot.graph.nodes[2].status = AgentStatus.COMPLETED
@@ -232,7 +285,9 @@ class DecisionGraph:
             agent.status = AgentStatus.ACTIVE
             agent.progress = 50
             agent.updated_at = datetime.utcnow()
-        await self._emit(snapshot, "stage.started", "Simulation Engine is modelling scenarios.")
+        await self._emit(
+            snapshot, "stage.started", "Simulation Engine is modelling scenarios."
+        )
 
         raw_scenarios = await self.llm.generate_simulations(
             query=snapshot.query,
@@ -276,7 +331,11 @@ class DecisionGraph:
             agent.status = AgentStatus.ACTIVE
             agent.progress = 60
             agent.updated_at = datetime.utcnow()
-        await self._emit(snapshot, "stage.started", "Consensus Engine is forming the final recommendation.")
+        await self._emit(
+            snapshot,
+            "stage.started",
+            "Consensus Engine is forming the final recommendation.",
+        )
 
         scenarios = snapshot.simulation.scenarios if snapshot.simulation else []
         rec = await self.llm.generate_consensus(
@@ -302,18 +361,29 @@ class DecisionGraph:
             agent.progress = 100
             agent.output = rec["analysis"]
             agent.messages = [rec["analysis"]]
+            agent.provider = rec.get("provider")
+            agent.provider_requested = "gradient"
+            agent.provider_used = rec.get("provider")
+            agent.model = rec.get("model")
+            agent.tokens = rec.get("tokens_used")
+            agent.latency_ms = rec.get("latency_ms")
+            agent.fallback_marker = rec.get("fallback_marker")
             agent.updated_at = datetime.utcnow()
 
-        snapshot.messages.append(AgentMessage(
-            agent_name="Consensus Engine",
-            stage=WorkflowStage.CONSENSUS,
-            content=rec["analysis"],
-            timestamp=datetime.utcnow(),
-        ))
+        snapshot.messages.append(
+            AgentMessage(
+                agent_name="Consensus Engine",
+                stage=WorkflowStage.CONSENSUS,
+                content=rec["analysis"],
+                timestamp=datetime.utcnow(),
+            )
+        )
         snapshot.workflow_steps[4].status = AgentStatus.COMPLETED
         snapshot.graph.nodes[4].status = AgentStatus.COMPLETED
         snapshot.current_stage = WorkflowStage.COMPLETED
         snapshot.status = SessionStatus.COMPLETED
         snapshot.updated_at = datetime.utcnow()
-        await self._emit(snapshot, "session.completed", "Consensus recommendation is ready.")
+        await self._emit(
+            snapshot, "session.completed", "Consensus recommendation is ready."
+        )
         return state
