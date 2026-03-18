@@ -146,6 +146,11 @@ class AgentResponse(BaseModel):
     progress: int = 0
     output: Optional[str] = None
     messages: List[str] = Field(default_factory=list)
+    provider: Optional[str] = None
+    model: Optional[str] = None
+    tokens: Optional[int] = None
+    latency_ms: Optional[int] = None
+    retrieved_docs: List[str] = Field(default_factory=list)
     created_at: datetime
     updated_at: datetime
 

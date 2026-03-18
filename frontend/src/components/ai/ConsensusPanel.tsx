@@ -43,6 +43,7 @@ const defaultConsensusData = {
 
 interface ConsensusPanelProps {
   consensus?: ConsensusResponse;
+  simplified?: boolean;
 }
 
 const insightIcons = {
@@ -57,7 +58,7 @@ const insightColors = {
   info: "text-blue-600 bg-blue-500/5 border-blue-500/10",
 };
 
-export default function ConsensusPanel({ consensus }: ConsensusPanelProps) {
+export default function ConsensusPanel({ consensus, simplified = false }: ConsensusPanelProps) {
   const consensusData = consensus
     ? {
         recommendation: consensus.recommendation,
@@ -70,6 +71,17 @@ export default function ConsensusPanel({ consensus }: ConsensusPanelProps) {
         nextSteps: consensus.next_steps,
       }
     : defaultConsensusData;
+
+  const simplifiedInsights = simplified
+    ? consensusData.keyInsights.map((insight) => ({
+        ...insight,
+        text: insight.text.split(".")[0] + (insight.text.includes(".") ? "." : ""),
+      }))
+    : consensusData.keyInsights;
+
+  const simplifiedSteps = simplified
+    ? consensusData.nextSteps.slice(0, 3)
+    : consensusData.nextSteps;
 
   return (
     <div className="space-y-10">
@@ -104,7 +116,7 @@ export default function ConsensusPanel({ consensus }: ConsensusPanelProps) {
       <div className="card p-6">
         <h3 className="text-md font-semibold mb-6">Key Analysis</h3>
         <div className="space-y-4">
-          {consensusData.keyInsights.map((insight, index) => {
+          {simplifiedInsights.map((insight, index) => {
             const Icon =
               insightIcons[insight.type as keyof typeof insightIcons];
             return (
@@ -135,7 +147,7 @@ export default function ConsensusPanel({ consensus }: ConsensusPanelProps) {
       <div className="card p-6">
         <h3 className="text-md font-semibold mb-6">Proposed Action Plan</h3>
         <div className="space-y-4">
-          {consensusData.nextSteps.map((step, index) => (
+          {simplifiedSteps.map((step, index) => (
             <div
               key={index}
               className="flex items-center gap-4 p-3 rounded-lg bg-[var(--bg-main)] border border-[var(--border-primary)] hover:border-blue-500/30 transition-all group"

@@ -24,8 +24,8 @@ interface QueryInterfaceProps {
 
 const exampleQueries = [
   {
-    text: "Develop a market entry strategy for a new business in Tamil Nadu with ₹5 lakh capital.",
-    category: "Business",
+    text: "How can I start an organic vegetable farm in Tamil Nadu with Rs.1.5 lakh?",
+    category: "Agriculture",
     icon: TrendingUp,
     color: "from-blue-600 to-blue-700",
   },

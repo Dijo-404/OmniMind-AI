@@ -17,6 +17,7 @@ interface Agent {
   tokens?: number;
   latency_ms?: number;
   provider?: string;
+  retrieved_docs?: string[];
 }
 
 interface AgentCardProps {
@@ -194,6 +195,22 @@ export default function AgentCard({ agent }: AgentCardProps) {
               </span>
               <span className="text-[10px] font-bold text-[var(--text-secondary)] uppercase tracking-tight">
                 {agent.latency_ms}ms
+              </span>
+            </div>
+            <div className="flex flex-col">
+              <span className="text-[8px] font-semibold text-[var(--text-secondary)]/50 uppercase tracking-widest mb-1">
+                Tokens
+              </span>
+              <span className="text-[10px] font-bold text-[var(--text-secondary)] uppercase tracking-tight">
+                {agent.tokens ?? 0}
+              </span>
+            </div>
+            <div className="flex flex-col">
+              <span className="text-[8px] font-semibold text-[var(--text-secondary)]/50 uppercase tracking-widest mb-1">
+                Sources
+              </span>
+              <span className="text-[10px] font-bold text-[var(--text-secondary)] uppercase tracking-tight">
+                {agent.retrieved_docs?.length ?? 0}
               </span>
             </div>
           </div>

@@ -60,6 +60,11 @@ export interface AgentResponse {
   status: AgentStatus;
   progress: number;
   output?: string;
+  provider?: string;
+  model?: string;
+  tokens?: number;
+  latency_ms?: number;
+  retrieved_docs?: string[];
   messages: string[];
   created_at: string;
   updated_at: string;

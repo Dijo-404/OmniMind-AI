@@ -6,7 +6,7 @@ import uvicorn
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from api.routes import agents, queries, simulations, council, debate
+from api.routes import agents, queries, simulations, council, debate, query
 from core.config import settings
 from core.database import init_db
 from services.gradient_ai import gradient_client
@@ -67,6 +67,7 @@ app.include_router(queries.router,     prefix="/api/queries",     tags=["queries
 app.include_router(simulations.router, prefix="/api/simulations", tags=["simulations"])
 app.include_router(council.router,     prefix="/api/council",     tags=["llm-council"])
 app.include_router(debate.router,      prefix="/api/debate",      tags=["debate"])
+app.include_router(query.router, tags=["workflow-stream"])
 
 
 @app.get("/")

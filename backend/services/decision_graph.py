@@ -107,6 +107,11 @@ class DecisionGraph:
             agent.progress = 100
             agent.output = planner_output
             agent.messages = [planner_output]
+            agent.provider = result.get("provider")
+            agent.model = result.get("model")
+            agent.tokens = result.get("tokens_used")
+            agent.latency_ms = result.get("latency_ms")
+            agent.retrieved_docs = [d.title for d in docs]
             agent.updated_at = datetime.utcnow()
 
         snapshot.messages.append(AgentMessage(
@@ -169,6 +174,11 @@ class DecisionGraph:
                 agent.progress = 100
                 agent.output = text
                 agent.messages = [text]
+                agent.provider = result.get("provider")
+                agent.model = result.get("model")
+                agent.tokens = result.get("tokens_used")
+                agent.latency_ms = result.get("latency_ms")
+                agent.retrieved_docs = [d.title for d in domain_docs]
                 agent.updated_at = datetime.utcnow()
 
             snapshot.messages.append(AgentMessage(
@@ -212,6 +222,10 @@ class DecisionGraph:
             agent.progress = 100
             agent.output = summary
             agent.messages = [summary]
+            agent.provider = result.get("provider")
+            agent.model = result.get("model")
+            agent.tokens = result.get("tokens_used")
+            agent.latency_ms = result.get("latency_ms")
             agent.updated_at = datetime.utcnow()
 
         snapshot.messages.append(AgentMessage(
@@ -308,6 +322,10 @@ class DecisionGraph:
             agent.progress = 100
             agent.output = rec["analysis"]
             agent.messages = [rec["analysis"]]
+            agent.provider = rec.get("provider")
+            agent.model = rec.get("model")
+            agent.tokens = rec.get("tokens_used")
+            agent.latency_ms = rec.get("latency_ms")
             agent.updated_at = datetime.utcnow()
 
         snapshot.messages.append(AgentMessage(

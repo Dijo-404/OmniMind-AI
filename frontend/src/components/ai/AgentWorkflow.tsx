@@ -9,6 +9,7 @@ import AgentCard from "./AgentCard";
 import WorkflowProgress from "./WorkflowProgress";
 import SimulationResults from "./SimulationResults";
 import ConsensusPanel from "./ConsensusPanel";
+import ReasoningGraph from "./ReasoningGraph";
 import { apiClient, QueryResponse, SessionEvent } from "@/lib/api";
 
 interface AgentWorkflowProps {
@@ -21,6 +22,7 @@ export default function AgentWorkflow({ query, onBack }: AgentWorkflowProps) {
   const [snapshot, setSnapshot] = useState<QueryResponse | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [events, setEvents] = useState<SessionEvent[]>([]);
+  const [simplifiedView, setSimplifiedView] = useState(false);
 
   useEffect(() => {
     let socket: WebSocket | null = null;
@@ -121,6 +123,11 @@ export default function AgentWorkflow({ query, onBack }: AgentWorkflowProps) {
       role: agent.role,
       status: agent.status === "failed" ? "pending" : agent.status,
       progress: agent.progress,
+      provider: agent.provider,
+      model: agent.model,
+      tokens: agent.tokens,
+      latency_ms: agent.latency_ms,
+      retrieved_docs: agent.retrieved_docs,
     })) ?? [];
 
   const workflowSteps =
@@ -203,6 +210,12 @@ export default function AgentWorkflow({ query, onBack }: AgentWorkflowProps) {
                 <ArrowDownTrayIcon className="h-4 w-4" />
                 Export Results
               </button>
+              <button
+                onClick={() => setSimplifiedView((prev) => !prev)}
+                className="btn-secondary flex items-center gap-3 h-fit px-6 py-4 text-[10px] font-black uppercase tracking-widest"
+              >
+                {simplifiedView ? "Detailed View" : "Simplified View"}
+              </button>
             </div>
             <div className="pt-6 border-t border-white/5">
               <WorkflowProgress
@@ -281,10 +294,14 @@ export default function AgentWorkflow({ query, onBack }: AgentWorkflowProps) {
             <div className="mt-10">
               <SimulationResults simulation={snapshot?.simulation} />
             </div>
+
+            <div className="mt-10">
+              <ReasoningGraph graph={snapshot?.graph} messages={snapshot?.messages ?? []} />
+            </div>
           </div>
 
           <div className="lg:col-span-1 space-y-10">
-            <ConsensusPanel consensus={snapshot?.consensus} />
+            <ConsensusPanel consensus={snapshot?.consensus} simplified={simplifiedView} />
 
             <div className="card p-10">
               <h3 className="text-lg font-bold text-[var(--text-primary)] tracking-tight mb-8">

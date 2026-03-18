@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { motion } from "framer-motion";
 import {
   BarChart,
@@ -46,6 +47,8 @@ interface SimulationResultsProps {
 export default function SimulationResults({
   simulation,
 }: SimulationResultsProps) {
+  const [multiplier, setMultiplier] = useState(1);
+
   const simulationData = simulation
     ? simulation.scenarios.map((scenario) => ({
         scenario: scenario.name,
@@ -59,8 +62,8 @@ export default function SimulationResults({
 
   const chartData = simulationData.map((item) => ({
     name: item.scenario,
-    Investment: item.investment / 1000,
-    Profit: item.expectedProfit / 1000,
+    Investment: (item.investment * multiplier) / 1000,
+    Profit: (item.expectedProfit * multiplier) / 1000,
     ROI: item.roi,
   }));
 
@@ -81,6 +84,24 @@ export default function SimulationResults({
           </p>
         </div>
       )}
+
+      <div className="mb-8 p-4 bg-[var(--bg-main)] rounded-xl border border-[var(--border-primary)]">
+        <div className="flex items-center justify-between mb-3">
+          <p className="text-[10px] uppercase tracking-widest text-[var(--text-secondary)] font-semibold">
+            Investment Multiplier
+          </p>
+          <p className="text-xs font-bold text-blue-600">{multiplier.toFixed(1)}x</p>
+        </div>
+        <input
+          type="range"
+          min={0.5}
+          max={3}
+          step={0.1}
+          value={multiplier}
+          onChange={(e) => setMultiplier(Number(e.target.value))}
+          className="w-full"
+        />
+      </div>
 
       <div className="mb-10 p-4 bg-[var(--bg-main)] rounded-xl border border-[var(--border-primary)]">
         <ResponsiveContainer width="100%" height={300}>
@@ -155,7 +176,7 @@ export default function SimulationResults({
                   Investment
                 </span>
                 <span className="text-xs font-semibold">
-                  ₹{(scenario.investment / 1000).toFixed(0)}K
+                  ₹{((scenario.investment * multiplier) / 1000).toFixed(0)}K
                 </span>
               </div>
               <div className="flex justify-between items-center pb-2 border-b border-[var(--border-primary)]">
@@ -163,7 +184,7 @@ export default function SimulationResults({
                   Expected Return
                 </span>
                 <span className="text-xs font-bold text-blue-600">
-                  ₹{(scenario.expectedProfit / 1000).toFixed(0)}K
+                  ₹{((scenario.expectedProfit * multiplier) / 1000).toFixed(0)}K
                 </span>
               </div>
               <div className="flex justify-between items-center pt-2">
