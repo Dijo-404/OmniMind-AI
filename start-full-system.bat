@@ -118,16 +118,13 @@ REM ═════════════════════════�
 echo.
 echo  ── Frontend Setup ──────────────────────────────────────────────
 
-if not exist "frontend\node_modules" (
+if not exist "node_modules" (
     echo  [INFO]  node_modules not found — running npm install ...
-    cd frontend
-    npm install
+    call npm install
     if %errorlevel% neq 0 (
         echo  [ERROR] npm install failed.
-        cd ..
         pause & exit /b 1
     )
-    cd ..
     echo  [OK]    Frontend dependencies installed
 ) else (
     echo  [OK]    node_modules exists — skipping install
@@ -152,7 +149,7 @@ call :check_key TAVILY_API_KEY      "Tavily Search (Research + Debate)"
 call :check_key OPENROUTER_API_KEY  "OpenRouter    (Risk Agent - Mixtral)"
 
 REM ════════════════════════════════════════════════════════════════
-REM  LAUNCH BACKEND + FRONTEND IN SEPARATE WINDOWS
+REM  LAUNCH BACKEND + FRONTEND
 REM ════════════════════════════════════════════════════════════════
 echo.
 echo  ── Launching Services ──────────────────────────────────────────
@@ -161,17 +158,6 @@ echo  [INFO]  Frontend →  http://localhost:3000
 echo  [INFO]  API Docs →  http://localhost:8000/docs
 echo.
 
-REM Start backend in new window
-start "OmniMind - Backend" cmd /k "cd /d "%~dp0backend" && ..\backend\venv\Scripts\python.exe -m uvicorn main:app --reload --host 0.0.0.0 --port 8000"
-
-REM Wait 3 seconds for backend to start before launching frontend
-timeout /t 3 /nobreak >nul
-
-REM Start frontend in new window
-start "OmniMind - Frontend" cmd /k "cd /d "%~dp0frontend" && npm run dev"
-
-echo  [OK]    Both services launched in separate windows.
-echo.
 echo  ── Access Points ───────────────────────────────────────────────
 echo   App      →  http://localhost:3000
 echo   API      →  http://localhost:8000
@@ -180,8 +166,12 @@ echo   Council  →  http://localhost:8000/api/council/health
 echo   Debate   →  http://localhost:8000/api/debate/run
 echo  ────────────────────────────────────────────────────────────────
 echo.
-echo  Close the backend and frontend windows to stop the servers.
+echo  Starting services using concurrently...
+echo  (Press Ctrl+C to stop all servers)
 echo.
+
+call npm run dev
+
 pause
 exit /b 0
 
