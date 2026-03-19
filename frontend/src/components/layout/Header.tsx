@@ -13,14 +13,14 @@ import { Brain, Zap } from "lucide-react";
 import { useTheme } from "@/context/ThemeContext";
 
 interface HeaderProps {
-  onSignIn: () => void;
-  onSignUp: () => void;
+  onSignIn?: () => void;
+  onSignUp?: () => void;
   hideAuthButtons?: boolean;
 }
 
 export default function Header({
-  onSignIn,
-  onSignUp,
+  onSignIn = () => {},
+  onSignUp = () => {},
   hideAuthButtons = false,
 }: HeaderProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);

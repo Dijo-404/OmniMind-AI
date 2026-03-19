@@ -14,6 +14,7 @@ class Settings(BaseSettings):
         "http://127.0.0.1:3000",
         "https://omnimind-ai.vercel.app",
     ]
+    ALLOWED_ORIGIN_REGEX: str = r"https://.*\.vercel\.app"
 
     # Database
     DATABASE_URL: str = os.getenv(
