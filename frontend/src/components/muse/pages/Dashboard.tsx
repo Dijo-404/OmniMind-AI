@@ -51,7 +51,7 @@ export default function Dashboard() {
           <div key={i} className="glass-panel rounded-xl p-5 space-y-3">
             <stat.icon className="w-5 h-5 text-muted-foreground" />
             <div>
-              <p className="text-4xl font-black tracking-tight leading-none">{stat.value}</p>
+              <p className="text-4xl font-black tracking-tight leading-none text-foreground">{stat.value}</p>
               <p className="text-xs text-muted-foreground mt-1">{stat.label}</p>
             </div>
           </div>
@@ -77,7 +77,7 @@ export default function Dashboard() {
 
       {/* Agent Cards */}
       <div className="space-y-4">
-        <h2 className="text-3xl font-black tracking-tight">The Council of Five</h2>
+        <h2 className="text-3xl font-black tracking-tight text-foreground">The Council of Five</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {agents.map((agent, i) => (
             <motion.div
@@ -92,7 +92,7 @@ export default function Dashboard() {
                 <div className="flex items-center gap-3">
                   <span className="text-xl">{agent.icon}</span>
                   <div>
-                    <h3 className="text-base font-bold">{agent.name}</h3>
+                    <h3 className="text-base font-bold text-foreground">{agent.name}</h3>
                     <p className="text-xs text-muted-foreground">{agent.role}</p>
                   </div>
                 </div>
@@ -109,7 +109,7 @@ export default function Dashboard() {
 
       {/* Recent Query Preview */}
       <div className="space-y-4">
-        <h2 className="text-2xl font-black tracking-tight">Latest Council Session</h2>
+        <h2 className="text-2xl font-black tracking-tight text-foreground">Latest Council Session</h2>
         <div className="glass-panel rounded-xl p-5 space-y-2">
           <p className="text-xs font-mono text-muted-foreground">Query: "Should I switch from cotton to turmeric farming? 3 acres, ₹80,000 budget"</p>
           <div className="flex items-center gap-4 text-xs text-muted-foreground">

@@ -11,14 +11,14 @@ export default function AgentCouncil() {
   return (
     <div className="p-8 max-w-5xl mx-auto space-y-8">
       <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}>
-        <h1 className="text-3xl font-bold tracking-tight">Agent Council</h1>
+        <h1 className="text-3xl font-bold tracking-tight text-foreground">Agent Council</h1>
         <p className="text-muted-foreground mt-1">Five expert agents analyse your query from distinct perspectives.</p>
       </motion.div>
 
       {/* Query */}
       <div className="glass-panel rounded-lg p-5">
         <p className="text-xs font-mono text-muted-foreground uppercase tracking-wider mb-2">Active Query</p>
-        <p className="text-sm font-medium">"Should I switch from cotton to turmeric farming? I have 3 acres in Madurai and ₹80,000 to invest."</p>
+        <p className="text-sm font-medium text-foreground">"Should I switch from cotton to turmeric farming? I have 3 acres in Madurai and ₹80,000 to invest."</p>
       </div>
 
       {/* Agent Responses */}
@@ -36,7 +36,7 @@ export default function AgentCouncil() {
               <div className="flex items-center gap-3">
                 <span className="text-lg">{agent.icon}</span>
                 <div>
-                  <span className="text-sm font-semibold">{agent.name}</span>
+                  <span className="text-sm font-semibold text-foreground">{agent.name}</span>
                   <span className="text-xs text-muted-foreground ml-2">— {agent.role}</span>
                 </div>
               </div>
