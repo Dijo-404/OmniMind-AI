@@ -22,9 +22,19 @@ npm run install:all
 
 ### 2. Neural Launch
 Start the entire cognitive engine (Frontend + Backend) concurrently:
-```bash
-npm run dev
+
+**Windows**:
+```bat
+start-full-system.bat
 ```
+
+**Linux / macOS (Neural Shell)**:
+```bash
+chmod +x start-vanguard.sh
+./start-vanguard.sh
+```
+
+*(Alternatively, use `npm run dev` from the root for direct terminal output Control).*
 
 ### 3. Verification Path
 | URL | Context |
