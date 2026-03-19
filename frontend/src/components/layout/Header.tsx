@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -17,6 +17,7 @@ interface HeaderProps {
   onSignUp: () => void;
   user: { name: string; email: string } | null;
   onSignOut: () => void;
+  hideAuthButtons?: boolean;
 }
 
 export default function Header({
@@ -24,6 +25,7 @@ export default function Header({
   onSignUp,
   user,
   onSignOut,
+  hideAuthButtons = false,
 }: HeaderProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { theme, toggleTheme } = useTheme();
@@ -122,28 +124,30 @@ export default function Header({
 
         <div className="hidden lg:flex lg:flex-1 lg:justify-end lg:items-center lg:gap-x-6">
           {!user ? (
-            <>
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="btn-ghost text-xs font-black uppercase tracking-widest"
-                onClick={onSignIn}
-              >
-                Log In
-              </motion.button>
-              <motion.button
-                whileHover={{
-                  scale: 1.05,
-                  boxShadow: "0 0 25px rgba(10, 10, 10, 0.28)",
-                }}
-                whileTap={{ scale: 0.95 }}
-                className="btn-primary flex items-center gap-2 text-xs uppercase tracking-widest px-8"
-                onClick={onSignUp}
-              >
-                <Zap className="w-4 h-4" />
-                Sign Up
-              </motion.button>
-            </>
+            !hideAuthButtons && (
+              <>
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="btn-ghost text-xs font-black uppercase tracking-widest"
+                  onClick={onSignIn}
+                >
+                  Log In
+                </motion.button>
+                <motion.button
+                  whileHover={{
+                    scale: 1.05,
+                    boxShadow: "0 0 25px rgba(10, 10, 10, 0.28)",
+                  }}
+                  whileTap={{ scale: 0.95 }}
+                  className="btn-primary flex items-center gap-2 text-xs uppercase tracking-widest px-8"
+                  onClick={onSignUp}
+                >
+                  <Zap className="w-4 h-4" />
+                  Sign Up
+                </motion.button>
+              </>
+            )
           ) : (
             <div className="flex items-center gap-6">
               <div className="flex items-center gap-3">
