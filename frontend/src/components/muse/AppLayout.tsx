@@ -12,7 +12,9 @@ import {
   Activity,
   FileText,
   Zap,
+  LogOut,
 } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 const navItems = [
   { to: "/muse", icon: LayoutDashboard, label: "Dashboard" },
@@ -67,10 +69,23 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
         </nav>
 
         {/* Footer */}
-        <div className="p-4 border-t border-border">
-          <div className="flex items-center gap-2 text-[10px] font-mono text-muted-foreground uppercase tracking-wider">
-            <div className="status-dot-online" />
-            Powered by Airia
+        <div className="p-4 border-t border-border space-y-4">
+          <button
+            onClick={() => {
+              localStorage.removeItem("user");
+              window.location.href = "/";
+            }}
+            className="flex items-center gap-3 w-full px-3 py-2.5 rounded-md text-sm text-red-500 hover:bg-red-500/10 transition-all font-bold uppercase tracking-widest"
+          >
+            <LogOut className="w-4 h-4" />
+            Sign Out
+          </button>
+          <div className="flex items-center justify-between px-3">
+            <div className="flex items-center gap-2 text-[10px] font-mono text-muted-foreground uppercase tracking-wider">
+              <div className="status-dot-online" />
+              Sync Active
+            </div>
+            <span className="text-[10px] font-mono text-muted-foreground uppercase">V4.1.2</span>
           </div>
         </div>
       </aside>
