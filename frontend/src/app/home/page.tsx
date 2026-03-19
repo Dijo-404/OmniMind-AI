@@ -93,8 +93,6 @@ export default function HomePage() {
       <Header
         onSignIn={() => setIsAuthModalOpen(true)}
         onSignUp={() => setIsAuthModalOpen(true)}
-        user={user}
-        onSignOut={() => setUser(null)}
       />
 
       <AnimatePresence mode="wait">
