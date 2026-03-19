@@ -1,88 +1,371 @@
-# OmniMind AI — Project Vanguard 🚀
+# OmniMind AI
 
-Autonomous multi-agent decision intelligence platform with unified orchestration. Transform complex problems into structured solutions using a collaborative council of AI experts.
+OmniMind AI is a multi-agent decision intelligence platform that combines structured reasoning, retrieval-augmented knowledge, simulations, and consensus generation.
 
-## 💎 Platform Core
-OmniMind AI is designed to collapse complexity through adversarial reasoning and consensus-driven synthesis.
+It supports two orchestration modes:
 
-- **Council Mode**: 7-agent deliberation workflow leveraging OpenAI, Gemini, and Groq.
-- **Debate Mode**: 4-agent structured argument pipeline for high-stakes decisions.
-- **RAG Intelligence**: Knowledge retrieval with zero-hallucination grounding.
-- **Scenario Simulations**: Forward-looking impact analysis for strategic pivots.
+- Council mode: seven coordinated specialist agents
+- Debate mode: four persona-driven agents with explicit argumentation
 
-## ⚡ Quick Start (High-Integrity Mode)
+## Table of Contents
 
-The project is managed via a root-level workspace for seamless full-stack orchestration.
+- Architecture at a glance
+- How the system works
+- Repository layout
+- Local development setup
+- Runtime endpoints
+- API map
+- Environment variables
+- Deployment model
+- Troubleshooting
 
-### 1. Unified Environment
-Install all dependencies for both Frontend (Next.js) and Backend (FastAPI) in one command:
-```bash
-npm run install:all
+## Architecture at a Glance
+
+### System Context
+
+```mermaid
+flowchart LR
+    User[User] --> Web[Next.js Frontend]
+    Web --> API[FastAPI Backend]
+
+    API --> Council[Council Orchestrator]
+    API --> Debate[Debate Orchestrator]
+    API --> Workflow[Decision Graph Pipeline]
+
+    Workflow --> Providers[Provider Router]
+    Providers --> Airia[Airia]
+    Providers --> OpenAI[OpenAI]
+    Providers --> Gemini[Gemini]
+    Providers --> Groq[Groq]
+    Providers --> OpenRouter[OpenRouter]
+    Providers --> Tavily[Tavily]
+
+    Workflow --> RAG[RAG Service]
+    RAG --> VectorStore[Qdrant or In-Memory Vector Store]
+
+    API --> DB[SQLite Local or PostgreSQL Production]
+    API --> Cache[Redis Optional]
 ```
 
-### 2. Neural Launch
-Start the entire cognitive engine (Frontend + Backend) concurrently:
+### Backend Component View
 
-**Windows**:
+```mermaid
+flowchart TB
+    Entry[FastAPI App Entry] --> Routes[API Routes]
+    Routes --> QueryRoute[Query Routes]
+    Routes --> CouncilRoute[Council Routes]
+    Routes --> DebateRoute[Debate Routes]
+    Routes --> IntelRoute[Intel and Simulations Routes]
+
+    QueryRoute --> QueryService[Decision Graph and Workflow Services]
+    CouncilRoute --> CouncilService[LLM Council Service]
+    DebateRoute --> DebateService[Multi-Agent Debate Service]
+    IntelRoute --> RAGService[Document and RAG Services]
+
+    QueryService --> ProviderRouter[Provider Routing and Fallback]
+    CouncilService --> ProviderRouter
+    DebateService --> ProviderRouter
+
+    QueryService --> Persistence[(Database and Session Store)]
+    RAGService --> Vector[(Qdrant or In-Memory)]
+```
+
+### Decision Pipeline
+
+```mermaid
+flowchart LR
+    Planner[Planner] --> Experts[Expert Agents]
+    Experts --> Debate[Debate and Critique]
+    Debate --> Simulation[Scenario Simulation]
+    Simulation --> Consensus[Consensus Synthesis]
+    Consensus --> Export[Structured Output and Export]
+```
+
+### Request Sequence (Council Run-All)
+
+```mermaid
+sequenceDiagram
+    participant U as User
+    participant F as Frontend
+    participant A as API
+    participant C as Council Service
+    participant P as Provider Router
+
+    U->>F: Submit question
+    F->>A: POST /api/council/chat/start
+    A->>C: Create session
+
+    F->>A: POST /api/council/chat/run-all/{session_id}
+    A->>C: Execute full council flow
+    C->>P: Agent-specific model requests
+    P-->>C: Response with provider metadata
+    C-->>A: Messages and final consensus
+    A-->>F: Session payload
+    F-->>U: Agent outputs, fallback indicators, consensus
+```
+
+## How the System Works
+
+### Council Mode
+
+Council mode runs seven specialist agents with role-specific prompts and provider routing.
+
+| Agent | Role | Typical Provider |
+|---|---|---|
+| Analyst | Logical decomposition and framing | OpenAI |
+| Researcher | Evidence synthesis | OpenAI and Tavily |
+| Critic | Challenge and risk pressure testing | Gemini |
+| Strategist | Strategic planning | Gemini |
+| Debater | Counter-position generation | Groq |
+| Synthesizer | Pattern merge and recommendation shaping | Groq |
+| Verifier | Final coherence and consistency checks | Airia-first fallback model |
+
+### Debate Mode
+
+Debate mode runs persona-driven reasoning for focused argumentation.
+
+| Persona | Role | Typical Provider |
+|---|---|---|
+| Priya | Research intelligence | Tavily and OpenAI |
+| Arjun | Risk analysis | OpenRouter |
+| Kavya | Financial strategy | OpenAI |
+| Ravi | Execution strategy | Gemini |
+
+### Routing and Fallback Policy
+
+- Airia-first fallback is attempted when a requested provider fails.
+- Silent cross-provider drift is blocked.
+- Fallback metadata is propagated to responses.
+- Frontend surfaces requested and used provider information.
+
+Fallback marker format:
+
+```text
+[FALLBACK requested=<provider> used=<provider|none> reason=<reason_code>]
+```
+
+### Persona Output Validation
+
+Persona outputs are validated against required structures. Validation errors are surfaced instead of silently passing malformed output.
+
+Validation marker format:
+
+```text
+[VALIDATION_FAILED persona=<name> missing=<fields>]
+```
+
+## Repository Layout
+
+```text
+OmniMind-AI/
+├── backend/
+│   ├── main.py
+│   ├── api/routes/
+│   ├── app/api/routes/
+│   ├── services/
+│   ├── app/services/
+│   ├── core/
+│   └── models/
+├── frontend/
+│   ├── src/app/
+│   ├── src/components/
+│   ├── src/lib/
+│   └── src/types/
+├── docs/
+├── docker-compose.yml
+├── vercel.json
+└── README.md
+```
+
+Compatibility shims exist under backend/app/api/routes so route imports remain stable while backend reorganization continues.
+
+## Local Development Setup
+
+### Prerequisites
+
+- Node.js 18 or newer
+- npm 8 or newer
+- Python 3.13 or compatible interpreter used by your virtual environment
+
+### Start Everything
+
+Linux and macOS:
+
+```bash
+./start-full-system.sh
+```
+
+Windows:
+
 ```bat
 start-full-system.bat
 ```
 
-**Linux / macOS (Neural Shell)**:
+### Start Services Separately
+
+Backend only:
+
 ```bash
-chmod +x start-vanguard.sh
-./start-vanguard.sh
+./start-backend.sh
 ```
 
-*(Alternatively, use `npm run dev` from the root for direct terminal output Control).*
+Frontend only:
 
-### 3. Verification Path
-| URL | Context |
+```bash
+./start-frontend.sh
+```
+
+### Manual Frontend Commands
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+### Manual Backend Commands
+
+```bash
+cd backend
+pip install -r requirements.txt
+uvicorn main:app --reload --host 0.0.0.0 --port 8000
+```
+
+## Runtime Endpoints
+
+| URL | Purpose |
 |---|---|
-| http://localhost:3000 | **Vanguard Landing Hub** |
-| http://localhost:8000/docs | **Core API Swagger** |
-| http://localhost:3000/mode-selection | **Session Link Hub (Live/Demo)** |
+| http://localhost:3000 | Frontend UI |
+| http://localhost:8000 | Backend API root |
+| http://localhost:8000/docs | OpenAPI and Swagger UI |
+| http://localhost:8000/health | Global health status |
+| http://localhost:8000/api/council/health | Council routing and provider health |
+| http://localhost:8000/api/integrations/status | Integration status |
 
----
+## API Map
 
-## 🏗️ Architecture: Layered Intelligence
+### Core Workflow
 
-OmniMind operates on a 6-layer architecture designed for truth integrity:
-
-1.  **Identity Link (Auth)**: Secure entry via neural-sync UI.
-2.  **Session Mode Selection**: Bridge between **Live API Link** and **Simulation Demo**.
-3.  **Council Orchestrator**: LangGraph-driven routing across multi-cloud providers.
-4.  **Cognitive Experts**: Specialized roles (Analyst, Researcher, Critic, Strategist, etc.).
-5.  **Adversarial Debate**: Stress-testing assumptions through cross-agent conflict.
-6.  **Consensus Synthesis**: Multi-provider agreement on the optimal path.
-
----
-
-## 🛠️ Tech Stack: The Vanguard Engine
-
-- **Frontend**: Next.js 14, Framer Motion (Neural Animations), Tailwind CSS, Zustand.
-- **Backend**: FastAPI (Python 3.13), Uvicorn, LangGraph.
-- **Intelligence**: Airia (Primary), OpenAI GPT-4o, Google Gemini 1.5, Groq Llama 3.1.
-- **Data Persistence**: SQLite (Standard), PostgreSQL (Scalable), Redis (Low-Latency Cache).
-- **Knowledge Bridge**: Qdrant Vector DB & Sentence Transformers.
-
----
-
-## 🏛️ Council & Debate Persona Mapping
-
-| Persona | Domain | Primary Model |
+| Method | Path | Purpose |
 |---|---|---|
-| **Analyst** | Logical Validity | GPT-4o |
-| **Researcher** | Intelligence/Search | GPT-4o + Tavily |
-| **Critic** | Risk & Friction | Gemini 1.5 Flash |
-| **Strategist** | Roadmap Architecture | Gemini 1.5 Flash |
-| **Debater** | Adversarial Pressure | Llama 3.1 70B |
-| **Synthesizer** | Pattern Convergence | Llama 3.1 70B |
-| **Verifier** | Final Integration | DeepSeek/Airia |
+| POST | /api/queries | Start full decision workflow |
+| GET | /api/queries/{id} | Get workflow state |
+| WS | /api/queries/{id}/stream | Stream workflow events |
+| GET | /api/queries/{id}/export?format=json\|pdf | Export workflow artifact |
+| POST | /api/simulations | Run scenario simulation |
 
----
+### Human-in-the-Loop
 
-## 📜 Professional Standard
-This project adheres to **Truth Integrity** and **Response Warp** standards. No silent provider drift is permitted; all fallbacks are surface-marked in the UI for full transparency.
+| Method | Path | Purpose |
+|---|---|---|
+| POST | /api/queries/{id}/hitl/decision | Approve or reject a gate |
+| GET | /api/queries/{id}/hitl | List recorded gate decisions |
 
-**© 2026 OmniMind AI Team. All Rights Reserved.**
+### Integrations
+
+| Method | Path | Purpose |
+|---|---|---|
+| GET | /api/integrations/status | Integration connectivity |
+| POST | /api/queries/{id}/integrations/execute | Execute integration actions |
+| GET | /api/queries/{id}/integrations | Integration history |
+
+### Council
+
+| Method | Path | Purpose |
+|---|---|---|
+| GET | /api/council/health | Provider and routing health |
+| GET | /api/council/agents | Agent registry |
+| POST | /api/council/chat/start | Create council session |
+| POST | /api/council/chat/run-all/{session_id} | Execute full council run |
+
+### Debate
+
+| Method | Path | Purpose |
+|---|---|---|
+| POST | /api/debate/run | Execute debate flow |
+
+## Environment Variables
+
+### Core
+
+| Variable | Purpose |
+|---|---|
+| DATABASE_URL | SQL persistence layer |
+| REDIS_URL | Optional cache and memory services |
+| QDRANT_URL | Optional vector store |
+
+### Airia and Legacy Gradient Aliases
+
+| Variable | Purpose |
+|---|---|
+| AIRIA_API_KEY | Airia authentication |
+| AIRIA_API_URL | Airia endpoint base URL |
+| AIRIA_AGENT_ID | Optional Airia agent route |
+| GRADIENT_API_KEY | Legacy alias of AIRIA_API_KEY |
+| GRADIENT_BASE_URL | Legacy alias of AIRIA_API_URL |
+| GRADIENT_WORKSPACE_ID | Legacy alias of AIRIA_AGENT_ID |
+
+### Additional Provider Keys
+
+| Variable | Purpose |
+|---|---|
+| OPENAI_API_KEY | Council OpenAI agents |
+| OPENAI_RESEARCH_API_KEY | Priya research analysis |
+| OPENAI_FINANCE_API_KEY | Kavya financial analysis |
+| GOOGLE_API_KEY | Council Gemini agents |
+| GEMINI_API_KEY | Ravi strategy analysis |
+| GROQ_API_KEY | Council Groq agents |
+| OPENROUTER_API_KEY | Arjun risk analysis |
+| TAVILY_API_KEY | Live web retrieval |
+
+## Deployment Model
+
+### Target Topology
+
+```mermaid
+flowchart LR
+    Browser[Client Browser] --> FE[Vercel Frontend]
+    FE --> BE[Hosted FastAPI Backend]
+    BE --> LLMs[Provider APIs]
+    BE --> DB[(PostgreSQL or SQLite)]
+    BE --> Q[(Qdrant Optional)]
+    BE --> R[(Redis Optional)]
+```
+
+### Vercel Notes
+
+- The project includes a resilient vercel.json command strategy that works from either repository root or frontend root.
+- Frontend expects NEXT_PUBLIC_API_URL to point to the deployed backend.
+- Backend CORS should include your Vercel production and preview domains.
+
+## Troubleshooting
+
+### Vercel build fails with no such file or directory for frontend
+
+Cause:
+
+- Build command assumes a frontend subdirectory while Vercel root is already frontend.
+
+Fix:
+
+- Use the included vercel.json, which conditionally changes directory only when frontend exists.
+
+### Frontend cannot reach backend
+
+Checklist:
+
+- Verify NEXT_PUBLIC_API_URL points to the backend base URL.
+- Verify backend CORS allows your frontend domain.
+- Verify backend health endpoint is reachable from the public internet.
+
+### Provider responses are inconsistent
+
+Checklist:
+
+- Confirm provider API keys are configured.
+- Confirm fallback markers appear in payload when fallback happens.
+- Use council health and integration status endpoints for diagnostics.
+
+## License
+
+MIT
