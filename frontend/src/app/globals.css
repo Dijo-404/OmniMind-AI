@@ -6,6 +6,19 @@
 
 @layer base {
   :root {
+    --bg-main: #0a0a0a;
+    --bg-sidebar: #111111;
+    --bg-elev-1: #151515;
+    --bg-elev-2: #1a1a1a;
+    --glass-bg: rgba(10, 10, 10, 0.72);
+    --text-primary: #ffffff;
+    --text-secondary: rgba(255, 255, 255, 0.7);
+    --border-primary: rgba(255, 255, 255, 0.1);
+    --shadow-soft: 0 10px 28px rgba(0, 0, 0, 0.4);
+    --shadow-deep: 0 20px 56px rgba(0, 0, 0, 0.6);
+  }
+
+  .light-theme {
     --bg-main: #ece8e2;
     --bg-sidebar: #e2ded7;
     --bg-elev-1: #f7f5f2;
@@ -184,71 +197,6 @@
 @layer utilities {
   .text-balance {
     text-wrap: balance;
-  }
-
-  [class*="text-white"] {
-    color: #111111 !important;
-  }
-
-  [class*="text-blue-"],
-  [class*="text-indigo-"],
-  [class*="text-purple-"],
-  [class*="text-violet-"],
-  [class*="text-cyan-"] {
-    color: #1a1a1a !important;
-  }
-
-  [class*="text-zinc-100"],
-  [class*="text-zinc-200"],
-  [class*="text-zinc-300"],
-  [class*="text-gray-100"],
-  [class*="text-gray-200"],
-  [class*="text-gray-300"],
-  [class*="text-neutral-100"],
-  [class*="text-neutral-200"],
-  [class*="text-neutral-300"] {
-    color: #1a1a1a !important;
-  }
-
-  [class*="text-white/"] {
-    color: #2f2f2f !important;
-  }
-
-  [class*="bg-blue-"],
-  [class*="bg-indigo-"],
-  [class*="bg-purple-"],
-  [class*="bg-violet-"],
-  [class*="bg-cyan-"] {
-    background-color: #101010 !important;
-    color: #ffffff !important;
-  }
-
-  [class*="from-blue-"],
-  [class*="via-blue-"],
-  [class*="to-blue-"],
-  [class*="from-indigo-"],
-  [class*="to-indigo-"],
-  [class*="from-purple-"],
-  [class*="to-purple-"] {
-    --tw-gradient-from: rgba(12, 12, 12, 0.95) var(--tw-gradient-from-position) !important;
-    --tw-gradient-to: rgba(58, 58, 58, 0.9) var(--tw-gradient-to-position) !important;
-    --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important;
-  }
-
-  [class*="ring-blue-"] {
-    --tw-ring-color: rgba(10, 10, 10, 0.28) !important;
-  }
-
-  [class*="focus:ring-blue-"] {
-    --tw-ring-color: rgba(10, 10, 10, 0.28) !important;
-  }
-
-  [class*="focus:border-blue-"] {
-    border-color: rgba(10, 10, 10, 0.22) !important;
-  }
-
-  [class*="border-blue-"] {
-    border-color: rgba(10, 10, 10, 0.2) !important;
   }
 }
 
