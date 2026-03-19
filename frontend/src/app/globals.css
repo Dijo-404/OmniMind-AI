@@ -7,21 +7,21 @@
 
 @layer base {
   :root {
-    --bg-main: #f2f2f2;
-    --bg-sidebar: #ebebeb;
-    --text-primary: #111111;
-    --text-secondary: #4a4a4a;
-    --border-primary: #d2d2d2;
-    --brand-accent: #111111;
-    --brand-accent-glow: rgba(0, 0, 0, 0.08);
-    --glass-bg: #f7f7f7;
-    --chart-grid: rgba(0, 0, 0, 0.08);
-    --chart-tick: rgba(0, 0, 0, 0.5);
-    --mono-ink: #101010;
-    --mono-ink-soft: #353535;
-    --mono-paper: #efefef;
-    --mono-paper-soft: #f9f9f9;
-    --mono-line: #cdcdcd;
+    --bg-main: #0a0a0a;
+    --bg-sidebar: #010101;
+    --text-primary: #ffffff;
+    --text-secondary: #a3a3a3;
+    --border-primary: #222222;
+    --brand-accent: #ffffff;
+    --brand-accent-glow: rgba(255, 255, 255, 0.08);
+    --glass-bg: #111111;
+    --chart-grid: rgba(255, 255, 255, 0.08);
+    --chart-tick: rgba(255, 255, 255, 0.5);
+    --mono-ink: #ffffff;
+    --mono-ink-soft: #d4d4d4;
+    --mono-paper: #0a0a0a;
+    --mono-paper-soft: #121212;
+    --mono-line: #333333;
   }
 
   .light-theme {
@@ -35,6 +35,11 @@
     --glass-bg: #f7f7f7;
     --chart-grid: rgba(0, 0, 0, 0.05);
     --chart-tick: rgba(0, 0, 0, 0.5);
+    --mono-ink: #101010;
+    --mono-ink-soft: #353535;
+    --mono-paper: #efefef;
+    --mono-paper-soft: #f9f9f9;
+    --mono-line: #cdcdcd;
   }
 
   html {
