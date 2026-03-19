@@ -6,6 +6,26 @@
 
 @layer base {
   :root {
+    --background: 240 10% 4%;
+    --foreground: 0 0% 100%;
+    --card: 240 10% 4%;
+    --card-foreground: 0 0% 100%;
+    --popover: 240 10% 4%;
+    --popover-foreground: 0 0% 100%;
+    --primary: 221 83% 53%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 240 4% 16%;
+    --secondary-foreground: 0 0% 100%;
+    --muted: 240 4% 16%;
+    --muted-foreground: 240 5% 65%;
+    --accent: 240 4% 16%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 240 4% 16%;
+    --input: 240 4% 16%;
+    --ring: 221 83% 53%;
+    
     --bg-main: #0a0a0a;
     --bg-sidebar: #111111;
     --bg-elev-1: #151515;
@@ -19,13 +39,33 @@
   }
 
   .light-theme {
+    --background: 37 30% 91%;
+    --foreground: 240 10% 4%;
+    --card: 37 30% 91%;
+    --card-foreground: 240 10% 4%;
+    --popover: 37 30% 91%;
+    --popover-foreground: 240 10% 4%;
+    --primary: 221 83% 53%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 0 0% 96%;
+    --secondary-foreground: 240 10% 4%;
+    --muted: 0 0% 96%;
+    --muted-foreground: 240 4% 36%;
+    --accent: 0 0% 96%;
+    --accent-foreground: 240 10% 4%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 240 6% 90%;
+    --input: 240 6% 90%;
+    --ring: 221 83% 53%;
+
     --bg-main: #ece8e2;
     --bg-sidebar: #e2ded7;
     --bg-elev-1: #f7f5f2;
     --bg-elev-2: #ede9e3;
     --glass-bg: rgba(255, 255, 255, 0.72);
     --text-primary: #0f0f0f;
-    --text-secondary: #3f3f3f;
+    --text-secondary: #000000;
     --border-primary: rgba(10, 10, 10, 0.14);
     --shadow-soft: 0 10px 28px rgba(12, 12, 12, 0.16);
     --shadow-deep: 0 20px 56px rgba(12, 12, 12, 0.22);
