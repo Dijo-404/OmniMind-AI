@@ -8,7 +8,6 @@ import {
   ShieldCheck,
   Star,
   Layers,
-  Search,
   MessageSquare,
   Lock,
   Mail,
@@ -53,23 +52,23 @@ export default function LandingPage() {
   const handleLogout = () => {
     setUser(null);
     localStorage.removeItem("user");
-    toast.success("Signed out.");
+    toast.success("Disconnected.");
   };
 
   const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    await new Promise(r => setTimeout(r, 1000));
+    await new Promise(r => setTimeout(r, 800));
     
     const userData = { name: formData.name || "Operator", email: formData.email };
     setUser(userData);
     localStorage.setItem("user", JSON.stringify(userData));
     setIsSubmitting(false);
-    toast.success("Access Granted.");
+    toast.success("Identity Verified.");
     
     setTimeout(() => {
       router.push("/muse");
-    }, 400);
+    }, 300);
   };
 
   const handleAuthSuccess = (userData: { name: string; email: string }) => {
@@ -81,11 +80,11 @@ export default function LandingPage() {
   if (!mounted) return null;
 
   return (
-    <div className="relative min-h-screen overflow-hidden bg-[#0a0a0a] text-white selection:bg-blue-600 font-[family-name:var(--font-space-grotesk)]">
-      {/* SIMPLE BACKGROUND (NO COMPLEX PARALLAX) */}
+    <div className="relative min-h-screen overflow-hidden bg-[#000000] text-white selection:bg-blue-600 font-[family-name:var(--font-space-grotesk)]">
+      {/* SOLID BACKGROUND */}
       <div className="fixed inset-0 z-0">
-        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-blue-600/10 blur-[150px] rounded-full" />
-        <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-blue-800/10 blur-[150px] rounded-full" />
+         <div className="absolute top-0 left-0 w-full h-full bg-[#050505]" />
+         <div className="absolute top-[10%] left-[10%] w-[30%] h-[30%] bg-blue-600/5 blur-[120px] rounded-full" />
       </div>
 
       <Header 
@@ -96,90 +95,81 @@ export default function LandingPage() {
         hideAuthButtons={true} 
       />
 
-      <main className="relative z-10 pt-44 pb-32 px-6 max-w-7xl mx-auto">
-        <div className="flex flex-col lg:flex-row items-center gap-16 lg:gap-20">
+      <main className="relative z-10 pt-48 pb-32 px-6 max-w-7xl mx-auto">
+        <div className="flex flex-col lg:flex-row items-center gap-20 lg:gap-28">
           
-          {/* LEFT: CONTENT (SOLID WHITE TEXT) */}
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="flex-1 flex flex-col items-center lg:items-start text-center lg:text-left space-y-10"
-          >
-            <div className="inline-flex items-center gap-2 px-4 py-1 rounded border border-white/20 bg-white/5">
+          {/* LEFT: CONTENT (PURE WHITE TEXT - NO GRADIENTS) */}
+          <div className="flex-1 flex flex-col items-center lg:items-start text-center lg:text-left space-y-12">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded border border-white/40 bg-white/5">
                <Fingerprint className="w-4 h-4 text-blue-500" />
-               <span className="text-[10px] font-bold text-white tracking-[0.2em] uppercase">Sanctuary Terminal</span>
+               <span className="text-[10px] font-black text-white uppercase tracking-[0.2em]">Core Protocol</span>
             </div>
 
-            <h1 className="text-6xl md:text-8xl font-black tracking-tighter leading-none text-white uppercase italic">
+            <h1 className="text-6xl md:text-8xl font-black tracking-tighter leading-[0.85] text-white uppercase italic">
               COLLECTIVE <br />
-              <span className="text-blue-500">INTELLIGENCE.</span>
+              INTELLIGENCE.
             </h1>
 
-            <p className="max-w-xl text-white/70 text-lg md:text-xl font-medium leading-relaxed italic">
-              Experience the pinnacle of agentic collaboration. OmniMind orchestrates specialized LLM architectures into a hyper-stable decision engine.
+            <p className="max-w-xl text-white text-lg md:text-xl font-medium leading-relaxed italic border-l-4 border-blue-600 pl-6 bg-white/5 py-4">
+              Hyper-stable agentic orchestration for elite decision makers. Collapse complexity with zero hallucinations. Verified. Precise. Autonomous.
             </p>
 
-            <div className="flex gap-12 pt-4">
-              <div className="flex flex-col">
-                <span className="text-3xl font-black text-white">0.02ms</span>
-                <span className="text-[10px] font-bold text-white/50 uppercase tracking-widest">Inference Response</span>
+            <div className="flex gap-16 pt-6">
+              <div className="flex flex-col border-t-2 border-white/20 pt-4">
+                <span className="text-4xl font-black text-white">0.02ms</span>
+                <span className="text-[10px] font-black text-white/50 uppercase tracking-[0.3em]">Latency</span>
               </div>
-              <div className="flex flex-col">
-                <span className="text-3xl font-black text-white">99%</span>
-                <span className="text-[10px] font-bold text-white/50 uppercase tracking-widest">Truth Accuracy</span>
+              <div className="flex flex-col border-t-2 border-white/20 pt-4">
+                <span className="text-4xl font-black text-white">99.9%</span>
+                <span className="text-[10px] font-black text-white/50 uppercase tracking-[0.3em]">Integrity</span>
               </div>
             </div>
-          </motion.div>
+          </div>
 
-          {/* RIGHT: SIMPLE & VISIBLE AUTH CARD (NO 3D TILT) */}
-          <motion.div 
-            initial={{ opacity: 0, scale: 0.98 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="flex-1 w-full max-w-lg"
-          >
-            <div className="bg-[#111111] border border-white/10 rounded-3xl p-10 lg:p-14 shadow-2xl space-y-10">
+          {/* RIGHT: VIBRANT AUTH CARD */}
+          <div className="flex-1 w-full max-w-lg">
+            <div className="bg-[#111111] border-2 border-white/20 rounded-[2.5rem] p-10 lg:p-14 shadow-[0_0_100px_rgba(37,99,235,0.15)] space-y-12">
               
-              <div className="flex items-center justify-between">
+              <div className="flex items-center justify-between border-b border-white/10 pb-8">
                 <div>
-                  <h2 className="text-3xl font-black text-white uppercase italic tracking-tighter">
-                    {user ? "IDENTIFIED" : (isLogin ? "Sign In" : "Sign Up")}
+                  <h2 className="text-4xl font-black text-white uppercase italic tracking-tighter">
+                    {user ? "ACCESS" : (isLogin ? "SIGN IN" : "SIGN UP")}
                   </h2>
-                  <p className="text-[10px] font-bold text-white/30 uppercase tracking-[0.2em]">Authorized Access Only</p>
+                  <p className="text-[10px] font-black text-blue-600 uppercase tracking-[0.3em]">Sanctuary Entrance</p>
                 </div>
-                <div className="w-12 h-12 rounded-xl bg-blue-600 flex items-center justify-center shadow-lg shadow-blue-600/20">
-                  <Brain className="w-7 h-7 text-black" />
+                <div className="w-14 h-14 rounded-2xl bg-blue-600 flex items-center justify-center p-3 shadow-xl">
+                  <Brain className="w-full h-full text-black" />
                 </div>
               </div>
 
               {user ? (
-                <div className="space-y-8 flex flex-col items-center">
-                  <div className="text-center space-y-1">
-                    <p className="text-xs font-bold text-white/30 tracking-widest uppercase italic">Welcome back,</p>
-                    <p className="text-3xl font-black text-blue-500 uppercase italic">{user.name}</p>
+                <div className="space-y-10 flex flex-col items-center">
+                  <div className="text-center space-y-2">
+                    <p className="text-xs font-black text-white uppercase tracking-widest italic opacity-50">Welcome, Operator</p>
+                    <p className="text-4xl font-black text-white uppercase italic">{user.name}</p>
                   </div>
                   <Link href="/muse" className="w-full">
                     <motion.button
-                      whileHover={{ scale: 1.02 }}
-                      className="btn-primary w-full py-6 flex items-center justify-center gap-4 text-xs font-black uppercase tracking-[0.2em]"
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.98 }}
+                      className="btn-primary w-full py-7 flex items-center justify-center gap-4 text-sm font-black uppercase tracking-[0.2em]"
                     >
-                      <Layers className="w-5 h-5" />
-                      Launch Interface
+                      <Layers className="w-6 h-6" />
+                      Initialize Portal
                     </motion.button>
                   </Link>
-                  <button onClick={handleLogout} className="text-xs font-bold text-white/20 hover:text-red-500 uppercase tracking-widest underline underline-offset-4">Sign Out</button>
+                  <button onClick={handleLogout} className="text-xs font-black text-red-500 hover:text-red-400 uppercase tracking-widest underline decoration-2 underline-offset-8 transition-all">Destroy Session</button>
                 </div>
               ) : (
-                <form onSubmit={handleFormSubmit} className="space-y-6">
+                <form onSubmit={handleFormSubmit} className="space-y-8">
                   {!isLogin && (
                     <div className="relative group">
-                      <UserIcon className="absolute left-5 top-1/2 -translate-y-1/2 w-4 h-4 text-white/30 group-focus-within:text-blue-500" />
+                      <UserIcon className="absolute left-6 top-1/2 -translate-y-1/2 w-5 h-5 text-white/40 group-focus-within:text-blue-500 transition-colors" />
                       <input 
                         required
                         type="text" 
                         placeholder="NAME"
-                        className="w-full bg-white/5 border border-white/10 rounded-2xl py-5 px-14 text-sm font-bold text-white placeholder:text-white/20 focus:outline-none focus:border-blue-600 transition-all uppercase tracking-widest"
+                        className="w-full bg-white/10 border-2 border-white/20 rounded-2xl py-6 px-16 text-sm font-black text-white placeholder:text-white/30 focus:outline-none focus:border-blue-600 focus:bg-white/20 transition-all uppercase tracking-widest"
                         value={formData.name}
                         onChange={(e) => setFormData({...formData, name: e.target.value})}
                       />
@@ -187,24 +177,24 @@ export default function LandingPage() {
                   )}
 
                   <div className="relative group">
-                    <Mail className="absolute left-5 top-1/2 -translate-y-1/2 w-4 h-4 text-white/30 group-focus-within:text-blue-500" />
+                    <Mail className="absolute left-6 top-1/2 -translate-y-1/2 w-5 h-5 text-white/40 group-focus-within:text-blue-500 transition-colors" />
                     <input 
                       required
                       type="email" 
                       placeholder="EMAIL"
-                      className="w-full bg-white/5 border border-white/10 rounded-2xl py-5 px-14 text-sm font-bold text-white placeholder:text-white/20 focus:outline-none focus:border-blue-600 transition-all uppercase tracking-widest"
+                      className="w-full bg-white/10 border-2 border-white/20 rounded-2xl py-6 px-16 text-sm font-black text-white placeholder:text-white/30 focus:outline-none focus:border-blue-600 focus:bg-white/20 transition-all uppercase tracking-widest"
                       value={formData.email}
                       onChange={(e) => setFormData({...formData, email: e.target.value})}
                     />
                   </div>
 
                   <div className="relative group">
-                    <Lock className="absolute left-5 top-1/2 -translate-y-1/2 w-4 h-4 text-white/30 group-focus-within:text-blue-500" />
+                    <Lock className="absolute left-6 top-1/2 -translate-y-1/2 w-5 h-5 text-white/40 group-focus-within:text-blue-500 transition-colors" />
                     <input 
                       required
                       type="password" 
-                      placeholder="PASSWORD"
-                      className="w-full bg-white/5 border border-white/10 rounded-2xl py-5 px-14 text-sm font-bold text-white placeholder:text-white/20 focus:outline-none focus:border-blue-600 transition-all uppercase tracking-widest"
+                      placeholder="ENCRYPTION"
+                      className="w-full bg-white/10 border-2 border-white/20 rounded-2xl py-6 px-16 text-sm font-black text-white placeholder:text-white/30 focus:outline-none focus:border-blue-600 focus:bg-white/20 transition-all uppercase tracking-widest"
                       value={formData.password}
                       onChange={(e) => setFormData({...formData, password: e.target.value})}
                     />
@@ -214,56 +204,56 @@ export default function LandingPage() {
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
                     disabled={isSubmitting}
-                    className="btn-primary w-full py-6 flex items-center justify-center gap-4 text-xs font-black uppercase tracking-[0.2em] shadow-xl disabled:opacity-50"
+                    className="btn-primary w-full py-8 flex items-center justify-center gap-4 text-sm font-black uppercase tracking-[0.4em] shadow-2xl disabled:opacity-50"
                   >
-                    {isSubmitting ? "..." : (
+                    {isSubmitting ? "SYNC..." : (
                       <>
-                        <Zap className="w-5 h-5" />
-                        {isLogin ? "LOG IN" : "CREATE ACCOUNT"}
+                        <Zap className="w-6 h-6" />
+                        {isLogin ? "EXECUTE LOGIN" : "RESERVE ACCESS"}
                       </>
                     )}
                   </motion.button>
 
-                  <div className="pt-6 text-center">
+                  <div className="pt-8 text-center border-t border-white/10">
                     <button 
                       type="button"
                       onClick={() => setIsLogin(!isLogin)}
-                      className="text-[10px] font-black text-blue-500 hover:text-blue-400 uppercase tracking-widest underline underline-offset-4"
+                      className="text-xs font-black text-blue-600 hover:text-white uppercase tracking-widest underline decoration-2 underline-offset-8 transition-all"
                     >
-                      {isLogin ? "GO TO SIGN UP" : "BACK TO SIGN IN"}
+                      {isLogin ? "SWITCH TO ENROLLMENT" : "RETURN TO IDENT"}
                     </button>
                   </div>
                 </form>
               )}
             </div>
-          </motion.div>
+          </div>
         </div>
 
-        {/* FEATURES (VISIBLE WHITE TEXT) */}
-        <section className="mt-60 grid grid-cols-1 md:grid-cols-3 gap-12">
+        {/* FEATURES (HIGH VISIBILITY) */}
+        <section className="mt-64 grid grid-cols-1 md:grid-cols-3 gap-16">
             {[
-              { icon: Brain, title: "Neural Consensus", desc: "Agents debate problems in a digital round table for absolute certainty." },
-              { icon: ShieldCheck, title: "Zero Hallucination", desc: "Every word is verified against your local knowledge archives." },
-              { icon: MessageSquare, title: "Consensus IQ", desc: "Collaborative intelligence that evolves with every complex query." }
+              { icon: Brain, title: "Neural Consensus", desc: "Collaborative agents debating problems in a digital round table for absolute certainty." },
+              { icon: ShieldCheck, title: "Zero Error", desc: "Verified against deep vector knowledge archives. No hallucinations." },
+              { icon: MessageSquare, title: "Autonomous IQ", desc: "Dynamic decision flows that evolve with every complex query." }
             ].map((f, i) => (
-              <div key={i} className="p-10 rounded-3xl border border-white/10 bg-[#111111] hover:border-blue-600 transition-all space-y-6">
-                 <div className="w-12 h-12 rounded-xl bg-blue-600/10 flex items-center justify-center">
-                    <f.icon className="w-6 h-6 text-blue-500" />
+              <div key={i} className="p-12 rounded-[2.5rem] border-2 border-white/10 bg-[#111111] hover:border-blue-600 transition-all space-y-8">
+                 <div className="w-16 h-16 rounded-2xl bg-blue-600 flex items-center justify-center shadow-lg">
+                    <f.icon className="w-8 h-8 text-black" />
                  </div>
-                 <h3 className="text-xl font-black text-white uppercase italic">{f.title}</h3>
-                 <p className="text-white/70 text-sm font-medium leading-relaxed italic">{f.desc}</p>
+                 <h3 className="text-3xl font-black text-white uppercase italic leading-none">{f.title}</h3>
+                 <p className="text-white text-base font-medium leading-relaxed italic opacity-80">{f.desc}</p>
               </div>
             ))}
         </section>
       </main>
 
-      <footer className="border-t border-white/10 py-20 px-6 text-center opacity-50">
-         <div className="max-w-7xl mx-auto flex flex-col items-center gap-6">
-            <div className="flex items-center gap-3">
-               <Brain className="w-6 h-6 text-blue-600" />
-               <span className="text-xl font-black tracking-tighter text-white">OmniMind</span>
+      <footer className="border-t-4 border-white pb-20 pt-16 px-6 text-center">
+         <div className="max-w-7xl mx-auto flex flex-col items-center gap-8">
+            <div className="flex items-center gap-4">
+               <Brain className="w-8 h-8 text-blue-600" />
+               <span className="text-3xl font-black tracking-tighter text-white animate-pulse">OmniMind</span>
             </div>
-            <p className="text-[10px] font-bold text-white uppercase tracking-[0.5em]">© 2026 THE VANGUARD GROUP</p>
+            <p className="text-[10px] font-black text-white uppercase tracking-[0.6em] opacity-30">© 2026 THE VANGUARD GROUP • HIGH INTEGRITY AI</p>
          </div>
       </footer>
 
