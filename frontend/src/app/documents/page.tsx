@@ -54,10 +54,10 @@ export default function DocumentsPage() {
     <AppLayout>
       <div className="max-w-6xl mx-auto p-6">
         <header className="mb-10">
-          <h1 className="text-4xl font-bold text-white mb-2">
+          <h1 className="text-4xl font-bold text-foreground mb-2">
             Document Intelligence
           </h1>
-          <p className="text-zinc-400 text-lg">
+          <p className="text-muted-foreground text-lg">
             Upload knowledge assets to expand the platform's intelligence with
             RAG and pgvector.
           </p>
@@ -65,14 +65,14 @@ export default function DocumentsPage() {
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           <div className="lg:col-span-2 space-y-6">
-            <div className="bg-zinc-900/50 border-2 border-dashed border-zinc-800 rounded-3xl p-12 flex flex-col items-center justify-center text-center transition-all hover:border-blue-500/50 group">
-              <div className="w-20 h-20 bg-zinc-800 rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition-transform shadow-2xl">
-                <Upload className="w-8 h-8 text-blue-400" />
+            <div className="bg-secondary/50 border-2 border-dashed border-border rounded-3xl p-12 flex flex-col items-center justify-center text-center transition-all hover:border-blue-500/50 group">
+              <div className="w-20 h-20 bg-secondary rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition-transform shadow-2xl">
+                <Upload className="w-8 h-8 text-blue-600" />
               </div>
-              <h3 className="text-2xl font-bold text-white mb-2">
+              <h3 className="text-2xl font-bold text-foreground mb-2">
                 Select relevant files
               </h3>
-              <p className="text-zinc-500 mb-8 max-w-sm">
+              <p className="text-muted-foreground mb-8 max-w-sm">
                 Support for PDF, DOCX, TXT, and CSV. Files are chunked and
                 embedded automatically.
               </p>
@@ -92,10 +92,10 @@ export default function DocumentsPage() {
               </label>
 
               {file && (
-                <div className="mt-8 flex items-center gap-3 bg-zinc-800/50 px-6 py-3 rounded-xl border border-zinc-700 animate-in fade-in slide-in-from-top-2">
-                  <File className="w-5 h-5 text-blue-400" />
-                  <span className="text-white font-medium">{file.name}</span>
-                  <span className="text-zinc-500 text-xs">
+                <div className="mt-8 flex items-center gap-3 bg-secondary px-6 py-3 rounded-xl border border-border animate-in fade-in slide-in-from-top-2">
+                  <File className="w-5 h-5 text-blue-600" />
+                  <span className="text-foreground font-medium">{file.name}</span>
+                  <span className="text-muted-foreground text-xs">
                     ({(file.size / 1024).toFixed(1)} KB)
                   </span>
                 </div>
@@ -130,28 +130,28 @@ export default function DocumentsPage() {
           </div>
 
           <div className="space-y-6">
-            <div className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
-              <h4 className="text-white font-bold mb-4 flex items-center gap-2 italic">
-                <Cpu className="w-4 h-4 text-blue-400" /> Engine Specs
+            <div className="bg-secondary/50 border border-border rounded-2xl p-6">
+              <h4 className="text-foreground font-bold mb-4 flex items-center gap-2 italic">
+                <Cpu className="w-4 h-4 text-blue-600" /> Engine Specs
               </h4>
               <ul className="space-y-4 text-sm">
-                <li className="flex justify-between border-b border-zinc-800 pb-2">
-                  <span className="text-zinc-500">Retrieval</span>
-                  <span className="text-zinc-300 font-mono">
+                <li className="flex justify-between border-b border-border pb-2">
+                  <span className="text-muted-foreground">Retrieval</span>
+                  <span className="text-foreground font-mono">
                     pgvector-RS256
                   </span>
                 </li>
-                <li className="flex justify-between border-b border-zinc-800 pb-2">
-                  <span className="text-zinc-500">Embedding</span>
-                  <span className="text-zinc-300 font-mono">all-MiniLM-L6</span>
+                <li className="flex justify-between border-b border-border pb-2">
+                  <span className="text-muted-foreground">Embedding</span>
+                  <span className="text-foreground font-mono">all-MiniLM-L6</span>
                 </li>
-                <li className="flex justify-between border-b border-zinc-800 pb-2">
-                  <span className="text-zinc-500">Chunk Size</span>
-                  <span className="text-zinc-300 font-mono">1000 chars</span>
+                <li className="flex justify-between border-b border-border pb-2">
+                  <span className="text-muted-foreground">Chunk Size</span>
+                  <span className="text-foreground font-mono">1000 chars</span>
                 </li>
                 <li className="flex justify-between">
-                  <span className="text-zinc-500">Overlap</span>
-                  <span className="text-zinc-300 font-mono">200 chars</span>
+                  <span className="text-muted-foreground">Overlap</span>
+                  <span className="text-foreground font-mono">200 chars</span>
                 </li>
               </ul>
             </div>

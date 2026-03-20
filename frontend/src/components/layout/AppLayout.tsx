@@ -58,7 +58,7 @@ export default function AppLayout({
         {/* Toggle Button */}
         <button
           onClick={() => setIsSidebarCollapsed(!isSidebarCollapsed)}
-          className="absolute -right-3 top-20 w-6 h-6 bg-[#0a0a0a] rounded-full flex items-center justify-center text-white shadow-lg border border-black/80 z-50 hover:scale-110 transition-transform"
+          className="absolute -right-3 top-20 w-6 h-6 bg-[var(--bg-main)] rounded-full flex items-center justify-center text-[var(--text-primary)] shadow-lg border border-[var(--border-primary)] z-50 hover:scale-110 transition-transform"
         >
           {isSidebarCollapsed ? (
             <ChevronRight size={14} />
@@ -68,9 +68,9 @@ export default function AppLayout({
         </button>
 
         {/* Brand */}
-        <div className="p-5 flex items-center gap-3">
-          <div className="w-8 h-8 rounded-lg bg-[#0a0a0a] flex items-center justify-center shrink-0 shadow-sm">
-            <Brain className="text-white w-5 h-5" />
+        <div className="p-4 flex items-center gap-3">
+          <div className="w-7 h-7 rounded-lg bg-[var(--bg-main)] flex items-center justify-center shrink-0 shadow-sm border border-[var(--border-primary)]">
+            <Brain className="text-[var(--text-primary)] w-4 h-4" />
           </div>
           {!isSidebarCollapsed && (
             <motion.span
@@ -84,19 +84,19 @@ export default function AppLayout({
         </div>
 
         {/* Navigation */}
-        <nav className="flex-1 px-3 py-6 space-y-1">
+        <nav className="flex-1 px-2.5 py-4 space-y-1">
           {menuItems.map((item) => (
             <button
               key={item.id}
               onClick={() => setActiveTab(item.id)}
-              className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all duration-200 group ${
+              className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg transition-all duration-200 group ${
                 activeTab === item.id
                   ? "active-nav-item text-[var(--text-primary)]"
                   : "text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--glass-bg)]"
               }`}
             >
               <item.icon
-                size={18}
+                size={16}
                 className={
                   activeTab === item.id
                     ? "text-[var(--text-primary)]"
@@ -104,7 +104,7 @@ export default function AppLayout({
                 }
               />
               {!isSidebarCollapsed && (
-                <span className="text-sm font-medium whitespace-nowrap">
+                <span className="text-[13px] font-medium whitespace-nowrap">
                   {item.name}
                 </span>
               )}
@@ -162,12 +162,12 @@ export default function AppLayout({
                   Member
                 </p>
               </div>
-              <div
+               <div
                 onClick={() => setIsProfileOpen(!isProfileOpen)}
                 className="relative cursor-pointer"
               >
-                <div className="w-8 h-8 rounded-lg bg-[#0a0a0a] flex items-center justify-center font-bold text-white shadow-sm hover:bg-[#1a1a1a] transition-colors">
-                  {user.name.charAt(0)}
+                <div className="w-7 h-7 rounded-lg bg-[var(--bg-main)] flex items-center justify-center font-bold text-[var(--text-primary)] shadow-sm border border-[var(--border-primary)] hover:bg-[var(--glass-bg)] transition-colors">
+                  <span className="text-xs">{user.name.charAt(0)}</span>
                 </div>
               </div>
 

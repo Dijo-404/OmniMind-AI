@@ -39,10 +39,10 @@ export default function ResearchPage() {
     <AppLayout>
       <div className="max-w-6xl mx-auto p-6">
         <header className="mb-10 text-center">
-          <h1 className="text-4xl font-bold text-white mb-2">
+          <h1 className="text-4xl font-bold text-foreground mb-2">
             Autonomous Research Agent
           </h1>
-          <p className="text-zinc-400 text-lg max-w-2xl mx-auto">
+          <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
             Deep analysis on complex topics with evidence-based insights and
             recommendations.
           </p>
@@ -55,7 +55,7 @@ export default function ResearchPage() {
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder="Enter research topic or question..."
-              className="w-full bg-zinc-900 border border-zinc-800 rounded-2xl px-6 py-5 text-white pr-16 focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all text-lg shadow-2xl"
+              className="w-full bg-secondary border border-border rounded-2xl px-6 py-5 text-foreground pr-16 focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all text-lg shadow-2xl"
             />
             <button
               onClick={handleResearch}
@@ -72,24 +72,24 @@ export default function ResearchPage() {
         </div>
 
         {result && (
-          <div className="bg-zinc-900/40 border border-zinc-800 rounded-3xl overflow-hidden backdrop-blur-2xl animate-in fade-in zoom-in-95 duration-700 shadow-2xl">
-            <div className="bg-gradient-to-r from-purple-900/20 to-blue-900/20 px-8 py-6 border-b border-zinc-800 flex items-center justify-between">
+          <div className="bg-secondary/40 border border-border rounded-3xl overflow-hidden backdrop-blur-2xl animate-in fade-in zoom-in-95 duration-700 shadow-2xl">
+            <div className="bg-gradient-to-r from-purple-900/10 to-blue-900/10 px-8 py-6 border-b border-border flex items-center justify-between">
               <div className="flex items-center gap-3">
-                <div className="bg-purple-500/20 p-2 rounded-lg text-purple-400">
+                <div className="bg-purple-500/10 p-2 rounded-lg text-purple-600">
                   <BookOpen className="w-6 h-6" />
                 </div>
-                <h2 className="text-xl font-bold text-white">
+                <h2 className="text-xl font-bold text-foreground">
                   Research Report: {result.topic}
                 </h2>
               </div>
-              <div className="text-xs text-zinc-500 font-mono">
+              <div className="text-xs text-muted-foreground font-mono">
                 MODEL: INF-70B-GRADIENT
               </div>
             </div>
 
             <div className="p-8">
               <article className="prose prose-invert max-w-none">
-                <div className="whitespace-pre-wrap text-zinc-300 leading-relaxed text-lg space-y-6">
+                <div className="whitespace-pre-wrap text-foreground/80 leading-relaxed text-lg space-y-6">
                   {result.report}
                 </div>
               </article>
@@ -115,7 +115,7 @@ export default function ResearchPage() {
                 ].map((tag, i) => (
                   <div
                     key={i}
-                    className="flex flex-col items-center p-4 rounded-xl bg-zinc-800/20 border border-zinc-800/50 text-zinc-400"
+                    className="flex flex-col items-center p-4 rounded-xl bg-secondary/20 border border-border/50 text-muted-foreground"
                   >
                     {tag.icon}
                     <span className="text-xs mt-2 font-medium">
@@ -130,20 +130,20 @@ export default function ResearchPage() {
 
         {!result && !loading && (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
-            <div className="p-6 rounded-2xl bg-zinc-900/30 border border-zinc-800 hover:border-purple-500/30 transition-all">
-              <h3 className="text-purple-400 font-bold mb-3 flex items-center gap-2">
+            <div className="p-6 rounded-2xl bg-secondary/30 border border-border hover:border-purple-500/30 transition-all">
+              <h3 className="text-purple-600 font-bold mb-3 flex items-center gap-2">
                 <Search className="w-4 h-4" /> Comprehensive Synthesis
               </h3>
-              <p className="text-zinc-500">
+              <p className="text-muted-foreground">
                 Retrieves data across all uploaded knowledge bases to build a
                 unified perspective on complex markets.
               </p>
             </div>
-            <div className="p-6 rounded-2xl bg-zinc-900/30 border border-zinc-800 hover:border-blue-500/30 transition-all">
-              <h3 className="text-blue-400 font-bold mb-3 flex items-center gap-2">
+            <div className="p-6 rounded-2xl bg-secondary/30 border border-border hover:border-blue-500/30 transition-all">
+              <h3 className="text-blue-600 font-bold mb-3 flex items-center gap-2">
                 <Target className="w-4 h-4" /> Actionable Solutions
               </h3>
-              <p className="text-zinc-500">
+              <p className="text-muted-foreground">
                 Goes beyond data collection to provide specific solutions and
                 final recommendations for business execution.
               </p>
